@@ -1,0 +1,61 @@
+{
+    "httpMethod": "POST",
+    "headers": {
+        "Accept": "*/*",
+        "Content-Length": "472",
+        "Content-Type": "application/json",
+        "Host": "functions.yandexcloud.net",
+        "User-Agent": "Mozilla/5.0 (compatible; VKCallback/2.0; +https://vk.com/dev/callback_api)",
+        "X-Forwarded-For": "95.142.196.36",
+        "X-Real-Remote-Address": "[95.142.196.36]:16944",
+        "X-Request-Id": "f06e8dcd-8ae6-4cc6-affb-ad0dcb4dd82e",
+        "X-Trace-Id": "da9346d0-7411-4245-8c01-80db42749b5f"
+    },
+    "url": "",
+    "params": {},
+    "multiValueParams": {},
+    "pathParams": {},
+    "multiValueHeaders": {
+        "Accept": [
+            "*/*"
+        ],
+        "Content-Length": [
+            "472"
+        ],
+        "Content-Type": [
+            "application/json"
+        ],
+        "Host": [
+            "functions.yandexcloud.net"
+        ],
+        "User-Agent": [
+            "Mozilla/5.0 (compatible; VKCallback/2.0; +https://vk.com/dev/callback_api)"
+        ],
+        "X-Forwarded-For": [
+            "95.142.196.36"
+        ],
+        "X-Real-Remote-Address": [
+            "[95.142.196.36]:16944"
+        ],
+        "X-Request-Id": [
+            "f06e8dcd-8ae6-4cc6-affb-ad0dcb4dd82e"
+        ],
+        "X-Trace-Id": [
+            "da9346d0-7411-4245-8c01-80db42749b5f"
+        ]
+    },
+    "queryStringParameters": {},
+    "multiValueQueryStringParameters": {},
+    "requestContext": {
+        "identity": {
+            "sourceIp": "95.142.196.36",
+            "userAgent": "Mozilla/5.0 (compatible; VKCallback/2.0; +https://vk.com/dev/callback_api)"
+        },
+        "httpMethod": "POST",
+        "requestId": "f06e8dcd-8ae6-4cc6-affb-ad0dcb4dd82e",
+        "requestTime": "16/Apr/2022:12:22:10 +0000",
+        "requestTimeEpoch": 1650111730
+    },
+    "body": "{\"message\":\"Hello World\"}",
+    "isBase64Encoded": false
+}
