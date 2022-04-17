@@ -1,0 +1,52 @@
+{
+  "root": "packages/functions/wall-post-new",
+  "sourceRoot": "packages/functions/wall-post-new/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/functions/wall-post-new",
+        "main": "packages/functions/wall-post-new/src/main.ts",
+        "tsConfig": "packages/functions/wall-post-new/tsconfig.app.json",
+        "assets": ["packages/functions/wall-post-new/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "packages/functions/wall-post-new/src/environments/environment.ts",
+              "with": "packages/functions/wall-post-new/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "functions-wall-post-new:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/functions/wall-post-new/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/functions/wall-post-new"],
+      "options": {
+        "jestConfig": "packages/functions/wall-post-new/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

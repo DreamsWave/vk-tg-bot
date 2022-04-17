@@ -1,0 +1,52 @@
+{
+  "root": "packages/functions/event-handler",
+  "sourceRoot": "packages/functions/event-handler/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/functions/event-handler",
+        "main": "packages/functions/event-handler/src/main.ts",
+        "tsConfig": "packages/functions/event-handler/tsconfig.app.json",
+        "assets": ["packages/functions/event-handler/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "packages/functions/event-handler/src/environments/environment.ts",
+              "with": "packages/functions/event-handler/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "functions-event-handler:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/functions/event-handler/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/functions/event-handler"],
+      "options": {
+        "jestConfig": "packages/functions/event-handler/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
