@@ -5,6 +5,7 @@
   "scripts": {},
   "private": true,
   "devDependencies": {
+    "@aws-sdk/types": "^3.55.0",
     "@nrwl/cli": "13.10.2",
     "@nrwl/eslint-plugin-nx": "13.10.2",
     "@nrwl/jest": "13.10.2",
@@ -27,6 +28,7 @@
   },
   "dependencies": {
     "@yandex-cloud/nodejs-sdk": "^2.0.1",
+    "aws-sdk": "^2.1116.0",
     "tslib": "^2.0.0"
   }
 }
