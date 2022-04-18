@@ -12,7 +12,10 @@
             "args": [
                 "--runInBand",
                 "--watchAll=false"
-            ]
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
         }
     ]
 }

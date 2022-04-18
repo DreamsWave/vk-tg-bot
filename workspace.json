@@ -4,6 +4,7 @@
     "functions-event-handler": "packages/functions/event-handler",
     "functions-wall-post-new": "packages/functions/wall-post-new",
     "mocks": "packages/mocks",
-    "types": "packages/types"
+    "types": "packages/types",
+    "yc-api": "packages/yc-api"
   }
 }
