@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
-    "sourceMap": false,
+    "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
@@ -10,17 +10,31 @@
     "importHelpers": false,
     "target": "ES6",
     "module": "ESNext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@yc-bot/mocks": ["packages/mocks/src/index.ts"],
-      "@yc-bot/types": ["packages/types/src/index.ts"],
-      "@yc-bot/utils": ["packages/utils/src/index.ts"],
-      "@yc-bot/yc-api": ["packages/yc-api/src/index.ts"]
+      "@yc-bot/mocks": [
+        "packages/mocks/src/index.ts"
+      ],
+      "@yc-bot/types": [
+        "packages/types/src/index.ts"
+      ],
+      "@yc-bot/utils": [
+        "packages/utils/src/index.ts"
+      ],
+      "@yc-bot/yc-api": [
+        "packages/yc-api/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

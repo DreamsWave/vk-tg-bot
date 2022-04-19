@@ -1,6 +1,6 @@
 import { handler } from './main';
 import { vkEvents, http } from '@yc-bot/mocks'
-import { VK, YC } from '@yc-bot/types'
+import { YC } from '@yc-bot/types'
 
 describe('Event Handler Function', () => {
     it('should return "ok"', async () => {
