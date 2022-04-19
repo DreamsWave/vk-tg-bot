@@ -5,13 +5,14 @@
     "module": "CommonJS",
     "types": [
       "node"
-    ]
+    ],
   },
   "exclude": [
     "**/*.spec.ts",
     "**/*.test.ts"
   ],
   "include": [
-    "**/*.ts"
+    "**/*.ts",
+    "src/_main.spec.ts_"
   ]
 }

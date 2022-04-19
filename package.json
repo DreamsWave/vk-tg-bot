@@ -29,6 +29,7 @@
   "dependencies": {
     "@yandex-cloud/nodejs-sdk": "^2.0.1",
     "aws-sdk": "^2.1116.0",
+    "chunk-text": "^2.0.1",
     "log4js": "^6.4.5",
     "tslib": "^2.0.0",
     "vk-io": "^4.5.2"

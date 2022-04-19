@@ -8,8 +8,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": false,
-    "target": "ES6",
-    "module": "ESNext",
+    "target": "es2015",
+    "module": "commonjs",
+    "esModuleInterop": true,
     "lib": [
       "es2017",
       "dom"
