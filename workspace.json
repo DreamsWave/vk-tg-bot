@@ -5,6 +5,7 @@
     "functions-wall-post-new": "packages/functions/wall-post-new",
     "mocks": "packages/mocks",
     "types": "packages/types",
+    "utils": "packages/utils",
     "yc-api": "packages/yc-api"
   }
 }

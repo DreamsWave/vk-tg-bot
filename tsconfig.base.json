@@ -18,6 +18,7 @@
     "paths": {
       "@yc-bot/mocks": ["packages/mocks/src/index.ts"],
       "@yc-bot/types": ["packages/types/src/index.ts"],
+      "@yc-bot/utils": ["packages/utils/src/index.ts"],
       "@yc-bot/yc-api": ["packages/yc-api/src/index.ts"]
     }
   },

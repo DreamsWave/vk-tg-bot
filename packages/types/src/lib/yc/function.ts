@@ -34,3 +34,30 @@ export interface Event {
         }
     }
 }
+export interface Messages {
+    messages: Array<{
+        event_metadata: {
+            event_id: string;
+            event_type: string;
+            created_at: string;
+            tracing_context: null;
+            cloud_id: string;
+            folder_id: string;
+        };
+        details: {
+            queue_id: string;
+            message: {
+                message_id: string;
+                md5_of_body: string;
+                body: string;
+                attributes: {
+                    ApproximateFirstReceiveTimestamp: string;
+                    ApproximateReceiveCount: string;
+                    SentTimestamp: string;
+                };
+                message_attributes: object;
+                md5_of_message_attributes: string;
+            };
+        };
+    }>;
+}
