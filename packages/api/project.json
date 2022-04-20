@@ -1,20 +1,20 @@
 {
-  "root": "packages/yc-api",
-  "sourceRoot": "packages/yc-api/src",
+  "root": "packages/api",
+  "sourceRoot": "packages/api/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/yc-api/**/*.ts"]
+        "lintFilePatterns": ["packages/api/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/yc-api"],
+      "outputs": ["coverage/packages/api"],
       "options": {
-        "jestConfig": "packages/yc-api/jest.config.js",
+        "jestConfig": "packages/api/jest.config.js",
         "passWithNoTests": true
       }
     }
