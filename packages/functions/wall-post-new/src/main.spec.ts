@@ -1,9 +1,5 @@
 import { handler } from './main';
-import {
-    // vkEvents, 
-    // http, 
-    ycEvents
-} from '@yc-bot/mocks'
+import { ycEvents } from '@yc-bot/mocks'
 import { YC } from '@yc-bot/types'
 
 describe('Wall Post New Function', () => {
@@ -12,6 +8,5 @@ describe('Wall Post New Function', () => {
         const context: YC.Context = {}
         const result = await handler(messages, context)
         expect(result.body).toEqual('ok');
-        // expect('ok').toEqual('ok');
     });
 });
