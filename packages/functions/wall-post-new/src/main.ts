@@ -11,6 +11,8 @@ export const handler = async (messages: YC.Messages, context: YC.Context) => {
         const post = new WallAttachment({ api: null, payload: body.object })
         if (post.hasAds) continue
         if (post.postType !== 'post') continue
+        const photos = post.getAttachments("photo")
+        // logger.warn(photos)
     }
     return {
         statusCode: 200,

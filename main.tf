@@ -40,7 +40,7 @@ resource "yandex_function" "event-handler" {
   user_hash          = data.archive_file.event-handler.output_base64sha256
   runtime            = "nodejs16"
   entrypoint         = "main.handler"
-  memory             = "256"
+  memory             = "128"
   execution_timeout  = "60"
   service_account_id = yandex_iam_service_account.this.id
   content {
