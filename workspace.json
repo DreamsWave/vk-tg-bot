@@ -1,11 +1,11 @@
 {
   "version": 2,
   "projects": {
+    "api": "packages/api",
     "functions-event-handler": "packages/functions/event-handler",
     "functions-wall-post-new": "packages/functions/wall-post-new",
     "mocks": "packages/mocks",
     "types": "packages/types",
-    "utils": "packages/utils",
-    "yc-api": "packages/yc-api"
+    "utils": "packages/utils"
   }
 }
