@@ -1,0 +1,29 @@
+{
+    "group_id": 191117934,
+    "type": "wall_post_new",
+    "event_id": "d91f7b475e3538dd0974d2fec33e308e396caa5f",
+    "v": "5.131",
+    "object": {
+        "id": 502,
+        "from_id": -191117934,
+        "owner_id": -191117934,
+        "date": 1650620096,
+        "marked_as_ads": 0,
+        "can_delete": 1,
+        "is_favorite": false,
+        "post_type": "post",
+        "text": "Hello World",
+        "can_edit": 1,
+        "created_by": 11300623,
+        "comments": {
+            "count": 0
+        },
+        "donut": {
+            "is_donut": false
+        },
+        "short_text_rate": 0.8,
+        "zoom_text": true,
+        "hash": "RY6wyxsbFtOFPCWXKXxAVaV8Enw"
+    },
+    "secret": ""
+}

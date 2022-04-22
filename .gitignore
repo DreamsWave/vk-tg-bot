@@ -46,3 +46,4 @@ terraform.tfvars
 terraform.tfstate
 
 .env
+.env.local

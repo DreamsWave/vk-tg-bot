@@ -1,0 +1,106 @@
+{
+    "group_id": 191117934,
+    "type": "wall_post_new",
+    "event_id": "572d4bd655c2f64028525c526cf68d95ee5758cf",
+    "v": "5.131",
+    "object": {
+        "id": 501,
+        "from_id": -191117934,
+        "owner_id": -191117934,
+        "date": 1650620060,
+        "marked_as_ads": 0,
+        "can_delete": 1,
+        "is_favorite": false,
+        "post_type": "post",
+        "text": "Hello Photo with Kitty",
+        "can_edit": 1,
+        "created_by": 11300623,
+        "attachments": [
+            {
+                "type": "photo",
+                "photo": {
+                    "album_id": -7,
+                    "date": 1650620060,
+                    "id": 457239096,
+                    "owner_id": -191117934,
+                    "access_key": "4411e335a272ba7d07",
+                    "post_id": 501,
+                    "sizes": [
+                        {
+                            "height": 50,
+                            "url": "https://sun9-82.userapi.com/s/v1/ig2/vDXAAT8SvdWyrzwcqFR1QVvztNLUgxPxwvvNtcuj9Zu9ZyrrpT3qpG3UaqsHWXZU_k8re9QONRs_fb8yz86sSLYj.jpg?size=75x50&quality=96&type=album",
+                            "type": "s",
+                            "width": 75
+                        },
+                        {
+                            "height": 87,
+                            "url": "https://sun9-82.userapi.com/s/v1/ig2/23Xxf20RsIp0IAEv8OoIY97hY3r14LxrLTacGe8XrjlZIvgbHscoG0oT1WFPmoto_-sNGwvbfmwTNvUFfH5zgTZ9.jpg?size=130x87&quality=96&type=album",
+                            "type": "m",
+                            "width": 130
+                        },
+                        {
+                            "height": 403,
+                            "url": "https://sun9-82.userapi.com/s/v1/ig2/0OOMxK_Kv9Vz90h-9Pt2LFY_8gRz0FCzDTzoaQ99P-xBD0InPP2i6KDnhYneSS17qB8wvElZoaGf1rQHD2L_auJ1.jpg?size=604x403&quality=96&type=album",
+                            "type": "x",
+                            "width": 604
+                        },
+                        {
+                            "height": 538,
+                            "url": "https://sun9-82.userapi.com/s/v1/ig2/4-RblpaQzrwlbIPu9LwRghMPmgnDG5ocPYR9oZdsRHStEtHiz4GwG0VKN7owiAXA1XnGLSDG3dLNbPnwKuwA3rVr.jpg?size=807x538&quality=96&type=album",
+                            "type": "y",
+                            "width": 807
+                        },
+                        {
+                            "height": 853,
+                            "url": "https://sun9-82.userapi.com/s/v1/ig2/JGA4YDMXOMJCe0U0HDF0-dRDgHX9ayjAgCTqgG-_ifMJUos6YdxMDL4rjIRaIp9QmxrZwDFwk4U7tMhICDcMNmAa.jpg?size=1280x853&quality=96&type=album",
+                            "type": "z",
+                            "width": 1280
+                        },
+                        {
+                            "height": 1280,
+                            "url": "https://sun9-82.userapi.com/s/v1/ig2/Nl6lgCzKe4JZ97i_vigPjogiI5IklMMTCatPNCAMS36TzOq8eZFF-A2ma5nLCwtPHka28W5ch1mk-fQc8uDipYx9.jpg?size=1920x1280&quality=96&type=album",
+                            "type": "w",
+                            "width": 1920
+                        },
+                        {
+                            "height": 87,
+                            "url": "https://sun9-82.userapi.com/s/v1/ig2/23Xxf20RsIp0IAEv8OoIY97hY3r14LxrLTacGe8XrjlZIvgbHscoG0oT1WFPmoto_-sNGwvbfmwTNvUFfH5zgTZ9.jpg?size=130x87&quality=96&type=album",
+                            "type": "o",
+                            "width": 130
+                        },
+                        {
+                            "height": 133,
+                            "url": "https://sun9-82.userapi.com/s/v1/ig2/WviyUfwe38N8GhSdtnm2dL9bk1LEWeIZ9TEA1sdKpPEvFKQiAoSzOxJyMyjVJ7yyW3USTfVF7dTP0hDFsSGoATd4.jpg?size=200x133&quality=96&type=album",
+                            "type": "p",
+                            "width": 200
+                        },
+                        {
+                            "height": 213,
+                            "url": "https://sun9-82.userapi.com/s/v1/ig2/xmjQ90yuzuFoDRTeSEM8TeDwoGw28n9RW9CIOE8jJlj3n2jakMRxlv9aPLwUi9nJDNKReXSl5R9r8gN3fbQ8PGpx.jpg?size=320x213&quality=96&type=album",
+                            "type": "q",
+                            "width": 320
+                        },
+                        {
+                            "height": 340,
+                            "url": "https://sun9-82.userapi.com/s/v1/ig2/1EFY0FiiuPw0O6Sehg7LOJmYO_dPvQYDJaqoXONZDbNYAKLlPZ8aZa4u1LWj_ZaXQK-XPARPj_GZrTGQnCZuS7ta.jpg?size=510x340&quality=96&type=album",
+                            "type": "r",
+                            "width": 510
+                        }
+                    ],
+                    "text": "",
+                    "user_id": 100,
+                    "has_tags": false
+                }
+            }
+        ],
+        "comments": {
+            "count": 0
+        },
+        "donut": {
+            "is_donut": false
+        },
+        "short_text_rate": 0.8,
+        "hash": "4g44yAyQ-G7fwkIwEaNsBbznKJw"
+    },
+    "secret": ""
+}
