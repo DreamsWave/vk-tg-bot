@@ -6,7 +6,7 @@ import fs from "fs"
 import os from "os"
 import { logger } from "../logger";
 
-export function downloadImage(imageUrl: string, filename: number | string, location: string = os.tmpdir()): Promise<string> {
+export const downloadImage = async (imageUrl: string, filename: number | string, location: string = os.tmpdir()): Promise<string> => {
     return new Promise((resolve, reject) => {
         https.get(imageUrl, async resp => {
             const contentType = resp.headers["content-type"];
@@ -19,11 +19,11 @@ export function downloadImage(imageUrl: string, filename: number | string, locat
     })
 }
 
-export function isWebp(location) {
+export const isWebp = (location: string): boolean => {
     return path.extname(path.basename(location)) === '.webp'
 }
 
-export async function convertWebpToJpg(location: string): Promise<string> {
+export const convertWebpToJpg = async (location: string): Promise<string> => {
     const filename = path.basename(location)
     const fileExt = path.extname(filename)
     const name = path.basename(location, fileExt)

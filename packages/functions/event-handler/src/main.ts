@@ -1,8 +1,8 @@
-import { YC } from '@yc-bot/types';
+import { Event, Context } from '@yc-bot/types';
 import { logger } from '@yc-bot/utils';
 import { yc } from '@yc-bot/api'
 
-export const handler = async (event: YC.Event, context: YC.Context) => {
+export const handler = async (event: Event, context: Context) => {
     logger.info("event-handler")
     logger.debug(event)
     logger.debug(context)

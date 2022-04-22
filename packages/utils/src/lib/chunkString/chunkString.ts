@@ -1,6 +1,6 @@
 import chunk from 'chunk-text'
 
-export function chunkString(str: string, size: number, firstElementSize?: number): string[] {
+export const chunkString = (str: string, size: number, firstElementSize?: number): string[] => {
     str = str.trim();
     if (firstElementSize) {
         const firstElementSizeChunks = chunk(str, firstElementSize);

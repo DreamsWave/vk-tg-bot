@@ -1,8 +1,8 @@
-import { YC } from '@yc-bot/types'
-import { logger } from '@yc-bot/utils'
+import { Messages, Context } from '@yc-bot/types'
+import { logger, download } from '@yc-bot/utils'
 import { WallAttachment } from 'vk-io'
 
-export const handler = async (messages: YC.Messages, context: YC.Context) => {
+export const handler = async (messages: Messages, context: Context) => {
     logger.info('wall-post-new')
     logger.info(messages)
     logger.info(context)
@@ -11,8 +11,10 @@ export const handler = async (messages: YC.Messages, context: YC.Context) => {
         const post = new WallAttachment({ api: null, payload: body.object })
         if (post.hasAds) continue
         if (post.postType !== 'post') continue
-        const photos = post.getAttachments("photo")
-        // logger.warn(photos)
+
+        // if (post.hasAttachments) {
+        //     const attachmentsToSend = await download.attachments.downloadAttachments(post)
+        // }
     }
     return {
         statusCode: 200,

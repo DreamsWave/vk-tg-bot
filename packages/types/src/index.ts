@@ -1,1 +1,1 @@
-export * as YC from './lib/yc';
+export * from './lib'
