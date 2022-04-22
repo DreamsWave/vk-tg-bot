@@ -1,7 +1,7 @@
 import { loremIpsum } from 'lorem-ipsum'
 import { chunkString } from './chunkString'
 
-function makeString(size: number) {
+const makeString = (size: number): string => {
     return loremIpsum({
         count: size,
         format: "plain",

@@ -1,13 +1,13 @@
 {
     "group_id": 191117934,
     "type": "wall_post_new",
-    "event_id": "8179781d5c5b709cbce1339eea46dd1156990e62",
+    "event_id": "848bcc75e75b8b211da009310decb4f150108557",
     "v": "5.131",
     "object": {
-        "id": 500,
+        "id": 508,
         "from_id": -191117934,
         "owner_id": -191117934,
-        "date": 1650619876,
+        "date": 1650639531,
         "marked_as_ads": 0,
         "can_delete": 1,
         "is_favorite": false,
@@ -19,7 +19,7 @@
             {
                 "type": "video",
                 "video": {
-                    "access_key": "293dc19604e620cf06",
+                    "access_key": "760b6930587e5c870f",
                     "can_comment": 1,
                     "can_edit": 1,
                     "can_like": 1,
@@ -29,94 +29,89 @@
                     "can_add": 1,
                     "can_attach_link": 1,
                     "comments": 0,
-                    "date": 1650619863,
+                    "date": 1650639511,
                     "description": "",
                     "duration": 17,
                     "image": [
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_s",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_s",
                             "width": 130,
                             "height": 96,
                             "with_padding": 1
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_m",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_m",
                             "width": 160,
                             "height": 120,
                             "with_padding": 1
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_l",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_l",
                             "width": 320,
                             "height": 240,
                             "with_padding": 1
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_x",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_x",
                             "width": 800,
                             "height": 450,
                             "with_padding": 1
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_w",
-                            "width": 1280,
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_w",
+                            "width": 1278,
                             "height": 720
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_t",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_t",
                             "width": 320,
                             "height": 180
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_u",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_u",
                             "width": 720,
-                            "height": 405
+                            "height": 406
                         }
                     ],
                     "first_frame": [
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_f",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_f",
                             "width": 720,
-                            "height": 405
+                            "height": 406
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_md",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_md",
                             "width": 480,
                             "height": 270
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_d",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_d",
                             "width": 240,
                             "height": 135
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_sm",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_sm",
                             "width": 128,
                             "height": 72
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI",
-                            "width": 1280,
-                            "height": 720
-                        },
-                        {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_h",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_h",
                             "width": 960,
-                            "height": 540
+                            "height": 541
                         },
                         {
-                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI",
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs",
                             "width": 1280,
-                            "height": 720
+                            "height": 721
                         }
                     ],
-                    "width": 1920,
-                    "height": 1080,
-                    "id": 456239046,
+                    "width": 852,
+                    "height": 480,
+                    "id": 456239048,
                     "owner_id": -191117934,
                     "title": "Видео от Sandbox",
                     "is_favorite": false,
-                    "track_code": "video_52e4935868k8pZ107hlMpFJ_GjkYAGPDLt_fVurFRHqVNUWnDPPE7CillXToEUipPn51PS02UfAX7-tg7bAqEfta",
+                    "track_code": "video_2753e236Sg7FIKnCNt7dAhkmScBuswMrPbmlu0YvrmwDAXhLRJFlK9EgocIw1tkPdScmzFuFMRgEiZGDQVrAB21u",
                     "type": "video",
                     "views": 1
                 }
@@ -129,7 +124,7 @@
             "is_donut": false
         },
         "short_text_rate": 0.8,
-        "hash": "_TE1P-9YOyFpfB14VqPsMLv3eQk"
+        "hash": "xOWADsuv6qwgC2ljSAFkI9SIttw"
     },
     "secret": ""
 }

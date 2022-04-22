@@ -35,6 +35,7 @@
     "lorem-ipsum": "^2.0.4",
     "tslib": "^2.0.0",
     "vk-io": "^4.5.2",
-    "webp-converter": "^2.3.3"
+    "webp-converter": "^2.3.3",
+    "youtube-dl-exec": "^2.0.11"
   }
 }
