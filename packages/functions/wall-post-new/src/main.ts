@@ -4,8 +4,8 @@ import { WallAttachment } from 'vk-io'
 
 export const handler = async (messages: YC.Messages, context: YC.Context) => {
     logger.info('wall-post-new')
-    logger.debug(messages)
-    logger.debug(context)
+    logger.info(messages)
+    logger.info(context)
     for (const message of messages.messages) {
         const body = JSON.parse(message.details.message.body) ?? ""
         const post = new WallAttachment({ api: null, payload: body.object })

@@ -10,7 +10,8 @@
             "program": "${workspaceFolder}\\node_modules\\jest\\bin\\jest.js",
             "cwd": "${workspaceFolder}",
             "runtimeArgs": [
-                "--experimental-vm-modules"
+                "--experimental-vm-modules",
+                "--no-warnings"
             ],
             "args": [
                 "--runInBand",

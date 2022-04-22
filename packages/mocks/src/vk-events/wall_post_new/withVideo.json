@@ -1,0 +1,135 @@
+{
+    "group_id": 191117934,
+    "type": "wall_post_new",
+    "event_id": "8179781d5c5b709cbce1339eea46dd1156990e62",
+    "v": "5.131",
+    "object": {
+        "id": 500,
+        "from_id": -191117934,
+        "owner_id": -191117934,
+        "date": 1650619876,
+        "marked_as_ads": 0,
+        "can_delete": 1,
+        "is_favorite": false,
+        "post_type": "post",
+        "text": "Hello kitty",
+        "can_edit": 1,
+        "created_by": 11300623,
+        "attachments": [
+            {
+                "type": "video",
+                "video": {
+                    "access_key": "293dc19604e620cf06",
+                    "can_comment": 1,
+                    "can_edit": 1,
+                    "can_like": 1,
+                    "can_repost": 1,
+                    "can_subscribe": 1,
+                    "can_add_to_faves": 1,
+                    "can_add": 1,
+                    "can_attach_link": 1,
+                    "comments": 0,
+                    "date": 1650619863,
+                    "description": "",
+                    "duration": 17,
+                    "image": [
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_s",
+                            "width": 130,
+                            "height": 96,
+                            "with_padding": 1
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_m",
+                            "width": 160,
+                            "height": 120,
+                            "with_padding": 1
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_l",
+                            "width": 320,
+                            "height": 240,
+                            "with_padding": 1
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_x",
+                            "width": 800,
+                            "height": 450,
+                            "with_padding": 1
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_w",
+                            "width": 1280,
+                            "height": 720
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_t",
+                            "width": 320,
+                            "height": 180
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_u",
+                            "width": 720,
+                            "height": 405
+                        }
+                    ],
+                    "first_frame": [
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_f",
+                            "width": 720,
+                            "height": 405
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_md",
+                            "width": 480,
+                            "height": 270
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_d",
+                            "width": 240,
+                            "height": 135
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_sm",
+                            "width": 128,
+                            "height": 72
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI",
+                            "width": 1280,
+                            "height": 720
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI&fn=vid_h",
+                            "width": 960,
+                            "height": 540
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2116338715305&idx=0&type=39&tkn=UOY1GfwZs8B--vxF5XbZPwPcliI",
+                            "width": 1280,
+                            "height": 720
+                        }
+                    ],
+                    "width": 1920,
+                    "height": 1080,
+                    "id": 456239046,
+                    "owner_id": -191117934,
+                    "title": "Видео от Sandbox",
+                    "is_favorite": false,
+                    "track_code": "video_52e4935868k8pZ107hlMpFJ_GjkYAGPDLt_fVurFRHqVNUWnDPPE7CillXToEUipPn51PS02UfAX7-tg7bAqEfta",
+                    "type": "video",
+                    "views": 1
+                }
+            }
+        ],
+        "comments": {
+            "count": 0
+        },
+        "donut": {
+            "is_donut": false
+        },
+        "short_text_rate": 0.8,
+        "hash": "_TE1P-9YOyFpfB14VqPsMLv3eQk"
+    },
+    "secret": ""
+}

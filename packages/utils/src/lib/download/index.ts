@@ -4,7 +4,7 @@ import os from "os"
 import path from "path";
 import { Attachment, PhotoAttachment, VideoAttachment } from "vk-io";
 import { logger } from "../logger";
-import { convertWebpToJpg, downloadImage, isWebp } from './downloadImages'
+import { convertWebpToJpg, downloadImage, isWebp } from './images'
 
 
 

@@ -10,7 +10,7 @@ describe('Event Handler Function', () => {
     })
     it('should return "ok"', async () => {
         const event = {} as YC.Event
-        event["body"] = JSON.stringify(vkEvents.wallPostNew)
+        event["body"] = JSON.stringify(vkEvents.wallPostNew.simple)
         const result = await handler(event, {})
         expect(result.body).toEqual('ok');
     });
