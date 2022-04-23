@@ -1,0 +1,52 @@
+{
+    "type": "video",
+    "video": {
+        "access_key": "5ef12d99a0ac056bc6",
+        "can_comment": 1,
+        "can_like": 1,
+        "can_repost": 1,
+        "can_subscribe": 1,
+        "can_add_to_faves": 1,
+        "can_add": 1,
+        "comments": 0,
+        "date": 1432155596,
+        "description": "Вступайте в самую невероятную ролевую игру по Трилогии Хоббита и Властелина Колец! http://vk.com/vk_rp_hobbit\nРАСПРЕДЕЛЕНИЕ ТУТ http://vk.com/topic-86659353_31565595",
+        "duration": 195,
+        "image": [
+            {
+                "url": "https://sun9-40.userapi.com/impf/c622026/v622026353/2e6bf/2yQRsoXikTE.jpg?size=130x96&quality=96&keep_aspect_ratio=1&background=000000&sign=21a4bbb782936f6573a78dc6a2860a45&type=video_thumb",
+                "width": 130,
+                "height": 96,
+                "with_padding": 1
+            },
+            {
+                "url": "https://sun9-40.userapi.com/impf/c622026/v622026353/2e6bf/2yQRsoXikTE.jpg?size=160x120&quality=96&keep_aspect_ratio=1&background=000000&sign=79c741593ab66f6b83328464cc06c2a0&c_uniq_tag=1yBrFKX13X-okuMb86sEBQQ1HZfB5v_p_cbT1UDJv_c&type=video_thumb",
+                "width": 160,
+                "height": 120,
+                "with_padding": 1
+            },
+            {
+                "url": "https://sun9-40.userapi.com/impf/c622026/v622026353/2e6bf/2yQRsoXikTE.jpg?size=320x240&quality=96&keep_aspect_ratio=1&background=000000&sign=ca3400061e6ea1c9f2ed38b04b4df485&c_uniq_tag=sblrFZFWJvsjHV3IZxc-ouec99r40FccMMvtGXSCPe4&type=video_thumb",
+                "width": 320,
+                "height": 240,
+                "with_padding": 1
+            },
+            {
+                "url": "https://sun9-40.userapi.com/impf/c622026/v622026353/2e6bf/2yQRsoXikTE.jpg?size=800x450&quality=96&keep_aspect_ratio=1&background=000000&sign=0bf90f503dc4b574f8610c1991845bc6&type=video_thumb",
+                "width": 800,
+                "height": 450,
+                "with_padding": 1
+            }
+        ],
+        "width": 1280,
+        "height": 534,
+        "id": 171315046,
+        "owner_id": -86659353,
+        "user_id": 286992962,
+        "title": "Трейлер | Властелин Колец: Возвращение Короля",
+        "is_favorite": false,
+        "track_code": "video_352010a8SqR8pa6t5yZ_fQWZ3T9Tvamm9dWR6k1PtFjHjRag4yJ5jmCsqazrLHgXA_fUCGKOmJPF4aftOCHfNqg",
+        "type": "video",
+        "views": 6740
+    }
+}

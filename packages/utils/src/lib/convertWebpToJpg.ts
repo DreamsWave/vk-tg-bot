@@ -4,25 +4,8 @@ import webp from "webp-converter"
 import path from 'path'
 import fs from "fs"
 import os from "os"
-import { logger } from "../logger";
+import { logger } from "./logger";
 import { FileInfo } from "@yc-bot/types";
-
-export const downloadImage = async (imageUrl: string, filePath: string): Promise<string> => {
-    return new Promise((resolve, reject) => {
-        https.get(imageUrl, async resp => {
-            const contentType = resp.headers["content-type"];
-            const ext: string = extension(contentType);
-            const imagePath = path.join(filePath, `${String(Math.random() * 100)}.${ext}`);
-            const fileStream = fs.createWriteStream(imagePath)
-            await Promise.resolve(resp.pipe(fileStream))
-            resolve(imagePath)
-        })
-    })
-}
-
-export const isWebp = (location: string): boolean => {
-    return path.extname(path.basename(location)) === '.webp'
-}
 
 export const convertWebpToJpg = async (filePath: string): Promise<FileInfo> => {
     const fullFilename = path.basename(filePath)
@@ -48,4 +31,8 @@ export const convertWebpToJpg = async (filePath: string): Promise<FileInfo> => {
     }
 
     return fileInfo
+}
+
+export const isWebp = (location: string): boolean => {
+    return path.extname(path.basename(location)) === '.webp'
 }

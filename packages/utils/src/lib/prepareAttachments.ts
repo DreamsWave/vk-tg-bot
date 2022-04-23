@@ -1,13 +1,11 @@
-import { DownloadedAttachment, PAttachment, PAttachments } from "@yc-bot/types";
+import { PAttachment, PAttachments } from "@yc-bot/types";
 import path from "path";
 import fs from "fs";
-import { Attachment, AttachmentType, DocumentAttachment, PhotoAttachment, VideoAttachment } from "vk-io";
-import { downloadAttachmentsInPost, downloadDocAttachment, downloadPhotoAttachment, downloadPhotoAttachments, downloadVideoAttachment } from "./download/attachments";
-import downloadFile from "./download/file";
+import { DocumentAttachment, PhotoAttachment, VideoAttachment } from "vk-io";
 import { logger } from "./logger";
 import os from 'os'
-import { downloadVideo } from "./download/videos";
-import { convertWebpToJpg, downloadImage, isWebp } from "./download/images";
+import { downloadVideo, downloadFile } from "./download";
+import { convertWebpToJpg, isWebp } from "./convertWebpToJpg";
 
 const tmpDir = path.join(os.tmpdir())
 
@@ -23,8 +21,8 @@ export async function prepareAttachments(attachments: any[], saveTo: string = tm
             pAttachments.photos.push(photo)
         }
         if (attachment.type === 'video') {
-            const video = await prepareVideo(attachment, saveTo) // add fileInfo
-            pAttachments.videos.push(video)
+            const video = await prepareVideo(attachment, saveTo)
+            if (video) pAttachments.videos.push(video)
         }
         if (attachment.type === 'doc') {
             const doc = await prepareDoc(attachment, saveTo)
@@ -79,8 +77,9 @@ export const prepareVideo = async (attachment: any, saveTo: string = tmpDir): Pr
     try {
         const video = new VideoAttachment({ api: null, payload: attachment.video })
         const videoUrl = `https://vk.com/video-${Math.abs(video.ownerId)}_${Math.abs(video.id)}`
-        const filePath = path.join(saveTo, `${video.id}.mp4`)
+        const filePath = path.join(saveTo, `${video.id}.%(ext)s`)
         const videoInfo = await downloadVideo(videoUrl, filePath)
+        if (!videoInfo) return null
         pAttachment.buffer = fs.createReadStream(videoInfo.path)
         pAttachment.info = videoInfo
         pAttachment.originUrl = videoUrl

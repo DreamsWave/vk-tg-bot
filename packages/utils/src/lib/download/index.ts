@@ -1,5 +1,0 @@
-export * as images from "./images"
-export * as videos from "./videos"
-export * as documents from "./documents"
-export * as attachments from "./attachments"
-export { default as file } from "./file"
