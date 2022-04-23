@@ -3,6 +3,7 @@ import { ymq } from '@yc-bot/mocks'
 import { Messages, Context } from '@yc-bot/types'
 
 describe('Wall Post New Function', () => {
+    jest.setTimeout(30000)
     it('Should return "ok"', async () => {
         const messages: Messages = ymq.messages
         const context: Context = {}

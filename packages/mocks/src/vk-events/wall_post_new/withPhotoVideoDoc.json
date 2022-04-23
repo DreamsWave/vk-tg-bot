@@ -1,0 +1,269 @@
+{
+    "group_id": 191117934,
+    "type": "wall_post_new",
+    "event_id": "ba4381dd6e464237e7ff37a312f51f2f7a8dd1f4",
+    "v": "5.131",
+    "object": {
+        "id": 512,
+        "from_id": -191117934,
+        "owner_id": -191117934,
+        "date": 1650715675,
+        "marked_as_ads": 0,
+        "can_delete": 1,
+        "is_favorite": false,
+        "post_type": "post",
+        "text": "photo, video, doc",
+        "can_edit": 1,
+        "created_by": 11300623,
+        "attachments": [
+            {
+                "type": "photo",
+                "photo": {
+                    "album_id": -7,
+                    "date": 1650715675,
+                    "id": 457239103,
+                    "owner_id": -191117934,
+                    "access_key": "2fc98d9df795f9b0c2",
+                    "post_id": 512,
+                    "sizes": [
+                        {
+                            "height": 50,
+                            "url": "https://sun9-12.userapi.com/s/v1/ig2/ddn6hHKJdfK4skiupfYSoPvt17d9DECy7rA6iTbMSX3OJfOhWAidEuFbUWT8_UW5sNzvcfmK7Retm8wt4YrFGsWz.jpg?size=75x50&quality=96&type=album",
+                            "type": "s",
+                            "width": 75
+                        },
+                        {
+                            "height": 86,
+                            "url": "https://sun9-12.userapi.com/s/v1/ig2/ttp0415QKXlzHCjZlM9ZOm47MJ83jV_t-f8NTRna9fgBG8EhIOJkt8G53hg49MOchjOKFg1n6V1cWlE2XwiHLuBM.jpg?size=130x86&quality=96&type=album",
+                            "type": "m",
+                            "width": 130
+                        },
+                        {
+                            "height": 401,
+                            "url": "https://sun9-12.userapi.com/s/v1/ig2/b6UhPw8cYpOvK0RA74ZlUd_7dwS6KR-IMp6wg8j_pc4j3UnP4lHGnYcoYf9sQLvzSj-v9VnbQmynWntkl7Hr4dRS.jpg?size=604x401&quality=96&type=album",
+                            "type": "x",
+                            "width": 604
+                        },
+                        {
+                            "height": 536,
+                            "url": "https://sun9-12.userapi.com/s/v1/ig2/xHWX8DkId-BMdgxh20fbvBt5MY4prRJvEGKfjc4M4VOqLSyrgkJjOQWNLbRh78QGnIIG7ggA4hMM-y251ZWDUNlg.jpg?size=807x536&quality=96&type=album",
+                            "type": "y",
+                            "width": 807
+                        },
+                        {
+                            "height": 850,
+                            "url": "https://sun9-12.userapi.com/s/v1/ig2/lRvM8WQRJaA7lh_FiVeaCkMlN3N75e9kk7Id9rRErwlnP3_HJvWGj5EpJMv2wvwukfFLM3NhNeULWIx9qmKM3XvO.jpg?size=1280x850&quality=96&type=album",
+                            "type": "z",
+                            "width": 1280
+                        },
+                        {
+                            "height": 1700,
+                            "url": "https://sun9-12.userapi.com/s/v1/ig2/Kmo1L4vlHzRTLfYbvKRk1stPvT5pdB20YpjKt0LBRQTUzwHKECmtZepuL-hfRAvK7Y91jM6YnD0OdajWWhk4c2So.jpg?size=2560x1700&quality=96&type=album",
+                            "type": "w",
+                            "width": 2560
+                        },
+                        {
+                            "height": 87,
+                            "url": "https://sun9-12.userapi.com/s/v1/ig2/5SBpolrRX9BcFSq7OxxfncPu2vvia0_oiEKDGZzPsnlbkOF-6IvXF9Pgr5FpXJR_pk9gHsOPgNxHsZcIjMqB0YJy.jpg?size=130x87&quality=96&crop=10,0,2540,1700&type=album",
+                            "type": "o",
+                            "width": 130
+                        },
+                        {
+                            "height": 133,
+                            "url": "https://sun9-12.userapi.com/s/v1/ig2/VgYQpAjnw0RQIrtVvG86z2djruM7GZqq3qXEefF7RTDn3i7k7Yp2mUN3-YPgRqhWF3KSc3ulDOUb8vlzLE8wNLsV.jpg?size=200x133&quality=96&type=album",
+                            "type": "p",
+                            "width": 200
+                        },
+                        {
+                            "height": 213,
+                            "url": "https://sun9-12.userapi.com/s/v1/ig2/9mPAmScy9TyCy759o_ufd7P-dI8alrI1Oaiykp_MVncVPFAUb19rnCkwtJEdP53AuMTLUs7hQ6akcJ_vdT84EygU.jpg?size=320x213&quality=96&crop=3,0,2554,1700&type=album",
+                            "type": "q",
+                            "width": 320
+                        },
+                        {
+                            "height": 340,
+                            "url": "https://sun9-12.userapi.com/s/v1/ig2/n7Ak69l-tK1EQxp3MI6tTMj8Mt5EwqwWvxE767Bmj6CEcz2sGbbTVwqjo4rTncHlXz6wi6pB8hYk6m4SLPZBHA-L.jpg?size=510x340&quality=96&crop=5,0,2550,1700&type=album",
+                            "type": "r",
+                            "width": 510
+                        }
+                    ],
+                    "text": "",
+                    "user_id": 100,
+                    "has_tags": false
+                }
+            },
+            {
+                "type": "video",
+                "video": {
+                    "access_key": "b7003ac965138561c7",
+                    "can_comment": 1,
+                    "can_edit": 1,
+                    "can_like": 1,
+                    "can_repost": 1,
+                    "can_subscribe": 1,
+                    "can_add_to_faves": 1,
+                    "can_add": 1,
+                    "can_attach_link": 1,
+                    "comments": 0,
+                    "date": 1650715664,
+                    "description": "",
+                    "duration": 17,
+                    "image": [
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_s",
+                            "width": 130,
+                            "height": 96,
+                            "with_padding": 1
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_m",
+                            "width": 160,
+                            "height": 120,
+                            "with_padding": 1
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_l",
+                            "width": 320,
+                            "height": 240,
+                            "with_padding": 1
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_x",
+                            "width": 800,
+                            "height": 450,
+                            "with_padding": 1
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_w",
+                            "width": 1278,
+                            "height": 720
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_t",
+                            "width": 320,
+                            "height": 180
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_u",
+                            "width": 720,
+                            "height": 406
+                        }
+                    ],
+                    "first_frame": [
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_f",
+                            "width": 720,
+                            "height": 406
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_md",
+                            "width": 480,
+                            "height": 270
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_d",
+                            "width": 240,
+                            "height": 135
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_sm",
+                            "width": 128,
+                            "height": 72
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs&fn=vid_h",
+                            "width": 960,
+                            "height": 541
+                        },
+                        {
+                            "url": "https://i.mycdn.me/getVideoPreview?id=2367146363418&idx=0&type=39&tkn=WiSVpGPSDf5hqSRydXFAmUYjzRs",
+                            "width": 1280,
+                            "height": 721
+                        }
+                    ],
+                    "width": 852,
+                    "height": 480,
+                    "id": 456239050,
+                    "owner_id": -191117934,
+                    "title": "Видео от Sandbox",
+                    "is_favorite": false,
+                    "track_code": "video_f9d4ca76DxFokMl6AYX2NbT90duRDDLkIgn136D_ePL30gnNor8gNHyQwXoHjfI42Py_3aQ6ANcbOcDvp4oWmZm9",
+                    "type": "video",
+                    "views": 1
+                }
+            },
+            {
+                "type": "doc",
+                "doc": {
+                    "id": 634588582,
+                    "owner_id": 11300623,
+                    "title": "catjam.gif",
+                    "size": 181878,
+                    "ext": "gif",
+                    "date": 1650715671,
+                    "type": 3,
+                    "url": "https://vk.com/doc11300623_634588582?hash=ZVf4gXnu5z3Cip9y1sp5dxXthozuIsWqa5Tu9toEjus&dl=GEYTGMBQGYZDG:1650715675:XD51jBLcAayC92roN4K0bI4h1zXu4zNC4QOZAtJbqVX&api=1&no_preview=1",
+                    "preview": {
+                        "photo": {
+                            "sizes": [
+                                {
+                                    "src": "https://sun9-58.userapi.com/c237231/u11300623/d56/-3/m_772b189520.jpg",
+                                    "width": 116,
+                                    "height": 90,
+                                    "type": "m"
+                                },
+                                {
+                                    "src": "https://sun1-54.userapi.com/c237231/u11300623/d56/-3/s_772b189520.jpg",
+                                    "width": 100,
+                                    "height": 75,
+                                    "type": "s"
+                                },
+                                {
+                                    "src": "https://sun9-65.userapi.com/c237231/u11300623/d56/-3/o_772b189520.jpg",
+                                    "width": 116,
+                                    "height": 90,
+                                    "type": "o"
+                                },
+                                {
+                                    "src": "https://sun9-9.userapi.com/c237231/u11300623/d56/-3/x_772b189520.jpg",
+                                    "width": 116,
+                                    "height": 90,
+                                    "type": "x"
+                                },
+                                {
+                                    "src": "https://sun9-58.userapi.com/impf/c237231/u11300623/d56/-3/m_772b189520.jpg?size=288x223&quality=90&sign=6c01e10fc7e16cbf25765ecb5589991b&c_uniq_tag=-PxedV-mjmDz0Z0MCKqikeRxfFg2pGlBe2_jce5fcDM",
+                                    "width": 288,
+                                    "height": 223,
+                                    "type": "i"
+                                },
+                                {
+                                    "src": "https://sun9-58.userapi.com/impf/c237231/u11300623/d56/-3/m_772b189520.jpg?size=192x149&quality=90&sign=2e63ebdb9b74c21b4a13fa45efeed8bc&c_uniq_tag=NDcUxcJRDQJ69hGEWMMMnzObPDDyeGVfA6r3yfDvAg8",
+                                    "width": 192,
+                                    "height": 149,
+                                    "type": "d"
+                                }
+                            ]
+                        },
+                        "video": {
+                            "src": "https://vk.com/doc11300623_634588582?hash=ZVf4gXnu5z3Cip9y1sp5dxXthozuIsWqa5Tu9toEjus&dl=GEYTGMBQGYZDG:1650715675:XD51jBLcAayC92roN4K0bI4h1zXu4zNC4QOZAtJbqVX&api=1&mp4=1",
+                            "width": 116,
+                            "height": 90,
+                            "file_size": 35823
+                        }
+                    },
+                    "access_key": "tF8q7vhEbcJ5fLQfKVkHXAn5Ezex5vZYPK3sitssDlD"
+                }
+            }
+        ],
+        "comments": {
+            "count": 0
+        },
+        "donut": {
+            "is_donut": false
+        },
+        "short_text_rate": 0.8,
+        "carousel_offset": 0,
+        "hash": "l6KeCoNd2WWSX1T53KrgHZAPP2k"
+    },
+    "secret": ""
+}
