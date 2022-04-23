@@ -1,0 +1,92 @@
+{
+    "group_id": 191117934,
+    "type": "wall_post_new",
+    "event_id": "e507c284552a1457790a859318ceb9c24308272b",
+    "v": "5.131",
+    "object": {
+        "id": 514,
+        "from_id": -191117934,
+        "owner_id": -191117934,
+        "date": 1650721185,
+        "marked_as_ads": 0,
+        "can_delete": 1,
+        "is_favorite": false,
+        "post_type": "post",
+        "text": "gif",
+        "can_edit": 1,
+        "created_by": 11300623,
+        "attachments": [
+            {
+                "type": "doc",
+                "doc": {
+                    "id": 634596229,
+                    "owner_id": 11300623,
+                    "title": "NyanCat.gif",
+                    "size": 31230,
+                    "ext": "gif",
+                    "date": 1650721184,
+                    "type": 3,
+                    "url": "https://vk.com/doc11300623_634596229?hash=ZuZDzg456JQQyS5Z1ohE0zouIj7emapaRx875M9OUyD&dl=GEYTGMBQGYZDG:1650721185:aO8Yvs22bYdyVFoRDCvdO6Lif5fcGhR8on1tNhe6ysz&api=1&no_preview=1",
+                    "preview": {
+                        "photo": {
+                            "sizes": [
+                                {
+                                    "src": "https://sun9-87.userapi.com/c537232/u11300623/d17/-3/m_80d95b0fe4.jpg",
+                                    "width": 130,
+                                    "height": 100,
+                                    "type": "m"
+                                },
+                                {
+                                    "src": "https://sun9-72.userapi.com/c537232/u11300623/d17/-3/s_80d95b0fe4.jpg",
+                                    "width": 100,
+                                    "height": 75,
+                                    "type": "s"
+                                },
+                                {
+                                    "src": "https://sun9-63.userapi.com/c537232/u11300623/d17/-3/o_80d95b0fe4.jpg",
+                                    "width": 400,
+                                    "height": 400,
+                                    "type": "o"
+                                },
+                                {
+                                    "src": "https://sun9-34.userapi.com/c537232/u11300623/d17/-3/x_80d95b0fe4.jpg",
+                                    "width": 400,
+                                    "height": 400,
+                                    "type": "x"
+                                },
+                                {
+                                    "src": "https://sun9-63.userapi.com/impf/c537232/u11300623/d17/-3/o_80d95b0fe4.jpg?size=288x288&quality=90&sign=c6b313131378b48275b8c756feee95bf&c_uniq_tag=cVZVi2FW8cBhVqqm7TwxNWGr6A7nEJZ2Lf6zrlTjIvY",
+                                    "width": 288,
+                                    "height": 288,
+                                    "type": "i"
+                                },
+                                {
+                                    "src": "https://sun9-63.userapi.com/impf/c537232/u11300623/d17/-3/o_80d95b0fe4.jpg?size=192x192&quality=90&sign=284f454e60327d9ba66b6a1a0aabacf4&c_uniq_tag=iEFePWd-05hyS4e2fwclr7RYbm4StGSp8xWhyWW719Q",
+                                    "width": 192,
+                                    "height": 192,
+                                    "type": "d"
+                                }
+                            ]
+                        },
+                        "video": {
+                            "src": "https://vk.com/doc11300623_634596229?hash=ZuZDzg456JQQyS5Z1ohE0zouIj7emapaRx875M9OUyD&dl=GEYTGMBQGYZDG:1650721185:aO8Yvs22bYdyVFoRDCvdO6Lif5fcGhR8on1tNhe6ysz&api=1&mp4=1",
+                            "width": 400,
+                            "height": 400,
+                            "file_size": 21682
+                        }
+                    },
+                    "access_key": "Uf5nIeUR2GvE4VSXMH6Zm6aFRnS7CLVzaV1guKfYzVg"
+                }
+            }
+        ],
+        "comments": {
+            "count": 0
+        },
+        "donut": {
+            "is_donut": false
+        },
+        "short_text_rate": 0.8,
+        "hash": "FMy9nB5_uREFArGupuV_DA-QbRU"
+    },
+    "secret": ""
+}

@@ -1,0 +1,44 @@
+{
+    "group_id": 191117934,
+    "type": "wall_post_new",
+    "event_id": "4ba3a67ee782a051c069f0e1f912a6e8a3d47fd5",
+    "v": "5.131",
+    "object": {
+        "id": 515,
+        "from_id": -191117934,
+        "owner_id": -191117934,
+        "date": 1650726424,
+        "marked_as_ads": 0,
+        "can_delete": 1,
+        "is_favorite": false,
+        "post_type": "post",
+        "text": "pdf",
+        "can_edit": 1,
+        "created_by": 11300623,
+        "attachments": [
+            {
+                "type": "doc",
+                "doc": {
+                    "id": 634603469,
+                    "owner_id": 11300623,
+                    "title": "sample.pdf",
+                    "size": 3028,
+                    "ext": "pdf",
+                    "date": 1650726423,
+                    "type": 1,
+                    "url": "https://vk.com/doc11300623_634603469?hash=mHpnqiwnt91PjIJwsf7Z2k77dPsGRydarKgXmt3FaYs&dl=GEYTGMBQGYZDG:1650726424:mzo2Rw8lyeRx15rAUmk7ZF5fTzXlNvZEZfcu9lMbjwT&api=1&no_preview=1",
+                    "access_key": "AzTmVTYZ0CZP5zWI3UGbiESp7BP2czAcGfl83IcgkYg"
+                }
+            }
+        ],
+        "comments": {
+            "count": 0
+        },
+        "donut": {
+            "is_donut": false
+        },
+        "short_text_rate": 0.8,
+        "hash": "1bVCDYwx2qN8QrsW8uA059iAR6Q"
+    },
+    "secret": ""
+}
