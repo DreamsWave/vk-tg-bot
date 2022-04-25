@@ -16,7 +16,7 @@ export interface FileInfo {
     size: number,
     path: string,
     ext: string,
-    filename: string,
+    filename: string | number,
 }
 export interface DownloadDocumentOptions {
     filename: string | number,

@@ -1,5 +1,5 @@
 // import {  WallAttachment } from 'vk-io';
-import { vkEvents, getVideo } from '@yc-bot/mocks'
+import { getAttachment } from '@yc-bot/mocks'
 import path from 'path';
 import fs from 'fs';
 import prepareTemp from './prepareTemp'
@@ -7,6 +7,7 @@ import prepareTemp from './prepareTemp'
 import { prepareAttachments, prepareDoc, preparePhoto, prepareVideo } from './prepareAttachments';
 import { downloadFile } from './download';
 import { convertWebpToJpg } from './convertWebpToJpg';
+import { makeID } from './helpers';
 
 // const vk = new VK(process.env.NX_VK_TOKEN)
 
@@ -32,7 +33,7 @@ describe('Utils', () => {
     describe("Prepare Attachments", () => {
         describe("prepareAttachments", () => {
             it("should prepare photos, videos and docs", async () => {
-                const attachments = vkEvents.wallPostNew.withPhotoVideoDoc.object.attachments
+                const attachments = [getAttachment("photo", "small"), getAttachment("video", "small"), getAttachment("doc", "gif")]
                 const pAttachments = await prepareAttachments(attachments, downloadLocation)
                 expect(pAttachments.photos.length).toBe(1)
                 expect(pAttachments.videos.length).toBe(1)
@@ -44,60 +45,50 @@ describe('Utils', () => {
         })
         describe("preparePhoto", () => {
             it("should prepare photo", async () => {
-                const photo = vkEvents.wallPostNew.withPhoto.object.attachments[0]
-                const pPhoto = await preparePhoto(photo, downloadLocation)
-                expect(fs.existsSync(pPhoto.info.path)).toBeTruthy()
-                expect(pPhoto.buffer).toBeTruthy()
-                expect(pPhoto.info.size).toBeGreaterThan(0)
+                const photo = await preparePhoto(getAttachment("photo", "small"), downloadLocation, makeID())
+                expect(fs.existsSync(photo.info.path)).toBeTruthy()
+                expect(photo.buffer).toBeTruthy()
+                expect(photo.info.size).toBeGreaterThan(0)
             })
             it("should prepare webp photo", async () => {
-                const size = { ...vkEvents.wallPostNew.withPhoto.object.attachments[0].photo.sizes[0], url: "https://via.placeholder.com/150.webp" }
-                let attachment = vkEvents.wallPostNew.withPhoto.object.attachments[0]
-                attachment = { type: attachment.type, photo: { ...attachment.photo, sizes: [size] } }
-                const photo = attachment
-                const pPhoto = await preparePhoto(photo, downloadLocation)
-                expect(fs.existsSync(pPhoto.info.path)).toBeTruthy()
-                expect(pPhoto.buffer).toBeTruthy()
-                expect(pPhoto.info.size).toBeGreaterThan(0)
-                expect(pPhoto.info.ext).toBe("jpg")
+                const photo = await preparePhoto(getAttachment("photo", "webp"), downloadLocation, makeID())
+                expect(fs.existsSync(photo.info.path)).toBeTruthy()
+                expect(photo.buffer).toBeTruthy()
+                expect(photo.info.size).toBeGreaterThan(0)
+                expect(photo.info.ext).toBe("jpg")
             })
         })
         describe("prepareVideo", () => {
             jest.setTimeout(60000)
             it("should prepare video", async () => {
-                const video = getVideo("normal")
-                const pVideo = await prepareVideo(video, downloadLocation)
-                expect(fs.existsSync(pVideo.info.path)).toBeTruthy()
-                expect(pVideo.buffer).toBeTruthy()
-                expect(pVideo.info.size).toBeGreaterThan(0)
-                expect(pVideo.info.size).toBeLessThan(50000)
+                const video = await prepareVideo(getAttachment("video", "small"), downloadLocation, makeID())
+                expect(fs.existsSync(video.info.path)).toBeTruthy()
+                expect(video.buffer).toBeTruthy()
+                expect(video.info.size).toBeGreaterThan(0)
+                expect(video.info.size).toBeLessThan(50000)
             })
             it("should ignore long video", async () => {
-                const video = getVideo("big")
-                const pVideo = await prepareVideo(video, downloadLocation)
-                expect(pVideo).toBeFalsy()
+                const video = await prepareVideo(getAttachment("video", "big"), downloadLocation, makeID())
+                expect(video).toBeFalsy()
             })
             it("should ignore video from youtube", async () => {
-                const video = getVideo("youtube")
-                const pVideo = await prepareVideo(video, downloadLocation)
-                expect(pVideo).toBeFalsy()
+                const video = await prepareVideo(getAttachment("video", "youtube"), downloadLocation, makeID())
+                expect(video).toBeFalsy()
             })
         })
         describe("prepareDoc", () => {
             jest.setTimeout(30000)
             it("should prepare gif", async () => {
-                const doc = vkEvents.wallPostNew.withDoc.object.attachments[0]
-                const pDoc = await prepareDoc(doc, downloadLocation)
-                expect(fs.existsSync(pDoc.info.path)).toBeTruthy()
-                expect(pDoc.buffer).toBeTruthy()
-                expect(pDoc.info.size).toBeGreaterThan(0)
+                const gif = await prepareDoc(getAttachment("doc", "gif"), downloadLocation, makeID())
+                expect(fs.existsSync(gif.info.path)).toBeTruthy()
+                expect(gif.buffer).toBeTruthy()
+                expect(gif.info.size).toBeGreaterThan(0)
             })
-            it("should prepare document", async () => {
-                const doc = vkEvents.wallPostNew.withDocPDF.object.attachments[0]
-                const pDoc = await prepareDoc(doc, downloadLocation)
-                expect(fs.existsSync(pDoc.info.path)).toBeTruthy()
-                expect(pDoc.buffer).toBeTruthy()
-                expect(pDoc.info.size).toBeGreaterThan(0)
+            it("should prepare pdf", async () => {
+                const pdf = await prepareDoc(getAttachment("doc", "pdf"), downloadLocation, makeID())
+                expect(fs.existsSync(pdf.info.path)).toBeTruthy()
+                expect(pdf.buffer).toBeTruthy()
+                expect(pdf.info.size).toBeGreaterThan(0)
             })
         })
     })
@@ -107,7 +98,7 @@ describe('Utils', () => {
             it("should download and save jpeg, webp, png images", async () => {
                 const images = ["https://via.placeholder.com/150.jpeg", "https://via.placeholder.com/150.webp", "https://via.placeholder.com/150.png"] // jpeg, webp, png
                 for (let id = 0; id < images.length; id++) {
-                    const imageInfo = await downloadFile(images[id], downloadLocation, `pic-${id}`)
+                    const imageInfo = await downloadFile(images[id], downloadLocation, makeID())
                     const imageExists = fs.existsSync(imageInfo.path)
                     expect(imageExists).toBeTruthy()
                     expect(imageInfo.size).toBeGreaterThan(0)
@@ -116,7 +107,7 @@ describe('Utils', () => {
             })
             it("should convert webp image to jpg", async () => {
                 const image = "https://via.placeholder.com/150.webp"
-                const imageInfo = await downloadFile(image, downloadLocation, `webp-image`)
+                const imageInfo = await downloadFile(image, downloadLocation, makeID())
                 const convertedImageInfo = await convertWebpToJpg(imageInfo.path)
                 const imageExists = fs.existsSync(convertedImageInfo.path)
                 expect(imageExists).toBeTruthy()
