@@ -1,5 +1,5 @@
-import videoYoutube from './video-youtube.json'
-import videoBig from './video-big.json'
-import video from './video.json'
+import * as photo from './photos'
+import * as video from './videos'
+import * as doc from './docs'
 
-export { videoYoutube, videoBig, video }
+export { photo, video, doc }

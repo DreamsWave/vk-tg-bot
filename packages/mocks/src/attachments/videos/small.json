@@ -1,0 +1,95 @@
+{
+    "type": "video",
+    "video": {
+        "access_key": "40f9a47aaf9f10f2b4",
+        "can_comment": 1,
+        "can_edit": 1,
+        "can_like": 1,
+        "can_repost": 1,
+        "can_subscribe": 1,
+        "can_add_to_faves": 1,
+        "can_add": 1,
+        "can_attach_link": 1,
+        "comments": 0,
+        "date": 1650877075,
+        "description": "",
+        "duration": 13,
+        "image": [
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=9&type=39&tkn=Qi3EEljSVxPOZJnBku-MpZY8uiE&fn=vid_s",
+                "width": 130,
+                "height": 96,
+                "with_padding": 1
+            },
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=9&type=39&tkn=Qi3EEljSVxPOZJnBku-MpZY8uiE&fn=vid_m",
+                "width": 160,
+                "height": 120,
+                "with_padding": 1
+            },
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=9&type=39&tkn=Qi3EEljSVxPOZJnBku-MpZY8uiE&fn=vid_l",
+                "width": 320,
+                "height": 240,
+                "with_padding": 1
+            },
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=9&type=39&tkn=Qi3EEljSVxPOZJnBku-MpZY8uiE&fn=vid_x",
+                "width": 800,
+                "height": 450,
+                "with_padding": 1
+            },
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=9&type=39&tkn=Qi3EEljSVxPOZJnBku-MpZY8uiE&fn=vid_w",
+                "width": 1280,
+                "height": 720
+            },
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=9&type=39&tkn=Qi3EEljSVxPOZJnBku-MpZY8uiE&fn=vid_t",
+                "width": 320,
+                "height": 180
+            },
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=9&type=39&tkn=Qi3EEljSVxPOZJnBku-MpZY8uiE&fn=vid_u",
+                "width": 720,
+                "height": 405
+            }
+        ],
+        "first_frame": [
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=0&type=39&tkn=45vvWBCFVCWGEot6jY4rbxOhqFI&fn=vid_f",
+                "width": 720,
+                "height": 405
+            },
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=0&type=39&tkn=45vvWBCFVCWGEot6jY4rbxOhqFI&fn=vid_md",
+                "width": 480,
+                "height": 270
+            },
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=0&type=39&tkn=45vvWBCFVCWGEot6jY4rbxOhqFI&fn=vid_d",
+                "width": 240,
+                "height": 135
+            },
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=0&type=39&tkn=45vvWBCFVCWGEot6jY4rbxOhqFI&fn=vid_sm",
+                "width": 128,
+                "height": 72
+            },
+            {
+                "url": "https://i.mycdn.me/getVideoPreview?id=2152926087776&idx=0&type=39&tkn=45vvWBCFVCWGEot6jY4rbxOhqFI",
+                "width": 1280,
+                "height": 720
+            }
+        ],
+        "width": 640,
+        "height": 360,
+        "id": 456239053,
+        "owner_id": -191117934,
+        "title": "Видео от Sandbox",
+        "is_favorite": false,
+        "track_code": "video_30840963it4OHkeYRQXrtYtBYzNzYji_bIL7aQv4gI7HtFjf54Gl-xoeT5hDDe-450AONUZUCoxVss5aDI3u5anb",
+        "type": "video",
+        "views": 1
+    }
+}

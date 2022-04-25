@@ -1,0 +1,22 @@
+{
+    "type": "photo",
+    "photo": {
+        "album_id": -7,
+        "date": 1650876395,
+        "id": 457239105,
+        "owner_id": -191117934,
+        "access_key": "2c5bf3ba4685cd57fe",
+        "post_id": 520,
+        "sizes": [
+            {
+                "height": 150,
+                "url": "https://via.placeholder.com/150.webp",
+                "type": "w",
+                "width": 150
+            }
+        ],
+        "text": "",
+        "user_id": 100,
+        "has_tags": false
+    }
+}

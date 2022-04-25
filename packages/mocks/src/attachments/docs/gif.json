@@ -1,0 +1,62 @@
+{
+    "type": "doc",
+    "doc": {
+        "id": 634588582,
+        "owner_id": 11300623,
+        "title": "catjam.gif",
+        "size": 181878,
+        "ext": "gif",
+        "date": 1650715671,
+        "type": 3,
+        "url": "https://vk.com/doc11300623_634588582?hash=ZVf4gXnu5z3Cip9y1sp5dxXthozuIsWqa5Tu9toEjus&dl=GEYTGMBQGYZDG:1650715675:XD51jBLcAayC92roN4K0bI4h1zXu4zNC4QOZAtJbqVX&api=1&no_preview=1",
+        "preview": {
+            "photo": {
+                "sizes": [
+                    {
+                        "src": "https://sun9-58.userapi.com/c237231/u11300623/d56/-3/m_772b189520.jpg",
+                        "width": 116,
+                        "height": 90,
+                        "type": "m"
+                    },
+                    {
+                        "src": "https://sun1-54.userapi.com/c237231/u11300623/d56/-3/s_772b189520.jpg",
+                        "width": 100,
+                        "height": 75,
+                        "type": "s"
+                    },
+                    {
+                        "src": "https://sun9-65.userapi.com/c237231/u11300623/d56/-3/o_772b189520.jpg",
+                        "width": 116,
+                        "height": 90,
+                        "type": "o"
+                    },
+                    {
+                        "src": "https://sun9-9.userapi.com/c237231/u11300623/d56/-3/x_772b189520.jpg",
+                        "width": 116,
+                        "height": 90,
+                        "type": "x"
+                    },
+                    {
+                        "src": "https://sun9-58.userapi.com/impf/c237231/u11300623/d56/-3/m_772b189520.jpg?size=288x223&quality=90&sign=6c01e10fc7e16cbf25765ecb5589991b&c_uniq_tag=-PxedV-mjmDz0Z0MCKqikeRxfFg2pGlBe2_jce5fcDM",
+                        "width": 288,
+                        "height": 223,
+                        "type": "i"
+                    },
+                    {
+                        "src": "https://sun9-58.userapi.com/impf/c237231/u11300623/d56/-3/m_772b189520.jpg?size=192x149&quality=90&sign=2e63ebdb9b74c21b4a13fa45efeed8bc&c_uniq_tag=NDcUxcJRDQJ69hGEWMMMnzObPDDyeGVfA6r3yfDvAg8",
+                        "width": 192,
+                        "height": 149,
+                        "type": "d"
+                    }
+                ]
+            },
+            "video": {
+                "src": "https://vk.com/doc11300623_634588582?hash=ZVf4gXnu5z3Cip9y1sp5dxXthozuIsWqa5Tu9toEjus&dl=GEYTGMBQGYZDG:1650715675:XD51jBLcAayC92roN4K0bI4h1zXu4zNC4QOZAtJbqVX&api=1&mp4=1",
+                "width": 116,
+                "height": 90,
+                "file_size": 35823
+            }
+        },
+        "access_key": "tF8q7vhEbcJ5fLQfKVkHXAn5Ezex5vZYPK3sitssDlD"
+    }
+}
