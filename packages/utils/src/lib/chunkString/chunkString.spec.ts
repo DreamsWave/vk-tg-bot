@@ -1,13 +1,6 @@
-import { loremIpsum } from 'lorem-ipsum'
 import { chunkString } from './chunkString'
+import { makeString } from '../helpers'
 
-const makeString = (size: number): string => {
-    return loremIpsum({
-        count: size,
-        format: "plain",
-        units: "words",
-    }).substring(0, size)
-}
 describe('chunkString', () => {
     it('should chunk text(1000) to chunks with size less than 250', async () => {
         const stringSize = 1000

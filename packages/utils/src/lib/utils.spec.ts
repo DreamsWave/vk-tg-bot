@@ -1,5 +1,5 @@
 // import {  WallAttachment } from 'vk-io';
-import { vkEvents, attachments } from '@yc-bot/mocks'
+import { vkEvents, getVideo } from '@yc-bot/mocks'
 import path from 'path';
 import fs from 'fs';
 import prepareTemp from './prepareTemp'
@@ -20,15 +20,15 @@ describe('Utils', () => {
     beforeAll(() => {
         prepareTemp(downloadLocation)
     })
-    afterAll(() => {
-        prepareTemp(downloadLocation)
-    })
-    beforeEach(() => {
-        prepareTemp(downloadLocation)
-    })
-    afterEach(() => {
-        prepareTemp(downloadLocation)
-    })
+    // afterAll(() => {
+    //     prepareTemp(downloadLocation)
+    // })
+    // beforeEach(() => {
+    //     prepareTemp(downloadLocation)
+    // })
+    // afterEach(() => {
+    //     prepareTemp(downloadLocation)
+    // })
     describe("Prepare Attachments", () => {
         describe("prepareAttachments", () => {
             it("should prepare photos, videos and docs", async () => {
@@ -65,7 +65,7 @@ describe('Utils', () => {
         describe("prepareVideo", () => {
             jest.setTimeout(60000)
             it("should prepare video", async () => {
-                const video = attachments.video
+                const video = getVideo("normal")
                 const pVideo = await prepareVideo(video, downloadLocation)
                 expect(fs.existsSync(pVideo.info.path)).toBeTruthy()
                 expect(pVideo.buffer).toBeTruthy()
@@ -73,12 +73,12 @@ describe('Utils', () => {
                 expect(pVideo.info.size).toBeLessThan(50000)
             })
             it("should ignore long video", async () => {
-                const video = attachments.videoBig
+                const video = getVideo("big")
                 const pVideo = await prepareVideo(video, downloadLocation)
                 expect(pVideo).toBeFalsy()
             })
             it("should ignore video from youtube", async () => {
-                const video = attachments.videoYoutube
+                const video = getVideo("youtube")
                 const pVideo = await prepareVideo(video, downloadLocation)
                 expect(pVideo).toBeFalsy()
             })

@@ -1,0 +1,58 @@
+{
+    "type": "photo",
+    "photo": {
+        "album_id": -7,
+        "date": 1650876291,
+        "id": 457239104,
+        "owner_id": -191117934,
+        "access_key": "1cd5ba2d9a623a9ece",
+        "post_id": 519,
+        "sizes": [
+            {
+                "height": 75,
+                "url": "https://sun9-87.userapi.com/s/v1/ig2/bDtp2eVgKauOSqGHCQEKa0FFhbEkOTYa5OFx4hLlrrZoswKWEnj52grfuEYPB5rH05VGFTo9RPVfgUB13mlVPUg9.jpg?size=75x75&quality=96&type=album",
+                "type": "s",
+                "width": 75
+            },
+            {
+                "height": 130,
+                "url": "https://sun9-87.userapi.com/s/v1/ig2/nJhqNVDCrqGiZOEHBp2rs3JMqCmOeZwsspMfAuISBIsUN0rTE1m64fKWdHzFfJuC5Y2LYAFiChCEUoXbIMyJSW-7.jpg?size=130x130&quality=96&type=album",
+                "type": "m",
+                "width": 130
+            },
+            {
+                "height": 150,
+                "url": "https://sun9-87.userapi.com/s/v1/ig2/Iy_y8OKX_PlgX_5h6rufDfWggV3o9vSzqAUXqPvbD44MjEO7mG4VjoXD-ae_av0uHPcvJwyjb1_AmSziaWrG4OIV.jpg?size=150x150&quality=96&type=album",
+                "type": "x",
+                "width": 150
+            },
+            {
+                "height": 130,
+                "url": "https://sun9-87.userapi.com/s/v1/ig2/nJhqNVDCrqGiZOEHBp2rs3JMqCmOeZwsspMfAuISBIsUN0rTE1m64fKWdHzFfJuC5Y2LYAFiChCEUoXbIMyJSW-7.jpg?size=130x130&quality=96&type=album",
+                "type": "o",
+                "width": 130
+            },
+            {
+                "height": 150,
+                "url": "https://sun9-87.userapi.com/s/v1/ig2/Iy_y8OKX_PlgX_5h6rufDfWggV3o9vSzqAUXqPvbD44MjEO7mG4VjoXD-ae_av0uHPcvJwyjb1_AmSziaWrG4OIV.jpg?size=150x150&quality=96&type=album",
+                "type": "p",
+                "width": 150
+            },
+            {
+                "height": 150,
+                "url": "https://sun9-87.userapi.com/s/v1/ig2/Iy_y8OKX_PlgX_5h6rufDfWggV3o9vSzqAUXqPvbD44MjEO7mG4VjoXD-ae_av0uHPcvJwyjb1_AmSziaWrG4OIV.jpg?size=150x150&quality=96&type=album",
+                "type": "q",
+                "width": 150
+            },
+            {
+                "height": 150,
+                "url": "https://sun9-87.userapi.com/s/v1/ig2/Iy_y8OKX_PlgX_5h6rufDfWggV3o9vSzqAUXqPvbD44MjEO7mG4VjoXD-ae_av0uHPcvJwyjb1_AmSziaWrG4OIV.jpg?size=150x150&quality=96&type=album",
+                "type": "r",
+                "width": 150
+            }
+        ],
+        "text": "Original: https://via.placeholder.com/150.jpeg",
+        "user_id": 100,
+        "has_tags": false
+    }
+}
