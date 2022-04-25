@@ -6,9 +6,11 @@ import { logger } from "./logger";
 import os from 'os'
 import { downloadVideo, downloadFile } from "./download";
 import { convertWebpToJpg, isWebp } from "./convertWebpToJpg";
+import { makeID } from "./helpers";
 
 const tmpDir = path.join(os.tmpdir())
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function prepareAttachments(attachments: any[], saveTo: string = tmpDir): Promise<PAttachments> {
     const pAttachments: PAttachments = {
         photos: [],
@@ -32,7 +34,8 @@ export async function prepareAttachments(attachments: any[], saveTo: string = tm
     return pAttachments
 }
 
-export const preparePhoto = async (attachment: any, saveTo: string = tmpDir): Promise<PAttachment> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const preparePhoto = async (attachment: any, saveTo: string = tmpDir, filename?: number | string): Promise<PAttachment> => {
     const pAttachment: PAttachment = {
         buffer: null,
         info: {
@@ -48,7 +51,7 @@ export const preparePhoto = async (attachment: any, saveTo: string = tmpDir): Pr
     try {
         const photo = new PhotoAttachment({ api: null, payload: attachment.photo })
         const photoUrl = photo.largeSizeUrl
-        let imageInfo = await downloadFile(photoUrl, saveTo, String(photo.id))
+        let imageInfo = await downloadFile(photoUrl, saveTo, filename ?? String(photo.id))
         if (isWebp(imageInfo.path)) {
             imageInfo = await convertWebpToJpg(imageInfo.path)
         }
@@ -61,7 +64,8 @@ export const preparePhoto = async (attachment: any, saveTo: string = tmpDir): Pr
     return pAttachment
 }
 
-export const prepareVideo = async (attachment: any, saveTo: string = tmpDir): Promise<PAttachment> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const prepareVideo = async (attachment: any, saveTo: string = tmpDir, filename?: number | string): Promise<PAttachment> => {
     const pAttachment: PAttachment = {
         buffer: null,
         info: {
@@ -77,7 +81,7 @@ export const prepareVideo = async (attachment: any, saveTo: string = tmpDir): Pr
     try {
         const video = new VideoAttachment({ api: null, payload: attachment.video })
         const videoUrl = `https://vk.com/video-${Math.abs(video.ownerId)}_${Math.abs(video.id)}`
-        const filePath = path.join(saveTo, `${video.id}.%(ext)s`)
+        const filePath = path.join(saveTo, `${filename ?? video.id}.%(ext)s`)
         const videoInfo = await downloadVideo(videoUrl, filePath)
         if (!videoInfo) return null
         pAttachment.buffer = fs.createReadStream(videoInfo.path)
@@ -89,7 +93,8 @@ export const prepareVideo = async (attachment: any, saveTo: string = tmpDir): Pr
     return pAttachment
 }
 
-export const prepareDoc = async (attachment: any, downloadTo: string = tmpDir): Promise<PAttachment> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const prepareDoc = async (attachment: any, downloadTo: string = tmpDir, filename?: number | string): Promise<PAttachment> => {
     const pAttachment: PAttachment = {
         buffer: null,
         info: {
@@ -104,8 +109,8 @@ export const prepareDoc = async (attachment: any, downloadTo: string = tmpDir): 
     }
     try {
         const doc = new DocumentAttachment({ api: null, payload: attachment.doc })
-        const filename = doc.title.split('.')[0]
-        const fileInfo = await downloadFile(doc.url, downloadTo, filename)
+        const docTitle = doc.title.split('.')[0]
+        const fileInfo = await downloadFile(doc.url, downloadTo, filename ?? docTitle)
         pAttachment.originUrl = doc.url
         pAttachment.info = fileInfo
         pAttachment.buffer = fs.createReadStream(fileInfo.path)

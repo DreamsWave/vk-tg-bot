@@ -6,11 +6,11 @@ import path from "path";
 import { extension } from "mime-types";
 import { logger } from "./logger";
 
-export const downloadFile = async (fileUrl: string, downloadTo: string, filename: string): Promise<FileInfo> => {
+export const downloadFile = async (fileUrl: string, downloadTo: string, filename: string | number): Promise<FileInfo> => {
     return new Promise((resolve, reject) => {
         const request = https.get(fileUrl, async resp => {
             if (resp.headers.location && resp.statusCode === 302) {
-                resolve(await downloadFile(resp.headers.location, downloadTo, filename))
+                resolve(await downloadFile(resp.headers.location, downloadTo, String(filename)))
                 return;
             }
             const size = Math.ceil(parseInt(resp.headers['content-length'], 10) / 1000) // kb

@@ -7,3 +7,5 @@ export const makeString = (size: number): string => {
         units: "words",
     }).substring(0, size)
 }
+
+export const makeID = (): number => Math.floor(Math.random() * 10000000)
