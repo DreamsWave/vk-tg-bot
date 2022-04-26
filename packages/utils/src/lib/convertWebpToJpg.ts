@@ -18,7 +18,6 @@ export const convertWebpToJpg = async (filePath: string): Promise<FileInfo> => {
     const newfilePath = path.join(path.dirname(filePath), `${name}.jpg`);
     await webp.dwebp(filePath, newfilePath, "-o");
     fs.unlink(filePath, err => { if (err) logger.error(err) })
-
     const size = Math.round(fs.statSync(newfilePath).size / 1000) // kb
     if (size > 50000) throw "File is bigger than 50mb"
     const [filename, ext] = path.basename(newfilePath).split('.')
@@ -27,7 +26,8 @@ export const convertWebpToJpg = async (filePath: string): Promise<FileInfo> => {
         filename,
         mime: "image/jpeg",
         path: newfilePath,
-        size
+        size,
+        buffer: fs.createReadStream(newfilePath)
     }
 
     return fileInfo

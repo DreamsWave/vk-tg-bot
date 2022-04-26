@@ -1,12 +1,12 @@
-import { handler } from './main';
 import { vkEvents } from '@yc-bot/mocks'
-import * as api from '@yc-bot/api'
+import { YC } from '@yc-bot/utils'
 import { SQS } from "aws-sdk";
 import { Event } from "@yc-bot/types"
+import { handler } from './main';
 
 describe('Event Handler Function', () => {
     beforeAll(() => {
-        jest.spyOn(api.yc.ymq, 'sendMessage').mockImplementation(() => Promise.resolve({} as SQS.SendMessageResult))
+        jest.spyOn(YC.ymq, 'sendMessage').mockImplementation(() => Promise.resolve({} as SQS.SendMessageResult))
     })
     it('should return "ok"', async () => {
         const event = {} as Event

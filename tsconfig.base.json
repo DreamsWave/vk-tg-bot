@@ -20,9 +20,6 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@yc-bot/api": [
-        "packages/api/src/index.ts"
-      ],
       "@yc-bot/mocks": [
         "packages/mocks/src/index.ts"
       ],
