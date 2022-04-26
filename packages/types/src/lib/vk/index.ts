@@ -1,3 +1,7 @@
+import { IWallAttachmentPayload } from "vk-io";
+
+export * from "./attachments"
+
 export interface VKEvent {
     group_id?: number;
     type?: string;
@@ -6,3 +10,5 @@ export interface VKEvent {
     object?: object;
     secret?: string;
 }
+
+export type Post = IWallAttachmentPayload

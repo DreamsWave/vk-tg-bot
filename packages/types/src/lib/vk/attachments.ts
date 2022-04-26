@@ -4,6 +4,7 @@ export interface PAttachments {
     docs: PAttachment[]
 }
 export interface PAttachment extends DownloadedAttachment {
+    type: string,
     origin: any,
     originUrl: string
 }
