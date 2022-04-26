@@ -1,3 +1,6 @@
+import { ReadStream } from "fs"
+import { Stream } from "stream"
+
 export interface PAttachments {
     photos: PAttachment[],
     videos: PAttachment[],
@@ -18,6 +21,7 @@ export interface FileInfo {
     path: string,
     ext: string,
     filename: string | number,
+    buffer: string | Stream | Buffer | ReadStream
 }
 export interface DownloadDocumentOptions {
     filename: string | number,

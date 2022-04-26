@@ -1,20 +1,11 @@
-// import {  WallAttachment } from 'vk-io';
 import { getAttachment } from '@yc-bot/mocks'
 import path from 'path';
 import fs from 'fs';
 import prepareTemp from './prepareTemp'
-// import { VK } from '@yc-bot/api'
-import { prepareAttachments, prepareDoc, preparePhoto, prepareVideo } from './prepareAttachments';
-import { downloadFile } from './download';
+import { downloadFile, downloadVideo } from './download';
 import { convertWebpToJpg } from './convertWebpToJpg';
 import { makeID } from './helpers';
-
-// const vk = new VK(process.env.NX_VK_TOKEN)
-
-// const getPost = (body): WallAttachment => {
-//     const payload = JSON.parse(JSON.stringify(body))
-//     return new WallAttachment({ api: vk.api, payload: payload.object })
-// }
+import { prepareMedia } from './prepareMedia'
 
 describe('Utils', () => {
     const downloadLocation = path.join(path.resolve(), 'tmp', "assets")
@@ -30,69 +21,72 @@ describe('Utils', () => {
     // afterEach(() => {
     //     prepareTemp(downloadLocation)
     // })
-    describe("Prepare Attachments", () => {
-        describe("prepareAttachments", () => {
-            it("should prepare photos, videos and docs", async () => {
-                const attachments = [getAttachment("photo", "small"), getAttachment("video", "small"), getAttachment("doc", "gif")]
-                const pAttachments = await prepareAttachments(attachments, downloadLocation)
-                expect(pAttachments.photos.length).toBe(1)
-                expect(pAttachments.videos.length).toBe(1)
-                expect(pAttachments.docs.length).toBe(1)
-                expect(pAttachments.photos[0].buffer).toBeTruthy()
-                expect(pAttachments.videos[0].buffer).toBeTruthy()
-                expect(pAttachments.docs[0].buffer).toBeTruthy()
+    describe('Prepare Media', () => {
+        describe("Photos", () => {
+            it('should prepare a photo', async () => {
+                const attachments = [getAttachment('photo', "small")]
+                const media = await prepareMedia(attachments, { randomFilenames: true, saveTo: downloadLocation })
+                for (const m of media) {
+                    expect(m.type).toBeDefined()
+                    expect(m.media).toBeDefined()
+                }
+            })
+            it('should prepare 2 photos', async () => {
+                const attachments = [getAttachment('photo', "small"), getAttachment('photo', "small")]
+                const media = await prepareMedia(attachments, { randomFilenames: true, saveTo: downloadLocation })
+                for (const m of media) {
+                    expect(m.type).toBeDefined()
+                    expect(m.media).toBeDefined()
+                }
+            })
+            it('should prepare jpg and webp photos', async () => {
+                const attachments = [getAttachment('photo', "small"), getAttachment('photo', "webp")]
+                const media = await prepareMedia(attachments, { randomFilenames: true, saveTo: downloadLocation })
+                for (const m of media) {
+                    expect(m.type).toBeDefined()
+                    expect(m.media).toBeDefined()
+                }
             })
         })
-        describe("preparePhoto", () => {
-            it("should prepare photo", async () => {
-                const photo = await preparePhoto(getAttachment("photo", "small"), downloadLocation, makeID())
-                expect(fs.existsSync(photo.info.path)).toBeTruthy()
-                expect(photo.buffer).toBeTruthy()
-                expect(photo.info.size).toBeGreaterThan(0)
+        describe('Videos', () => {
+            it("should prepare a video", async () => {
+                const attachments = [getAttachment('video', "small")]
+                const media = await prepareMedia(attachments, { randomFilenames: true, saveTo: downloadLocation })
+                for (const m of media) {
+                    expect(m.type).toBeDefined()
+                    expect(m.media).toBeDefined()
+                }
             })
-            it("should prepare webp photo", async () => {
-                const photo = await preparePhoto(getAttachment("photo", "webp"), downloadLocation, makeID())
-                expect(fs.existsSync(photo.info.path)).toBeTruthy()
-                expect(photo.buffer).toBeTruthy()
-                expect(photo.info.size).toBeGreaterThan(0)
-                expect(photo.info.ext).toBe("jpg")
+            it("should prepare 2 videos", async () => {
+                const attachments = [getAttachment('video', "small"), getAttachment('video', "small")]
+                const media = await prepareMedia(attachments, { randomFilenames: true, saveTo: downloadLocation })
+                for (const m of media) {
+                    expect(m.type).toBeDefined()
+                    expect(m.media).toBeDefined()
+                }
             })
-        })
-        describe("prepareVideo", () => {
-            jest.setTimeout(60000)
-            it("should prepare video", async () => {
-                const video = await prepareVideo(getAttachment("video", "small"), downloadLocation, makeID())
-                expect(fs.existsSync(video.info.path)).toBeTruthy()
-                expect(video.buffer).toBeTruthy()
-                expect(video.info.size).toBeGreaterThan(0)
-                expect(video.info.size).toBeLessThan(50000)
-            })
-            it("should ignore long video", async () => {
-                const video = await prepareVideo(getAttachment("video", "big"), downloadLocation, makeID())
-                expect(video).toBeFalsy()
-            })
-            it("should ignore video from youtube", async () => {
-                const video = await prepareVideo(getAttachment("video", "youtube"), downloadLocation, makeID())
-                expect(video).toBeFalsy()
+            it("should prepare 1 video and ignore youtube/big video", async () => {
+                const attachments = [getAttachment('video', "youtube"), getAttachment('video', "small"), getAttachment('video', "big")]
+                const media = await prepareMedia(attachments, { randomFilenames: true, saveTo: downloadLocation })
+                expect(media).toHaveLength(3)
+                for (const m of media) {
+                    expect(m.media).toBeDefined()
+                    expect(m.type).toBe("video")
+                }
             })
         })
-        describe("prepareDoc", () => {
-            jest.setTimeout(30000)
-            it("should prepare gif", async () => {
-                const gif = await prepareDoc(getAttachment("doc", "gif"), downloadLocation, makeID())
-                expect(fs.existsSync(gif.info.path)).toBeTruthy()
-                expect(gif.buffer).toBeTruthy()
-                expect(gif.info.size).toBeGreaterThan(0)
-            })
-            it("should prepare pdf", async () => {
-                const pdf = await prepareDoc(getAttachment("doc", "pdf"), downloadLocation, makeID())
-                expect(fs.existsSync(pdf.info.path)).toBeTruthy()
-                expect(pdf.buffer).toBeTruthy()
-                expect(pdf.info.size).toBeGreaterThan(0)
+        describe('Documents', () => {
+            it("should prepare pdf and gif", async () => {
+                const attachments = [getAttachment('doc', "pdf"), getAttachment('doc', "gif")]
+                const media = await prepareMedia(attachments, { randomFilenames: true, saveTo: downloadLocation })
+                expect(media).toHaveLength(2)
+                for (const m of media) {
+                    expect(m.media).toBeDefined()
+                    expect(m.type).toBe("document")
+                }
             })
         })
     })
-
     describe('Download', () => {
         describe("Image", () => {
             it("should download and save jpeg, webp, png images", async () => {
@@ -114,6 +108,18 @@ describe('Utils', () => {
                 expect(convertedImageInfo.ext).toBe('jpg')
                 expect(convertedImageInfo.size).toBeGreaterThan(0)
                 expect(convertedImageInfo.size).toBeLessThan(50000)
+            })
+        })
+        describe("Video", () => {
+            jest.setTimeout(120000)
+            it("should download vk video", async () => {
+                // const videoUrl = "https://vk.com/video-29320599_456248886"
+                const videoUrl = "https://vk.com/video-191117934_456239054"
+                const videoInfo = await downloadVideo(videoUrl, downloadLocation, makeID())
+                const videoExists = fs.existsSync(videoInfo.path)
+                expect(videoExists).toBeTruthy()
+                expect(videoInfo.size).toBeGreaterThan(0)
+                expect(videoInfo.size).toBeLessThan(50000)
             })
         })
     })

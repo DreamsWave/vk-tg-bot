@@ -1,5 +1,5 @@
 import { Messages, Context, VKEvent, Post } from '@yc-bot/types'
-import { prepareAttachments, logger } from '@yc-bot/utils'
+import { logger } from '@yc-bot/utils'
 
 export const handler = async (messages: Messages, context: Context) => {
     logger.info('wall-post-new')
@@ -11,11 +11,11 @@ export const handler = async (messages: Messages, context: Context) => {
         if (post.marked_as_ads) continue
         if (post.post_type !== 'post') continue
         if (post.attachments) {
-            const attachments = await prepareAttachments(post.attachments)
-            if (attachments) {
-                // await sendPost(post, attachments)
-                continue
-            }
+            // const attachments = await prepareAttachments(post.attachments)
+            // if (attachments) {
+            //     // await sendPost(post, attachments)
+            //     continue
+            // }
         }
         // await sendPost(post)
     }
