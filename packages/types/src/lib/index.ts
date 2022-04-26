@@ -1,3 +1,2 @@
-export * from './attachments'
+export * from './vk'
 export * from './function'
-export * from './vk-event'

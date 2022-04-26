@@ -37,6 +37,7 @@ export async function prepareAttachments(attachments: any[], saveTo: string = tm
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const preparePhoto = async (attachment: any, saveTo: string = tmpDir, filename?: number | string): Promise<PAttachment> => {
     const pAttachment: PAttachment = {
+        type: '',
         buffer: null,
         info: {
             ext: "",
@@ -55,6 +56,7 @@ export const preparePhoto = async (attachment: any, saveTo: string = tmpDir, fil
         if (isWebp(imageInfo.path)) {
             imageInfo = await convertWebpToJpg(imageInfo.path)
         }
+        pAttachment.type = "photo"
         pAttachment.info = imageInfo
         pAttachment.buffer = fs.createReadStream(imageInfo.path)
         pAttachment.originUrl = photoUrl
@@ -67,6 +69,7 @@ export const preparePhoto = async (attachment: any, saveTo: string = tmpDir, fil
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const prepareVideo = async (attachment: any, saveTo: string = tmpDir, filename?: number | string): Promise<PAttachment> => {
     const pAttachment: PAttachment = {
+        type: '',
         buffer: null,
         info: {
             ext: "",
@@ -84,6 +87,7 @@ export const prepareVideo = async (attachment: any, saveTo: string = tmpDir, fil
         const filePath = path.join(saveTo, `${filename ?? video.id}.%(ext)s`)
         const videoInfo = await downloadVideo(videoUrl, filePath)
         if (!videoInfo) return null
+        pAttachment.type = "video"
         pAttachment.buffer = fs.createReadStream(videoInfo.path)
         pAttachment.info = videoInfo
         pAttachment.originUrl = videoUrl
@@ -96,6 +100,7 @@ export const prepareVideo = async (attachment: any, saveTo: string = tmpDir, fil
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const prepareDoc = async (attachment: any, downloadTo: string = tmpDir, filename?: number | string): Promise<PAttachment> => {
     const pAttachment: PAttachment = {
+        type: '',
         buffer: null,
         info: {
             ext: "",
@@ -111,6 +116,7 @@ export const prepareDoc = async (attachment: any, downloadTo: string = tmpDir, f
         const doc = new DocumentAttachment({ api: null, payload: attachment.doc })
         const docTitle = doc.title.split('.')[0]
         const fileInfo = await downloadFile(doc.url, downloadTo, filename ?? docTitle)
+        pAttachment.type = "document"
         pAttachment.originUrl = doc.url
         pAttachment.info = fileInfo
         pAttachment.buffer = fs.createReadStream(fileInfo.path)
