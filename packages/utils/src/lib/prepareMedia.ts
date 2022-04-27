@@ -10,7 +10,8 @@ const tmpDir = path.join(os.tmpdir())
 
 export type MediaType = {
     type: "photo" | "video" | "document",
-    media: string | Stream | Buffer
+    media: string | Stream | Buffer,
+    ext: string
 }
 
 export interface IPrepareMediaOptions {
@@ -36,6 +37,7 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
             }
             media.type = "photo"
             media.media = imageInfo.buffer
+            media.ext = imageInfo.ext
         }
         if (attachment.type === 'video') {
             const video = new VideoAttachment({ api: null, payload: attachment.video })
@@ -45,6 +47,7 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
             if (!videoInfo) continue
             media.type = "video"
             media.media = videoInfo.buffer
+            media.ext = videoInfo.ext
         }
         if (attachment.type === 'doc') {
             const doc = new DocumentAttachment({ api: null, payload: attachment.doc })
@@ -53,6 +56,7 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
             if (!fileInfo) continue
             media.type = "document"
             media.media = fileInfo.buffer
+            media.ext = fileInfo.ext
         }
         mediaArray.push(media)
     }

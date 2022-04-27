@@ -1,6 +1,5 @@
 process.env["NTBA_FIX_350"] = "1";
-import TelegramBot, { InputMedia, SendMessageOptions } from "node-telegram-bot-api"
-import { Post, PAttachments } from '@yc-bot/types'
+import TelegramBot, { InputMedia, SendMediaGroupOptions, SendMessageOptions } from "node-telegram-bot-api"
 import { chunkString } from '@yc-bot/utils'
 import { MediaType } from "../prepareMedia";
 import { logger } from "../logger";
@@ -8,10 +7,14 @@ import { logger } from "../logger";
 export interface ITG {
     chatId: number,
     api: TelegramBot,
-    sendPost: (post: unknown, attachments?: unknown) => Promise<void>
-    sendLongMessage: (text: string, options?: SendMessageOptions) => Promise<void>
+    send: (text: string, media?: MediaType[], options?: SendMessageOptions) => Promise<void>
+    sendMessage: (text: string, options?: SendMessageOptions) => Promise<void>
+    sendMediaMessage: (text: string, media: MediaType, options?: SendMessageOptions) => Promise<void>
+    sendMediaGroupMessage: (text: string, mediaGroup: InputMedia[], options?: SendMessageOptions) => Promise<void>
 }
 
+const MAX_TEXT_LENGTH = 4000
+const CAPTION_TEXT_LENGTH = 1020
 export default class TG implements ITG {
     public chatId: number
     public api: TelegramBot
@@ -21,51 +24,80 @@ export default class TG implements ITG {
         this.api = new TelegramBot(token, options)
     }
 
-    async sendPost(post: Post, media?: MediaType[], options?: SendMessageOptions): Promise<void> {
+    async send(text: string, media?: MediaType[], options?: SendMessageOptions): Promise<void> {
         try {
             if (media.length) {
-
                 if (media.length === 1) {
-                    const type = media[0].type
-                    const m = media[0].media
-                    switch (type) {
-                        case "photo":
-                            await this.api.sendPhoto(this.chatId, m, { ...options })
-                            break
-                        case "video":
-                            await this.api.sendVideo(this.chatId, m, { ...options })
-                            break
-                        case "document":
-                            await this.api.sendDocument(this.chatId, m, { ...options })
-                            break
-                    }
+                    await this.sendMediaMessage(text, media[0], { ...options })
+                    return
                 }
-
-                if (media.length >= 2 && media.length <= 10) {
-                    const photosAndVideos = media.filter(m => m.type === 'photo' || m.type === 'video') as InputMedia[]
-                    const documents = media.filter(m => m.type === 'document')
-                    if (photosAndVideos.length) {
-                        await this.api.sendMediaGroup(this.chatId, photosAndVideos, { ...options })
-                    }
-                    if (documents.length) {
-                        for (const document of documents) {
+                const documents = media.filter(m => m.type === 'document')
+                const photosAndVideos = media.filter(m => m.type === 'video' || m.type === 'photo') as InputMedia[]
+                if (documents.length) {
+                    for (const document of documents) {
+                        if (document.ext === 'gif') {
+                            await this.api.sendAnimation(this.chatId, document.media, { ...options })
+                        } else {
                             await this.api.sendDocument(this.chatId, document.media, { ...options })
                         }
                     }
                 }
+                if (photosAndVideos.length) {
+                    await this.sendMediaGroupMessage(text, photosAndVideos, { ...options })
+                    return
+                }
             }
-
-            await this.sendLongMessage(post.text, { ...options })
-
+            await this.sendMessage(text, { ...options })
         } catch (error) {
-            logger.error
+            const err = new Error(error)
+            logger.error(err.message)
+            throw err
         }
     }
 
-    async sendLongMessage(text: string, options?: SendMessageOptions): Promise<void> {
+    async sendMessage(text: string, options?: SendMessageOptions): Promise<void> {
         const chunkedText = chunkString(text, 4096)
-        for (const text of chunkedText) {
-            await this.api.sendMessage(this.chatId, text, { ...options })
+        for (let i = 0; i < chunkedText.length; i++) {
+            if (i === 0) {
+                await this.api.sendMessage(this.chatId, chunkedText[0], { ...options })
+            } else {
+                await this.api.sendMessage(this.chatId, chunkedText[i], { ...options, disable_notification: true })
+            }
+        }
+    }
+
+    async sendMediaMessage(text: string, media: MediaType, options?: SendMessageOptions): Promise<void> {
+        if (media) {
+            const [firstText, ...restText] = chunkString(text, MAX_TEXT_LENGTH, CAPTION_TEXT_LENGTH)
+            if (media.type === 'photo') {
+                await this.api.sendPhoto(this.chatId, media.media, { ...options, caption: firstText })
+            }
+            if (media.type === 'video') {
+                await this.api.sendVideo(this.chatId, media.media, { ...options, caption: firstText })
+            }
+            if (media.type === 'document') {
+                if (media.ext === 'gif') {
+                    await this.api.sendAnimation(this.chatId, media.media, { ...options, caption: firstText })
+                } else {
+                    await this.api.sendDocument(this.chatId, media.media, { ...options, caption: firstText })
+                }
+            }
+            for (const txt of restText) {
+                await this.api.sendMessage(this.chatId, txt, { ...options, disable_notification: true })
+            }
+        }
+    }
+
+    async sendMediaGroupMessage(text: string, mediaGroup: InputMedia[], mediaGroupOptions?: SendMediaGroupOptions, messageOptions?: SendMessageOptions): Promise<void> {
+        if (mediaGroup.length) {
+            const [firstText, ...restText] = chunkString(text, MAX_TEXT_LENGTH, CAPTION_TEXT_LENGTH)
+            let media = mediaGroup.filter(m => m.type === 'video' || m.type === 'photo') as InputMedia[]
+            media[0].caption = firstText
+            media = media.slice(0, 9)
+            await this.api.sendMediaGroup(this.chatId, media, { ...mediaGroupOptions })
+            for (const txt of restText) {
+                await this.api.sendMessage(this.chatId, txt, { ...messageOptions, disable_notification: true })
+            }
         }
     }
 }
