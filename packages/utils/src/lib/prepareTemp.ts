@@ -1,6 +1,6 @@
 import fs from 'fs';
 import os from 'os';
-import { logger } from './logger';
+import { logger } from '@yc-bot/shared';
 
 export default function prepareTemp(location: string = os.tmpdir()): void {
 	fs.mkdir(location, { recursive: true }, (err) => {

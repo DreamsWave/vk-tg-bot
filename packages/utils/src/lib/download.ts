@@ -5,7 +5,7 @@ import { FileInfo } from '@yc-bot/types';
 import path from 'path';
 import { extension } from 'mime-types';
 import ytdl from 'ytdl-core';
-import { logger } from './logger';
+import { logger } from '@yc-bot/shared';
 
 export const downloadFile = async (fileUrl: string, saveTo: string, filename: string | number): Promise<FileInfo> => {
 	return new Promise((resolve, reject) => {

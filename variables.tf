@@ -13,3 +13,15 @@ variable "folder_id" {
 variable "service_account_name" {
   type = string
 }
+
+variable "tg_token" {
+  type = string
+}
+
+variable "tg_chat_id" {
+  type = string
+}
+
+variable "vk_confirmation" {
+  type = string
+}

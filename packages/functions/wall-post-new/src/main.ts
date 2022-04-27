@@ -1,5 +1,6 @@
 import { Messages, Context, VKEvent, Post } from '@yc-bot/types';
-import { logger, prepareMedia, TG } from '@yc-bot/utils';
+import { prepareMedia, TG } from '@yc-bot/utils';
+import { logger } from '@yc-bot/shared';
 import dotenv from 'dotenv';
 dotenv.config();
 
