@@ -1,12 +1,9 @@
-import path from 'path';
 import { DocumentAttachment, PhotoAttachment, VideoAttachment } from 'vk-io';
 import os from 'os';
 import { downloadVideo, downloadFile } from './download';
 import { convertWebpToJpg, isWebp } from './convertWebpToJpg';
 import { makeID } from './helpers';
 import { Stream } from 'stream';
-
-const tmpDir = path.join(os.tmpdir());
 
 export type MediaType = {
 	type: 'photo' | 'video' | 'document';
@@ -21,7 +18,8 @@ export interface IPrepareMediaOptions {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOptions): Promise<MediaType[]> => {
-	const { saveTo = tmpDir, randomFilenames = false } = options;
+	const saveTo = options?.saveTo ?? os.tmpdir();
+	const randomFilenames = options?.randomFilenames;
 	const mediaArray = [] as MediaType[];
 	for (const attachment of attachments) {
 		const media = {} as MediaType;

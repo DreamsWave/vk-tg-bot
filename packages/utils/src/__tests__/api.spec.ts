@@ -83,19 +83,16 @@ describe('APIs tests', () => {
 					expect(false).toBeTruthy();
 				}
 			});
-			// it('should send message with 1 photo and 1 video', async () => {
-			//     const text = 'should send message with 1 photo and 1 video'
-			//     const media = await prepareMedia(
-			//         [getAttachment('photo', 'small'), getAttachment('video', 'small')],
-			//         { randomFilenames: true, saveTo: tmpDir }
-			//     );
-			//     try {
-			//         await tg.send(text, media, { disable_notification: true });
-			//         expect(true).toBeTruthy();
-			//     } catch (error) {
-			//         expect(false).toBeTruthy();
-			//     }
-			// });
+			it('should send message with 1 photo and 1 video', async () => {
+				const text = 'should send message with 1 photo and 1 video';
+				const media = await prepareMedia([getAttachment('photo', 'small'), getAttachment('video', 'small')], { randomFilenames: true, saveTo: tmpDir });
+				try {
+					await tg.send(text, media, { disable_notification: true });
+					expect(true).toBeTruthy();
+				} catch (error) {
+					expect(false).toBeTruthy();
+				}
+			});
 			it('should send message with gif and pdf', async () => {
 				const text = 'should send message with gif and pdf';
 				const media = await prepareMedia([getAttachment('doc', 'gif'), getAttachment('doc', 'pdf')], { randomFilenames: true, saveTo: tmpDir });
