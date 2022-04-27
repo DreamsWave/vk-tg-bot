@@ -1,9 +1,7 @@
 process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
 import TelegramBot, { InputMedia, SendMediaGroupOptions, SendMessageOptions } from 'node-telegram-bot-api';
-import { chunkString } from '../chunkString/chunkString';
-import { MediaType } from '../prepareMedia';
-import { logger } from '../logger';
+import { chunkString, logger, MediaType } from '../../';
 
 export interface ITG {
 	chatId: number;
@@ -20,8 +18,8 @@ export default class TG implements ITG {
 	public chatId: number;
 	public api: TelegramBot;
 
-	constructor(token: string, chatId?: number, options?: object) {
-		this.chatId = -chatId || -process.env.NX_TG_CHAT_ID;
+	constructor(token: string, chatId?: number | string, options?: object) {
+		this.chatId = -Number(chatId) || -Number(process.env.NX_TG_CHAT_ID);
 		this.api = new TelegramBot(token, options);
 	}
 
