@@ -1,6 +1,5 @@
-import { getLogger } from 'log4js'
+import { getLogger } from 'log4js';
 
+export const logger = getLogger();
 
-export const logger = getLogger()
-
-logger.level = process.env.LOG_LEVEL || "DEBUG"
+logger.level = process.env.LOG_LEVEL || 'DEBUG';

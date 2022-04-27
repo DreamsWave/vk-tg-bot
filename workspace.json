@@ -1,10 +1,10 @@
 {
-  "version": 2,
-  "projects": {
-    "functions-event-handler": "packages/functions/event-handler",
-    "functions-wall-post-new": "packages/functions/wall-post-new",
-    "mocks": "packages/mocks",
-    "types": "packages/types",
-    "utils": "packages/utils"
-  }
+	"version": 2,
+	"projects": {
+		"functions-event-handler": "packages/functions/event-handler",
+		"functions-wall-post-new": "packages/functions/wall-post-new",
+		"mocks": "packages/mocks",
+		"types": "packages/types",
+		"utils": "packages/utils"
+	}
 }

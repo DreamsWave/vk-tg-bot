@@ -1,3 +1,3 @@
-import simple from './simple.json'
+import simple from './simple.json';
 
-export { simple }
+export { simple };
