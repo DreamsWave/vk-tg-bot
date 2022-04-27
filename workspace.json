@@ -4,7 +4,9 @@
 		"functions-event-handler": "packages/functions/event-handler",
 		"functions-wall-post-new": "packages/functions/wall-post-new",
 		"mocks": "packages/mocks",
+		"shared": "packages/shared",
 		"types": "packages/types",
-		"utils": "packages/utils"
+		"utils": "packages/utils",
+		"yandex-api": "packages/yandex-api"
 	}
 }

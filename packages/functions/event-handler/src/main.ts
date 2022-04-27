@@ -1,6 +1,8 @@
 import { Event, Context, VKEvent } from '@yc-bot/types';
-import { logger } from '@yc-bot/utils';
-import { YC } from '@yc-bot/utils';
+import { logger } from '@yc-bot/shared';
+import { ymq } from '@yc-bot/yandex-api';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const handler = async (event: Event, context: Context) => {
 	logger.info('event-handler');
@@ -11,14 +13,14 @@ export const handler = async (event: Event, context: Context) => {
 	if (vkEvent?.type === 'confirmation') {
 		return {
 			statusCode: 200,
-			body: process.env.NX_VK_CONFIRMATION ?? ''
+			body: process.env.VK_CONFIRMATION ?? ''
 		};
 	}
 
 	if (vkEvent?.type === 'wall_post_new') {
 		logger.info('wall_post_new');
-		const ymqUrl = process.env.NX_YMQ_WALL_POST_NEW_URL;
-		await YC.ymq.sendMessage(ymqUrl, vkEvent);
+		const ymqUrl = process.env.YMQ_WALL_POST_NEW_URL;
+		await ymq.sendMessage(ymqUrl, vkEvent);
 	}
 
 	return {

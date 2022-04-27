@@ -1,4 +1,4 @@
-import { logger } from '../logger';
+import { logger } from '@yc-bot/shared';
 import { SQS } from 'aws-sdk';
 
 export const ymq = {

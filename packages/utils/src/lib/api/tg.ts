@@ -1,7 +1,8 @@
 process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
 import TelegramBot, { InputMedia, SendMediaGroupOptions, SendMessageOptions } from 'node-telegram-bot-api';
-import { chunkString, logger, MediaType } from '../../';
+import { chunkString, MediaType } from '../../';
+import { logger } from '@yc-bot/shared';
 
 export interface ITG {
 	chatId: number;

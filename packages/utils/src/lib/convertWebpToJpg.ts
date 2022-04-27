@@ -1,7 +1,7 @@
 import webp from 'webp-converter';
 import path from 'path';
 import fs from 'fs';
-import { logger } from './logger';
+import { logger } from '@yc-bot/shared';
 import { FileInfo } from '@yc-bot/types';
 
 export const convertWebpToJpg = async (filePath: string): Promise<FileInfo> => {
