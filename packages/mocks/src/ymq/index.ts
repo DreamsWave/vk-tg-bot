@@ -1,3 +1,3 @@
-import messages from './messages.json'
+import messages from './messages.json';
 
-export { messages }
+export { messages };
