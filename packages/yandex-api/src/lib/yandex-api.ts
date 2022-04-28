@@ -16,10 +16,10 @@ export const ymq = {
 		};
 		try {
 			const result = await ymq.sendMessage(params).promise();
-			logger.debug(result);
+			logger.debug(JSON.stringify(result));
 			return result;
 		} catch (error) {
-			logger.error(error);
+			logger.error(JSON.stringify(error));
 			throw error;
 		}
 	}

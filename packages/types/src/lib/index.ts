@@ -1,2 +1,3 @@
-export * from './vk'
-export * from './function'
+export * from './vk';
+export * from './tg';
+export * from './function';

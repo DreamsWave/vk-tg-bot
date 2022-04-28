@@ -2,14 +2,8 @@ import { DocumentAttachment, PhotoAttachment, VideoAttachment } from 'vk-io';
 import os from 'os';
 import { downloadVideo, downloadFile } from './download';
 import { convertWebpToJpg, isWebp } from './convertWebpToJpg';
-import { makeID } from './helpers';
-import { Stream } from 'stream';
-
-export type MediaType = {
-	type: 'photo' | 'video' | 'document';
-	media: string | Stream | Buffer;
-	ext: string;
-};
+import { makeID } from '@yc-bot/shared';
+import { MediaType } from '@yc-bot/types';
 
 export interface IPrepareMediaOptions {
 	saveTo?: string;
@@ -46,6 +40,10 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 			media.type = 'video';
 			media.media = videoInfo.buffer;
 			media.ext = videoInfo.ext;
+			media.duration = videoInfo.duration;
+			media.height = videoInfo.height;
+			media.width = videoInfo.width;
+			media.thumb = videoInfo.thumb;
 		}
 		if (attachment.type === 'doc') {
 			const doc = new DocumentAttachment({ api: null, payload: attachment.doc });

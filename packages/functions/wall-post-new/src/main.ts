@@ -1,14 +1,15 @@
 import { Messages, Context, VKEvent, Post } from '@yc-bot/types';
-import { prepareMedia, TG } from '@yc-bot/utils';
+import { prepareMedia } from '@yc-bot/utils';
+import { TG } from '@yc-bot/telegram-api';
 import { logger } from '@yc-bot/shared';
 import dotenv from 'dotenv';
 dotenv.config();
 
 export const handler = async (messages: Messages, context: Context) => {
 	logger.info('wall-post-new');
-	logger.info(messages);
-	logger.info(context);
-	const tg = new TG(process.env.NX_TG_TOKEN, process.env.NX_TG_CHAT_ID);
+	logger.info(JSON.stringify(messages));
+	logger.info(JSON.stringify(context));
+	const tg = new TG(process.env.TG_TOKEN, process.env.TG_CHAT_ID);
 	try {
 		for (const message of messages.messages) {
 			const event: VKEvent = JSON.parse(message.details.message.body) ?? '';
@@ -17,7 +18,7 @@ export const handler = async (messages: Messages, context: Context) => {
 			if (post.post_type !== 'post') continue;
 			if (post.attachments) {
 				const media = await prepareMedia(post.attachments);
-				if (media.length) {
+				if (media?.length) {
 					await tg.send(post.text, media);
 				} else {
 					tg.send(post.text);
@@ -27,7 +28,7 @@ export const handler = async (messages: Messages, context: Context) => {
 			}
 		}
 	} catch (error) {
-		logger.error(error);
+		logger.error(JSON.stringify(error));
 		// send error to some chat
 	}
 	return {

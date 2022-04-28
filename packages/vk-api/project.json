@@ -1,0 +1,23 @@
+{
+	"root": "packages/vk-api",
+	"sourceRoot": "packages/vk-api/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["packages/vk-api/**/*.ts"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/packages/vk-api"],
+			"options": {
+				"jestConfig": "packages/vk-api/jest.config.js",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}
