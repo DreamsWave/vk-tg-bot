@@ -15,8 +15,8 @@ export interface ITG {
 	sendMediaGroupMessage: (text: string, mediaGroup: InputMedia[], options?: SendMessageOptions) => Promise<void>;
 }
 
-const MAX_TEXT_LENGTH = 4000;
-const CAPTION_TEXT_LENGTH = 1020;
+const MAX_TEXT_LENGTH = 4096;
+const CAPTION_TEXT_LENGTH = 1024;
 export default class TG implements ITG {
 	public chatId: number;
 	public api: TelegramBot;
