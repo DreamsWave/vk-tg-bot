@@ -6,8 +6,8 @@ dotenv.config();
 
 export const handler = async (event: Event, context: Context) => {
 	logger.info('event-handler');
-	logger.debug(event);
-	logger.debug(context);
+	logger.debug(JSON.stringify(event));
+	logger.debug(JSON.stringify(context));
 	const vkEvent: VKEvent = JSON.parse(event.body) ?? {};
 
 	if (vkEvent?.type === 'confirmation') {

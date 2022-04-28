@@ -1,8 +1,10 @@
 process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
 import TelegramBot, { InputMedia, SendMediaGroupOptions, SendMessageOptions } from 'node-telegram-bot-api';
-import { chunkString, MediaType } from '../../';
-import { logger } from '@yc-bot/shared';
+import { MediaType } from '@yc-bot/types';
+import { logger, chunkString } from '@yc-bot/shared';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export interface ITG {
 	chatId: number;
@@ -20,13 +22,13 @@ export default class TG implements ITG {
 	public api: TelegramBot;
 
 	constructor(token: string, chatId?: number | string, options?: object) {
-		this.chatId = -Number(chatId) || -Number(process.env.NX_TG_CHAT_ID);
+		this.chatId = -Number(chatId) || -Number(process.env.TG_CHAT_ID);
 		this.api = new TelegramBot(token, options);
 	}
 
 	async send(text: string, media?: MediaType[], options?: SendMessageOptions): Promise<void> {
 		try {
-			if (media.length) {
+			if (media?.length) {
 				if (media.length === 1) {
 					await this.sendMediaMessage(text, media[0], { ...options });
 					return;

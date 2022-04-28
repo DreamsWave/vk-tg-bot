@@ -23,6 +23,10 @@ export interface FileInfo {
 	ext: string;
 	filename: string | number;
 	buffer: string | Stream | Buffer | ReadStream;
+	duration?: number;
+	height?: number;
+	width?: number;
+	thumb?: string | Stream | Buffer | ReadStream;
 }
 export interface DownloadDocumentOptions {
 	filename: string | number;

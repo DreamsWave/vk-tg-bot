@@ -59,6 +59,7 @@ export const downloadVideo = async (videoUrl: string, saveTo: string, filename: 
 	} else {
 		await youtubeDlExec(videoUrl, { output: filePath, format: 'best[height<=360]' });
 	}
+	// const thumbInfo = await downloadFile(result.thumbnail, saveTo, `${filename}_thumb`);
 	const videoPath = filePath.replace(/%\(ext\)s/i, result.ext);
 	const size = Math.round(fs.statSync(videoPath).size / 1024); // kb
 	if (size > 50000) throw 'File is bigger than 50mb';
@@ -69,7 +70,12 @@ export const downloadVideo = async (videoUrl: string, saveTo: string, filename: 
 		mime: '',
 		path: videoPath,
 		size,
-		buffer: fs.createReadStream(videoPath)
+		buffer: fs.createReadStream(videoPath),
+		duration: result.duration,
+		height: result.height,
+		width: result.width,
+		thumb: result.thumbnail
+		// thumb: thumbInfo.buffer
 	};
 	return fileInfo;
 };

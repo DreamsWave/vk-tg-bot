@@ -1,16 +1,16 @@
-// import { SQS } from 'aws-sdk';
 import dotenv from 'dotenv';
 import path from 'path';
 import { getAttachment } from '@yc-bot/mocks';
-import { makeString, prepareTemp, prepareMedia, TG } from '../';
-import { ymq } from '@yc-bot/yandex-api';
+import { makeString } from '@yc-bot/shared';
+import { prepareTemp, prepareMedia } from '@yc-bot/utils';
+import TG from './telegram-api';
 dotenv.config();
 
-const tmpDir = path.join(path.resolve(), 'tmp', 'assets', 'api');
+const tmpDir = path.join(path.resolve(), 'tmp', 'assets', 'telegram-api');
 
 describe('APIs tests', () => {
 	jest.setTimeout(60000);
-	const tg = new TG(process.env.NX_TG_TOKEN, +process.env.NX_TG_CHAT_ID);
+	const tg = new TG(process.env.TG_TOKEN, +process.env.TG_CHAT_ID);
 
 	beforeAll(() => {
 		prepareTemp(tmpDir);
@@ -20,9 +20,6 @@ describe('APIs tests', () => {
 	// })
 	describe('Telegram API tests', () => {
 		describe('sendLongMessage', () => {
-			// beforeAll(() => {
-			//     jest.spyOn(ymq, 'sendMessage').mockImplementation(() => Promise.resolve({} as SQS.SendMessageResult))
-			// })
 			it('should send 1000 symbols text', async () => {
 				try {
 					await tg.sendMessage(makeString(1000), {
@@ -106,22 +103,4 @@ describe('APIs tests', () => {
 			});
 		});
 	});
-	// describe('Yandex Cloud API tests', () => {
-	// 	describe('Yandex Message Queue', () => {
-	// 		beforeAll(() => {
-	// 			jest.spyOn(ymq, 'sendMessage').mockImplementation(() => Promise.resolve({} as SQS.SendMessageResult));
-	// 		});
-	// 		it('Should work', async () => {
-	// 			const url = 'https://some-url.com';
-	// 			const message = { some: 'data' };
-	// 			let result;
-	// 			try {
-	// 				result = await ymq.sendMessage(url, message);
-	// 				expect(result).toBeDefined();
-	// 			} catch (error) {
-	// 				expect(error).toBe(/url is required/i);
-	// 			}
-	// 		});
-	// 	});
-	// });
 });

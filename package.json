@@ -2,7 +2,11 @@
   "name": "yc-bot",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "nx run functions-event-handler:build --generatePackageJson && nx run functions-wall-post-new:build --generatePackageJson",
+    "deploy": "terraform apply",
+    "bad": "npm run build && terraform apply --auto-approve"
+  },
   "private": true,
   "devDependencies": {
     "@aws-sdk/types": "^3.55.0",

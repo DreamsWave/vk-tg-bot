@@ -5,8 +5,10 @@
 		"functions-wall-post-new": "packages/functions/wall-post-new",
 		"mocks": "packages/mocks",
 		"shared": "packages/shared",
+		"telegram-api": "packages/telegram-api",
 		"types": "packages/types",
 		"utils": "packages/utils",
+		"vk-api": "packages/vk-api",
 		"yandex-api": "packages/yandex-api"
 	}
 }
