@@ -1,8 +1,12 @@
-import { getLogger } from 'log4js';
+import log4js from 'log4js';
 import { loremIpsum } from 'lorem-ipsum';
 import chunk from 'chunk-text';
 
-export const logger = getLogger();
+log4js.configure({
+	appenders: { console: { type: 'console', layout: { type: 'basic' } } },
+	categories: { default: { appenders: ['console'], level: 'all' } }
+});
+export const logger = log4js.getLogger();
 logger.level = process.env.LOG_LEVEL || 'DEBUG';
 
 export const chunkString = (str: string, size: number, firstElementSize?: number): string[] => {
