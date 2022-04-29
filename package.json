@@ -36,6 +36,7 @@
     "aws-sdk": "^2.1116.0",
     "chunk-text": "^2.0.1",
     "dotenv": "^16.0.0",
+    "ffmpeg-static": "^5.0.0",
     "got": "^12.0.3",
     "log4js": "^6.4.5",
     "lorem-ipsum": "^2.0.4",

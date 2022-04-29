@@ -6,6 +6,11 @@ import path from 'path';
 import { extension } from 'mime-types';
 import ytdl from 'ytdl-core';
 import { logger } from '@yc-bot/shared';
+import pathToFfmpeg from 'ffmpeg-static';
+import child_process from 'child_process';
+import { promisify } from 'util';
+promisify(child_process.exec);
+const exec = child_process.exec;
 
 export const downloadFile = async (fileUrl: string, saveTo: string, filename: string | number): Promise<FileInfo> => {
 	return new Promise((resolve, reject) => {
@@ -51,26 +56,40 @@ export const downloadFile = async (fileUrl: string, saveTo: string, filename: st
 };
 
 export const downloadVideo = async (videoUrl: string, saveTo: string, filename: string | number): Promise<FileInfo> => {
-	const filePath = path.join(saveTo, `${filename}.%(ext)s`);
-	const result = await youtubeDlExec(videoUrl, { dumpJson: true, format: 'best[height<=360]' });
-	if (result.duration > 600) return null;
-	if (result.extractor === 'youtube') {
-		await downloadYoutubeVideo(result.webpage_url, saveTo, filename);
-	} else {
-		await youtubeDlExec(videoUrl, { output: filePath, format: 'best[height<=360]' });
+	// let filePath = path.join(saveTo, `${filename}.%(ext)s`);
+	let filePath = path.join(saveTo, `${filename}.mp4`);
+	let result;
+	try {
+		result = await youtubeDlExec(videoUrl, {
+			dumpJson: true,
+			format: '(mp4)[height<=360]'
+		});
+		if (result.duration > 600) return null;
+		if (result.extractor === 'youtube') {
+			await downloadYoutubeVideo(result.webpage_url, saveTo, filename);
+		} else {
+			await youtubeDlExec(videoUrl, {
+				output: filePath,
+				format: '(mp4)[height<=360]'
+			});
+			filePath = await convertVideoToMP4(filePath);
+		}
+	} catch (error) {
+		logger.error(error);
+		throw new Error(error);
 	}
 	// const thumbInfo = await downloadFile(result.thumbnail, saveTo, `${filename}_thumb`);
-	const videoPath = filePath.replace(/%\(ext\)s/i, result.ext);
-	const size = Math.round(fs.statSync(videoPath).size / 1024); // kb
+	// filePath = filePath.replace(/%\(ext\)s/, 'mp4');
+	const size = Math.round(fs.statSync(filePath).size / 1024); // kb
 	if (size > 50000) throw 'File is bigger than 50mb';
-	const [name, ext] = path.basename(videoPath).split('.');
+	const [name, ext] = path.basename(filePath).split('.');
 	const fileInfo: FileInfo = {
 		ext,
 		filename: name,
 		mime: '',
-		path: videoPath,
+		path: filePath,
 		size,
-		buffer: fs.createReadStream(videoPath),
+		buffer: fs.createReadStream(filePath),
 		duration: result.duration,
 		height: result.height,
 		width: result.width,
@@ -90,6 +109,16 @@ export const downloadYoutubeVideo = (videoUrl: string, saveTo: string, filename:
 		video.on('end', () => {
 			logger.info('Video downloaded');
 			resolve();
+		});
+	});
+};
+
+export const convertVideoToMP4 = async (fileLocation: string): Promise<string> => {
+	return new Promise((resolve, reject) => {
+		const convertedFileLocation = path.join(path.dirname(fileLocation), `c-${path.basename(fileLocation).split('.')[0]}.mp4`);
+		exec(`"${pathToFfmpeg}" -i ${fileLocation} -codec:v libx264 -preset veryfast ${convertedFileLocation}`, (err) => {
+			if (err) reject(err);
+			resolve(convertedFileLocation);
 		});
 	});
 };
