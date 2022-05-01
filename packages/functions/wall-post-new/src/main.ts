@@ -3,14 +3,13 @@ import { prepareMedia } from '@yc-bot/utils';
 import { TG } from '@yc-bot/telegram-api';
 import { logger } from '@yc-bot/shared';
 import dotenv from 'dotenv';
-import { VK } from '@yc-bot/vk-api';
+import { vk } from '@yc-bot/vk-api';
 dotenv.config();
 
 export const handler = async (messages: Messages, context: Context) => {
-	logger.debug(JSON.stringify(messages));
-	const tg = new TG(process.env.TG_TOKEN, process.env.TG_CHAT_ID);
-	const vk = new VK(process.env.VK_TOKEN, process.env.VK_ERROR_CHAT_ID);
 	try {
+		logger.debug(JSON.stringify(messages));
+		const tg = new TG(process.env.TG_TOKEN, process.env.TG_CHAT_ID);
 		for (const message of messages.messages) {
 			const event: VKEvent = JSON.parse(message.details.message.body) ?? '';
 			const post = event.object as Post;
@@ -29,7 +28,7 @@ export const handler = async (messages: Messages, context: Context) => {
 		}
 	} catch (error) {
 		logger.error(JSON.stringify(error));
-		vk.sendError(new Error(error));
+		vk.sendError(error.message);
 	}
 	return {
 		statusCode: 200,
