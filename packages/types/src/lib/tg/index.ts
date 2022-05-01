@@ -8,4 +8,5 @@ export type MediaType = {
 	height?: number;
 	width?: number;
 	thumb?: string | Stream | Buffer;
+	origin?: string;
 };
