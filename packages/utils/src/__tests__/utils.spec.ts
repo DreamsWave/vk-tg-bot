@@ -83,6 +83,21 @@ describe('Utils', () => {
 				expect(videoInfo.duration).toBeLessThan(600);
 			}
 		});
+		it('should download right size vertical video', async () => {
+			const videoUrls = ['https://vk.com/video367476532_456239281'];
+			for (const videoUrl of videoUrls) {
+				const videoInfo = await downloadVideo(videoUrl, downloadLocation, makeID());
+				const videoExists = fs.existsSync(videoInfo.path);
+				expect(videoExists).toBeTruthy();
+				expect(videoInfo.size).toBeGreaterThan(0);
+				expect(videoInfo.size).toBeLessThan(50000);
+				expect(videoInfo.duration).toBeLessThan(600);
+				expect(videoInfo.height).toBeLessThanOrEqual(640);
+				expect(videoInfo.height).toBeGreaterThanOrEqual(360);
+				expect(videoInfo.width).toBeLessThanOrEqual(640);
+				expect(videoInfo.width).toBeGreaterThanOrEqual(360);
+			}
+		});
 		it('should ignore videos longer than 10mins and bigger than 50mb', async () => {
 			const videoUrls = ['https://vk.com/video-74325500_169755573', 'https://youtu.be/hY7m5jjJ9mM'];
 			for (const videoUrl of videoUrls) {
