@@ -3,7 +3,7 @@ import { loremIpsum } from 'lorem-ipsum';
 import chunk from 'chunk-text';
 
 log4js.configure({
-	appenders: { console: { type: 'console', layout: { type: 'basic' } } },
+	appenders: { console: { type: 'console', layout: { type: 'messagePassThrough' } } },
 	categories: { default: { appenders: ['console'], level: 'all' } }
 });
 export const logger = log4js.getLogger();

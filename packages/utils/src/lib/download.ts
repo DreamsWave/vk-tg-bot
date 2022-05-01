@@ -56,7 +56,6 @@ export const downloadFile = async (fileUrl: string, saveTo: string, filename: st
 };
 
 export const downloadVideo = async (videoUrl: string, saveTo: string, filename: string | number): Promise<FileInfo> => {
-	// let filePath = path.join(saveTo, `${filename}.%(ext)s`);
 	let filePath = path.join(saveTo, `${filename}.mp4`);
 	let result;
 	try {
@@ -78,8 +77,6 @@ export const downloadVideo = async (videoUrl: string, saveTo: string, filename: 
 		logger.error(error);
 		throw new Error(error);
 	}
-	// const thumbInfo = await downloadFile(result.thumbnail, saveTo, `${filename}_thumb`);
-	// filePath = filePath.replace(/%\(ext\)s/, 'mp4');
 	const size = Math.round(fs.statSync(filePath).size / 1024); // kb
 	if (size > 50000) throw 'File is bigger than 50mb';
 	const [name, ext] = path.basename(filePath).split('.');
@@ -94,7 +91,6 @@ export const downloadVideo = async (videoUrl: string, saveTo: string, filename: 
 		height: result.height,
 		width: result.width,
 		thumb: result.thumbnail
-		// thumb: thumbInfo.buffer
 	};
 	return fileInfo;
 };

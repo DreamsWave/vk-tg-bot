@@ -5,7 +5,7 @@
   "scripts": {
     "build": "nx run functions-event-handler:build --generatePackageJson && nx run functions-wall-post-new:build --generatePackageJson",
     "deploy": "terraform apply",
-    "bad": "npm run build && terraform apply --auto-approve"
+    "bad": "npm install && npm run build && terraform apply --auto-approve"
   },
   "private": true,
   "devDependencies": {
@@ -37,7 +37,6 @@
     "chunk-text": "^2.0.1",
     "dotenv": "^16.0.0",
     "ffmpeg-static": "^5.0.0",
-    "got": "^12.0.3",
     "log4js": "^6.4.5",
     "lorem-ipsum": "^2.0.4",
     "node-telegram-bot-api": "^0.57.0",

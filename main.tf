@@ -53,6 +53,8 @@ resource "yandex_function" "event-handler" {
     "YMQ_WALL_POST_NEW_URL" = data.yandex_message_queue.wall-post-new.url
     "VK_CONFIRMATION"       = var.vk_confirmation
     "LOG_LEVEL"             = "ALL"
+    "VK_TOKEN"              = var.vk_token
+    "VK_ERROR_CHAT_ID"      = var.vk_error_chat_id
   }
 }
 data "archive_file" "event-handler" {
@@ -77,6 +79,8 @@ resource "yandex_function" "wall-post-new" {
     "TG_TOKEN"       = var.tg_token
     "TG_CHAT_ID"     = var.tg_chat_id
     "LOG_LEVEL"      = "ALL"
+    "VK_TOKEN"       = var.vk_token
+    "VK_ERROR_CHAT_ID" = var.vk_error_chat_id
   }
   depends_on = [yandex_message_queue.wall-post-new]
 }
