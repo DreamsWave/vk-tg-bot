@@ -25,3 +25,11 @@ variable "tg_chat_id" {
 variable "vk_confirmation" {
   type = string
 }
+
+variable "vk_token" {
+  type = string
+}
+
+variable "vk_error_chat_id" {
+  type = string
+}
