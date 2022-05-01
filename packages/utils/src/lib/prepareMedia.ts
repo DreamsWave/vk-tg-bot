@@ -14,7 +14,7 @@ export interface IPrepareMediaOptions {
 export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOptions): Promise<MediaType[]> => {
 	const saveTo = options?.saveTo ?? os.tmpdir();
 	const randomFilenames = options?.randomFilenames;
-	const mediaArray = [] as MediaType[];
+	let mediaArray = [] as MediaType[];
 	for (const attachment of attachments) {
 		const media = {} as MediaType;
 		if (attachment.type === 'photo') {
@@ -57,5 +57,6 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 		}
 		mediaArray.push(media);
 	}
+	mediaArray = mediaArray.filter((media) => media.media);
 	return mediaArray;
 };
