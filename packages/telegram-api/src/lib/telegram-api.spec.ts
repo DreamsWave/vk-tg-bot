@@ -18,89 +18,40 @@ describe('APIs tests', () => {
 	// beforeEach(() => {
 	//     prepareTemp(tmpDir)
 	// })
-	describe('Telegram API tests', () => {
-		describe('sendLongMessage', () => {
-			it('should send 1000 symbols text', async () => {
-				try {
-					await tg.sendMessage(makeString(1000), {
-						disable_notification: true
-					});
-					expect(true).toBeTruthy();
-				} catch (error) {
-					expect(false).toBeTruthy();
-				}
-			});
-			it('should send 5000 symbols text', async () => {
-				try {
-					await tg.sendMessage(makeString(5000), {
-						disable_notification: true
-					});
-					expect(true).toBeTruthy();
-				} catch (error) {
-					expect(false).toBeTruthy();
-				}
-			});
+	it('should send message with 1 photo and long text', async () => {
+		const text = makeString(5000);
+		const media = await prepareMedia([getAttachment('photo', 'small')], {
+			randomFilenames: true,
+			saveTo: tmpDir
 		});
-		describe('send', () => {
-			it('should send message with 1 photo', async () => {
-				const text = 'should send message with 1 photo';
-				const media = await prepareMedia([getAttachment('photo', 'small')], {
-					randomFilenames: true,
-					saveTo: tmpDir
-				});
-				try {
-					await tg.send(text, media, { disable_notification: true });
-					expect(true).toBeTruthy();
-				} catch (error) {
-					expect(false).toBeTruthy();
-				}
-			});
-			it('should send message with 1 video', async () => {
-				const text = 'should send message with 1 video';
-				const media = await prepareMedia([getAttachment('video', 'small')], {
-					randomFilenames: true,
-					saveTo: tmpDir
-				});
-				try {
-					await tg.send(text, media, { disable_notification: true });
-					expect(true).toBeTruthy();
-				} catch (error) {
-					expect(false).toBeTruthy();
-				}
-			});
-			it('should send message with 2 photos', async () => {
-				const text = 'should send message with 2 photos';
-				const media = await prepareMedia([getAttachment('photo', 'small'), getAttachment('photo', 'normal')], {
-					randomFilenames: true,
-					saveTo: tmpDir
-				});
-				try {
-					await tg.send(text, media, { disable_notification: true });
-					expect(true).toBeTruthy();
-				} catch (error) {
-					expect(false).toBeTruthy();
-				}
-			});
-			it('should send message with 1 photo and 1 video', async () => {
-				const text = 'should send message with 1 photo and 1 video';
-				const media = await prepareMedia([getAttachment('photo', 'small'), getAttachment('video', 'small')], { randomFilenames: true, saveTo: tmpDir });
-				try {
-					await tg.send(text, media, { disable_notification: true });
-					expect(true).toBeTruthy();
-				} catch (error) {
-					expect(false).toBeTruthy();
-				}
-			});
-			it('should send message with gif and pdf', async () => {
-				const text = 'should send message with gif and pdf';
-				const media = await prepareMedia([getAttachment('doc', 'gif'), getAttachment('doc', 'pdf')], { randomFilenames: true, saveTo: tmpDir });
-				try {
-					await tg.send(text, media, { disable_notification: true });
-					expect(true).toBeTruthy();
-				} catch (error) {
-					expect(false).toBeTruthy();
-				}
-			});
+		try {
+			await tg.send(text, media, { disable_notification: true });
+			expect(true).toBeTruthy();
+		} catch (error) {
+			expect(false).toBeTruthy();
+		}
+	});
+	it('should send media group with 1 photo and 1 video', async () => {
+		const text = 'should send media group with 1 photo and 1 video';
+		const media = await prepareMedia([getAttachment('photo', 'small'), getAttachment('video', 'small')], {
+			randomFilenames: true,
+			saveTo: tmpDir
 		});
+		try {
+			await tg.send(text, media, { disable_notification: true });
+			expect(true).toBeTruthy();
+		} catch (error) {
+			expect(false).toBeTruthy();
+		}
+	});
+	it('should send message with gif', async () => {
+		const text = 'should send message with gif';
+		const media = await prepareMedia([getAttachment('doc', 'gif')], { randomFilenames: true, saveTo: tmpDir });
+		try {
+			await tg.send(text, media, { disable_notification: true });
+			expect(true).toBeTruthy();
+		} catch (error) {
+			expect(false).toBeTruthy();
+		}
 	});
 });

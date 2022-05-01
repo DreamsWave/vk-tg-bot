@@ -68,7 +68,7 @@ resource "yandex_function" "wall-post-new" {
   runtime            = "nodejs16"
   entrypoint         = "main.handler"
   memory             = "128"
-  execution_timeout  = "120"
+  execution_timeout  = "180"
   service_account_id = yandex_iam_service_account.this.id
   content {
     zip_filename     = "${path.module}/dist/packages/functions/wall-post-new/dist.zip"
