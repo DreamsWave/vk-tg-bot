@@ -18,8 +18,9 @@ describe('APIs tests', () => {
 	// beforeEach(() => {
 	//     prepareTemp(tmpDir)
 	// })
-	it('should send message with 1 photo and long text', async () => {
-		const text = makeString(5000);
+	it('should send message with 1 photo and text', async () => {
+		let text = makeString(500);
+		text = 'START ' + text + ' END';
 		const media = await prepareMedia([getAttachment('photo', 'small')], {
 			randomFilenames: true,
 			saveTo: tmpDir

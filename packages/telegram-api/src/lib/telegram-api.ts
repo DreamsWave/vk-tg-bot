@@ -2,7 +2,7 @@ process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
 import TelegramBot, { InputMedia, SendMediaGroupOptions, SendMessageOptions } from 'node-telegram-bot-api';
 import { MediaType } from '@yc-bot/types';
-import { logger, chunkString } from '@yc-bot/shared';
+import { logger, chunkString, createLinkedPhoto } from '@yc-bot/shared';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -82,18 +82,30 @@ export default class TG implements ITG {
 	async sendMediaMessage(text: string, media: MediaType, options?: SendMessageOptions): Promise<void> {
 		if (media) {
 			const [firstText, ...restText] = chunkString(text, MAX_TEXT_LENGTH, CAPTION_TEXT_LENGTH);
+
 			if (media.type === 'photo') {
-				await this.api.sendPhoto(this.chatId, media.media, {
-					...options,
-					caption: firstText
-				});
+				const originUrl = media.origin ?? '';
+				const linkPhoto = createLinkedPhoto(originUrl);
+				const textWithLink = text + '\n' + linkPhoto;
+				const textLength = textWithLink.length;
+				if (textLength > CAPTION_TEXT_LENGTH && textLength < MAX_TEXT_LENGTH) {
+					await this.api.sendMessage(this.chatId, textWithLink, { parse_mode: 'HTML' });
+					return;
+				} else {
+					await this.api.sendPhoto(this.chatId, media.media, {
+						...options,
+						caption: firstText
+					});
+				}
 			}
+
 			if (media.type === 'video') {
 				await this.api.sendVideo(this.chatId, media.media, {
 					...options,
 					caption: firstText
 				});
 			}
+
 			if (media.type === 'document') {
 				if (media.ext === 'gif') {
 					await this.api.sendAnimation(this.chatId, media.media, {
@@ -107,6 +119,7 @@ export default class TG implements ITG {
 					});
 				}
 			}
+
 			for (const txt of restText) {
 				await this.api.sendMessage(this.chatId, txt, {
 					...options,

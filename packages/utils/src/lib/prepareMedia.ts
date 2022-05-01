@@ -30,6 +30,7 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 			media.type = 'photo';
 			media.media = imageInfo.buffer;
 			media.ext = imageInfo.ext;
+			media.origin = photoUrl;
 		}
 		if (attachment.type === 'video') {
 			const video = new VideoAttachment({ api: null, payload: attachment.video });
