@@ -1,1 +1,1 @@
-export * from './lib/vk-api';
+export { default as VK } from './lib/vk-api';

@@ -3,13 +3,13 @@ import { prepareMedia } from '@yc-bot/utils';
 import { TG } from '@yc-bot/telegram-api';
 import { logger } from '@yc-bot/shared';
 import dotenv from 'dotenv';
+import { VK } from '@yc-bot/vk-api';
 dotenv.config();
 
 export const handler = async (messages: Messages, context: Context) => {
-	logger.info('wall-post-new');
-	logger.info(JSON.stringify(messages));
-	logger.info(JSON.stringify(context));
+	logger.debug(JSON.stringify(messages));
 	const tg = new TG(process.env.TG_TOKEN, process.env.TG_CHAT_ID);
+	const vk = new VK(process.env.VK_TOKEN, process.env.VK_ERROR_CHAT_ID);
 	try {
 		for (const message of messages.messages) {
 			const event: VKEvent = JSON.parse(message.details.message.body) ?? '';
@@ -29,7 +29,7 @@ export const handler = async (messages: Messages, context: Context) => {
 		}
 	} catch (error) {
 		logger.error(JSON.stringify(error));
-		// send error to some chat
+		vk.sendError(new Error(error));
 	}
 	return {
 		statusCode: 200,
