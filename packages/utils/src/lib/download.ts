@@ -35,11 +35,11 @@ export const downloadFile = async (fileUrl: string, saveTo: string, filename: st
 				path: filePath,
 				filename,
 				ext,
-				buffer: fs.createReadStream(filePath)
+				buffer: ''
 			};
-
 			fileStream.on('finish', () => {
 				fileStream.close();
+				fileInfo.buffer = fs.createReadStream(filePath);
 				resolve(fileInfo);
 			});
 			request.on('error', (err) => {

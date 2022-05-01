@@ -1,7 +1,7 @@
 import { getAttachment } from '@yc-bot/mocks';
 import path from 'path';
 import fs from 'fs';
-import { prepareTemp, downloadFile, downloadVideo, convertWebpToJpg, prepareMedia } from '../';
+import { prepareTemp, downloadFile, downloadVideo, convertWebpToJpg, prepareMedia, isWebp } from '../';
 import { makeID, makeString, chunkString } from '@yc-bot/shared';
 
 describe('Utils', () => {
@@ -19,142 +19,89 @@ describe('Utils', () => {
 	//     prepareTemp(downloadLocation)
 	// })
 	describe('Prepare Media', () => {
-		describe('Photos', () => {
-			it('should prepare a photo', async () => {
-				const attachments = [getAttachment('photo', 'small')];
-				const media = await prepareMedia(attachments, {
-					randomFilenames: true,
-					saveTo: downloadLocation
-				});
-				for (const m of media) {
-					expect(m.type).toBeDefined();
-					expect(m.media).toBeDefined();
-				}
+		it('should prepare jpg and webp photos', async () => {
+			const attachments = [getAttachment('photo', 'small'), getAttachment('photo', 'webp')];
+			const media = await prepareMedia(attachments, {
+				randomFilenames: true,
+				saveTo: downloadLocation
 			});
-			it('should prepare 2 photos', async () => {
-				const attachments = [getAttachment('photo', 'small'), getAttachment('photo', 'normal')];
-				const media = await prepareMedia(attachments, {
-					randomFilenames: true,
-					saveTo: downloadLocation
-				});
-				for (const m of media) {
-					expect(m.type).toBeDefined();
-					expect(m.media).toBeDefined();
-				}
-			});
-			it('should prepare jpg and webp photos', async () => {
-				const attachments = [getAttachment('photo', 'small'), getAttachment('photo', 'webp')];
-				const media = await prepareMedia(attachments, {
-					randomFilenames: true,
-					saveTo: downloadLocation
-				});
-				for (const m of media) {
-					expect(m.type).toBeDefined();
-					expect(m.media).toBeDefined();
-				}
-			});
+			for (const m of media) {
+				expect(m.type).toBeDefined();
+				expect(m.media).toBeDefined();
+			}
 		});
-		describe('Videos', () => {
-			it('should prepare a video', async () => {
-				const attachments = [getAttachment('video', 'small')];
-				const media = await prepareMedia(attachments, {
-					randomFilenames: true,
-					saveTo: downloadLocation
-				});
-				for (const m of media) {
-					expect(m.type).toBeDefined();
-					expect(m.media).toBeDefined();
-				}
+		it('should prepare vk and youtube videos', async () => {
+			const attachments = [getAttachment('video', 'small'), getAttachment('video', 'youtube')];
+			const media = await prepareMedia(attachments, {
+				randomFilenames: true,
+				saveTo: downloadLocation
 			});
-			it('should prepare 2 videos', async () => {
-				const attachments = [getAttachment('video', 'small'), getAttachment('video', 'small')];
-				const media = await prepareMedia(attachments, {
-					randomFilenames: true,
-					saveTo: downloadLocation
-				});
-				for (const m of media) {
-					expect(m.type).toBeDefined();
-					expect(m.media).toBeDefined();
-				}
-			});
-			it('should prepare 1 video and ignore youtube and big video', async () => {
-				const attachments = [getAttachment('video', 'youtube'), getAttachment('video', 'small'), getAttachment('video', 'big')];
-				const media = await prepareMedia(attachments, {
-					randomFilenames: true,
-					saveTo: downloadLocation
-				});
-				expect(media).toHaveLength(3);
-				for (const m of media) {
-					expect(m.media).toBeDefined();
-					expect(m.type).toBe('video');
-				}
-			});
+			expect(media).toHaveLength(2);
+			for (const m of media) {
+				expect(m.media).toBeDefined();
+				expect(m.type).toBe('video');
+			}
 		});
-		describe('Documents', () => {
-			it('should prepare pdf and gif', async () => {
-				const attachments = [getAttachment('doc', 'pdf'), getAttachment('doc', 'gif')];
-				const media = await prepareMedia(attachments, {
-					randomFilenames: true,
-					saveTo: downloadLocation
-				});
-				expect(media).toHaveLength(2);
-				for (const m of media) {
-					expect(m.media).toBeDefined();
-					expect(m.type).toBe('document');
-				}
+		it('should prepare pdf and gif', async () => {
+			const attachments = [getAttachment('doc', 'pdf'), getAttachment('doc', 'gif')];
+			const media = await prepareMedia(attachments, {
+				randomFilenames: true,
+				saveTo: downloadLocation
 			});
+			expect(media).toHaveLength(2);
+			for (const m of media) {
+				expect(m.media).toBeDefined();
+				expect(m.type).toBe('document');
+			}
 		});
 	});
 	describe('Download', () => {
-		describe('Image', () => {
-			it('should download jpeg, webp, png images', async () => {
-				const images = ['https://via.placeholder.com/150.jpeg', 'https://via.placeholder.com/150.webp', 'https://via.placeholder.com/150.png'];
-				for (const image of images) {
-					const imageInfo = await downloadFile(image, downloadLocation, makeID());
-					const imageExists = fs.existsSync(imageInfo.path);
-					expect(imageExists).toBeTruthy();
-					expect(imageInfo.size).toBeGreaterThan(0);
-					expect(imageInfo.size).toBeLessThan(10000);
+		jest.setTimeout(120000);
+		it('should download jpeg, webp, png images. And convert webp to jpg', async () => {
+			const images = ['https://via.placeholder.com/150.jpeg', 'https://via.placeholder.com/150.webp', 'https://via.placeholder.com/150.png'];
+			for (const image of images) {
+				let imageInfo = await downloadFile(image, downloadLocation, makeID());
+				if (isWebp(imageInfo.path)) {
+					const cImageInfo = await convertWebpToJpg(imageInfo.path);
+					expect(cImageInfo.ext).toBe('jpg');
+					imageInfo = cImageInfo;
 				}
-			});
-			it('should convert webp image to jpg', async () => {
-				const image = 'https://via.placeholder.com/150.webp';
-				const imageInfo = await downloadFile(image, downloadLocation, makeID());
-				const convertedImageInfo = await convertWebpToJpg(imageInfo.path);
-				const imageExists = fs.existsSync(convertedImageInfo.path);
+				expect(fs.existsSync(imageInfo.path)).toBeTruthy();
+				expect(imageInfo.size).toBeGreaterThan(0);
+				expect(imageInfo.size).toBeLessThan(10000);
+			}
+		});
+
+		it('should download vk and youtube videos', async () => {
+			const videoUrls = ['https://vk.com/video-172967713_456240740', 'https://youtu.be/vy12D9bc48E'];
+			for (const videoUrl of videoUrls) {
+				const videoInfo = await downloadVideo(videoUrl, downloadLocation, makeID());
+				const videoExists = fs.existsSync(videoInfo.path);
+				expect(videoExists).toBeTruthy();
+				expect(videoInfo.size).toBeGreaterThan(0);
+				expect(videoInfo.size).toBeLessThan(50000);
+				expect(videoInfo.duration).toBeLessThan(600);
+			}
+		});
+		it('should ignore videos longer than 10mins and bigger than 50mb', async () => {
+			const videoUrls = ['https://vk.com/video-74325500_169755573', 'https://youtu.be/hY7m5jjJ9mM'];
+			for (const videoUrl of videoUrls) {
+				const videoInfo = await downloadVideo(videoUrl, downloadLocation, makeID());
+				expect(videoInfo).toBeNull();
+			}
+		});
+		it('should download pdf and gif documents', async () => {
+			const docs = [
+				'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+				'https://vk.com/doc11300623_634596229?hash=wbgBjb8P7nNwFE0VrShru9VQ05ZZ1vrUAL1W2jRQGdL&dl=GEYTGMBQGYZDG:1651397414:aGnkJBSUcfiZ05pJCHY5QZhQwJc4hBCS7BhoEjHorqz&api=1&no_preview=1'
+			];
+			for (const doc of docs) {
+				const imageInfo = await downloadFile(doc, downloadLocation, makeID());
+				const imageExists = fs.existsSync(imageInfo.path);
 				expect(imageExists).toBeTruthy();
-				expect(convertedImageInfo.ext).toBe('jpg');
-				expect(convertedImageInfo.size).toBeGreaterThan(0);
-				expect(convertedImageInfo.size).toBeLessThan(50000);
-			});
-		});
-		describe('Video', () => {
-			jest.setTimeout(120000);
-			it('should download vk and youtube videos', async () => {
-				const videoUrls = ['https://vk.com/video-191117934_456239053', 'https://youtu.be/kEPfM3jSoBw'];
-				for (const videoUrl of videoUrls) {
-					const videoInfo = await downloadVideo(videoUrl, downloadLocation, makeID());
-					const videoExists = fs.existsSync(videoInfo.path);
-					expect(videoExists).toBeTruthy();
-					expect(videoInfo.size).toBeGreaterThan(0);
-					expect(videoInfo.size).toBeLessThan(50000);
-				}
-			});
-		});
-		describe('Document', () => {
-			it('should download pdf and gif documents', async () => {
-				const docs = [
-					'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-					'https://www.easygifanimator.net/images/samples/video-to-gif-sample.gif'
-				];
-				for (const doc of docs) {
-					const imageInfo = await downloadFile(doc, downloadLocation, makeID());
-					const imageExists = fs.existsSync(imageInfo.path);
-					expect(imageExists).toBeTruthy();
-					expect(imageInfo.size).toBeGreaterThan(0);
-					expect(imageInfo.size).toBeLessThan(50000);
-				}
-			});
+				expect(imageInfo.size).toBeGreaterThan(0);
+				expect(imageInfo.size).toBeLessThan(50000);
+			}
 		});
 	});
 	describe('chunkString', () => {
