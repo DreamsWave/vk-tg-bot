@@ -62,7 +62,7 @@ export const downloadVideo = async (videoUrl: string, saveTo: string, filename: 
 	try {
 		result = await youtubeDlExec(videoUrl, {
 			dumpJson: true,
-			format: '(mp4)[height<=360]'
+			format: '(mp4)[height<=640][height>=360][width<=640][width>=360]'
 		});
 		if (result.duration > 600) return null;
 		if (result.extractor === 'youtube') {
@@ -70,7 +70,7 @@ export const downloadVideo = async (videoUrl: string, saveTo: string, filename: 
 		} else {
 			await youtubeDlExec(videoUrl, {
 				output: filePath,
-				format: '(mp4)[height<=360]'
+				format: '(mp4)[height<=640][height>=360][width<=640][width>=360]'
 			});
 			filePath = await convertVideoToMP4(filePath);
 		}
