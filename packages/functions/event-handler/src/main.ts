@@ -1,12 +1,11 @@
 import { Event, Context, VKEvent } from '@yc-bot/types';
 import { logger } from '@yc-bot/shared';
 import { ymq } from '@yc-bot/yandex-api';
-import { VK } from '@yc-bot/vk-api';
+import { vk } from '@yc-bot/vk-api';
 import dotenv from 'dotenv';
 dotenv.config();
 
 export const handler = async (event: Event, context: Context) => {
-	const vk = new VK(process.env.VK_TOKEN, process.env.VK_ERROR_CHAT_ID);
 	try {
 		logger.debug(JSON.stringify(event));
 		const vkEvent: VKEvent = JSON.parse(event.body) ?? {};
