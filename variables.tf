@@ -33,3 +33,7 @@ variable "vk_token" {
 variable "vk_error_chat_id" {
   type = string
 }
+
+variable "currency_token" {
+  type = string
+}

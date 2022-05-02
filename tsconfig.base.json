@@ -17,6 +17,7 @@
 		"resolveJsonModule": true,
 		"baseUrl": ".",
 		"paths": {
+			"@yc-bot/message-handler": ["packages/message-handler/src/index.ts"],
 			"@yc-bot/mocks": ["packages/mocks/src/index.ts"],
 			"@yc-bot/shared": ["packages/shared/src/index.ts"],
 			"@yc-bot/telegram-api": ["packages/telegram-api/src/index.ts"],

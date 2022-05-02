@@ -6,6 +6,7 @@ dotenv.config();
 interface IVK {
 	errorChatId: number;
 	api: API;
+	sendMessage(peerId: number | string, message: string): Promise<void>;
 	sendError(error: unknown): Promise<void>;
 }
 
@@ -15,6 +16,17 @@ class VK implements IVK {
 	constructor() {
 		this.api = new VKAPI({ token: process.env.VK_TOKEN }).api;
 		this.errorChatId = +process.env.VK_ERROR_CHAT_ID;
+	}
+
+	async sendMessage(peerId: number | string, message: string): Promise<void> {
+		if (peerId && message.length) {
+			try {
+				await this.api.messages.send({ peer_id: +peerId, message, random_id: getRandomId() });
+			} catch (error) {
+				logger.error(error);
+				this.sendError(error);
+			}
+		}
 	}
 
 	async sendError(error: Error): Promise<void> {

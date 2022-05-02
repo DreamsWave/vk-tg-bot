@@ -2,7 +2,9 @@
 	"version": 2,
 	"projects": {
 		"functions-event-handler": "packages/functions/event-handler",
+		"functions-message-new": "packages/functions/message-new",
 		"functions-wall-post-new": "packages/functions/wall-post-new",
+		"message-handler": "packages/message-handler",
 		"mocks": "packages/mocks",
 		"shared": "packages/shared",
 		"telegram-api": "packages/telegram-api",
