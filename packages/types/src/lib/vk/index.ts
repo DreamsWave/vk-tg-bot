@@ -9,6 +9,30 @@ export interface VKEvent {
 	secret?: string;
 }
 
+export interface Message {
+	message: {
+		date: number;
+		from_id: number;
+		id: number;
+		peer_id: number;
+		out?: number;
+		attachments?: object[];
+		conversation_message_id?: number;
+		fwd_messages?: object[];
+		important?: boolean;
+		is_hidden?: boolean;
+		random_id?: number;
+		text?: string;
+	};
+	client_info?: {
+		button_actions?: string[];
+		keyboard?: boolean;
+		inline_keyboard?: boolean;
+		carousel?: boolean;
+		lang_id?: number;
+	};
+}
+
 export interface Post {
 	id: number;
 	to_id?: number;

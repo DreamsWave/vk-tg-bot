@@ -1,0 +1,52 @@
+{
+	"root": "packages/functions/message-new",
+	"sourceRoot": "packages/functions/message-new/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/node:webpack",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/packages/functions/message-new",
+				"main": "packages/functions/message-new/src/main.ts",
+				"tsConfig": "packages/functions/message-new/tsconfig.app.json",
+				"assets": ["packages/functions/message-new/src/assets"]
+			},
+			"configurations": {
+				"production": {
+					"optimization": true,
+					"extractLicenses": true,
+					"inspect": false,
+					"fileReplacements": [
+						{
+							"replace": "packages/functions/message-new/src/environments/environment.ts",
+							"with": "packages/functions/message-new/src/environments/environment.prod.ts"
+						}
+					]
+				}
+			}
+		},
+		"serve": {
+			"executor": "@nrwl/node:node",
+			"options": {
+				"buildTarget": "functions-message-new:build"
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["packages/functions/message-new/**/*.ts"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/packages/functions/message-new"],
+			"options": {
+				"jestConfig": "packages/functions/message-new/jest.config.js",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}
