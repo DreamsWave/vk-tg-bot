@@ -18,12 +18,12 @@ export const downloadFile = async (fileUrl: string, saveTo: string, filename: st
 				resolve(await downloadFile(resp.headers.location, saveTo, String(filename)));
 			}
 			if (resp.statusCode === 200) {
-				const size = Math.ceil(parseInt(resp.headers['content-length'], 10) / 1000); // kb
+				const size = Math.ceil(parseInt(resp.headers['content-length'], 10) / 1024); // kb
 				const mime = resp.headers['content-type'];
 				const ext = extension(mime);
 				const filePath = path.join(saveTo, `${filename}.${ext}`);
 
-				if (size > 50000) reject('File is bigger than 50mb');
+				if (size > 51200) reject(`File is bigger than 50MB. Expected less than 50MB. Current size is ${size / 1024}MB`);
 
 				const fileStream = fs.createWriteStream(filePath);
 				resp.pipe(fileStream);
@@ -49,7 +49,7 @@ export const downloadFile = async (fileUrl: string, saveTo: string, filename: st
 				});
 				request.end();
 			} else {
-				reject('Unknown file downloading error');
+				reject('Unknown error in file downloading');
 			}
 		});
 	});
@@ -63,9 +63,7 @@ export const downloadVideo = async (videoUrl: string, saveTo: string, filename: 
 		format: '(mp4)[height<=640][height>=360][width<=640][width>=360]'
 	});
 	if (result.duration > 600) {
-		throw `Video is longer than 10 minutes
-			${result.fulltitle ?? ''}
-			${result.webpage_url ?? ''}`;
+		throw `Video is longer than 10 minutes. "${result.fulltitle ?? ''}" ${result.webpage_url ?? ''} `;
 	}
 	if (result.extractor === 'youtube') {
 		await downloadYoutubeVideo(result.webpage_url, saveTo, filename);
@@ -78,8 +76,10 @@ export const downloadVideo = async (videoUrl: string, saveTo: string, filename: 
 	}
 
 	const size = Math.round(fs.statSync(filePath).size / 1024); // kb
-	if (size > 50000) {
-		throw 'Video is bigger than 50MB';
+	if (size > 51200) {
+		throw `Video size is bigger than 50MB. Expected less than 50MB. Current size is ${size / 1024}MB. "${result.fulltitle ?? ''}" ${
+			result.webpage_url ?? ''
+		} `;
 	}
 	const [name, ext] = path.basename(filePath).split('.');
 	fileInfo = {

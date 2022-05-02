@@ -2,8 +2,9 @@ import { DocumentAttachment, PhotoAttachment, VideoAttachment } from 'vk-io';
 import os from 'os';
 import { downloadVideo, downloadFile } from './download';
 import { convertWebpToJpg, isWebp } from './convertWebpToJpg';
-import { makeID } from '@yc-bot/shared';
+import { logger, makeID } from '@yc-bot/shared';
 import { MediaType } from '@yc-bot/types';
+import { vk } from '@yc-bot/vk-api';
 
 export interface IPrepareMediaOptions {
 	saveTo?: string;
@@ -21,11 +22,16 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 			const photo = new PhotoAttachment({ api: null, payload: attachment.photo });
 			const photoUrl = photo.largeSizeUrl;
 			const filename = randomFilenames ? makeID() : photo.id;
-
-			let imageInfo = await downloadFile(photoUrl, saveTo, filename);
-			if (!imageInfo) continue;
-			if (isWebp(imageInfo.path)) {
-				imageInfo = await convertWebpToJpg(imageInfo.path);
+			let imageInfo = null;
+			try {
+				imageInfo = await downloadFile(photoUrl, saveTo, filename);
+				if (!imageInfo) continue;
+				if (isWebp(imageInfo.path)) {
+					imageInfo = await convertWebpToJpg(imageInfo.path);
+				}
+			} catch (error) {
+				logger.error(error);
+				await vk.sendError(error);
 			}
 			media.type = 'photo';
 			media.media = imageInfo.buffer;
@@ -34,9 +40,15 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 		}
 		if (attachment.type === 'video') {
 			const video = new VideoAttachment({ api: null, payload: attachment.video });
-			const videoUrl = `https://vk.com/video-${Math.abs(video.ownerId)}_${Math.abs(video.id)}`;
+			const videoUrl = `https://m.vk.com/video${video.ownerId}_${video.id}`;
 			const filename = randomFilenames ? makeID() : video.id;
-			const videoInfo = await downloadVideo(videoUrl, saveTo, filename);
+			let videoInfo = null;
+			try {
+				videoInfo = await downloadVideo(videoUrl, saveTo, filename);
+			} catch (error) {
+				logger.error(error);
+				await vk.sendError(error);
+			}
 			if (!videoInfo) continue;
 			media.type = 'video';
 			media.media = videoInfo.buffer;
@@ -49,7 +61,13 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 		if (attachment.type === 'doc') {
 			const doc = new DocumentAttachment({ api: null, payload: attachment.doc });
 			const filename = randomFilenames ? makeID() : doc.title.split('.')[0];
-			const fileInfo = await downloadFile(doc.url, saveTo, filename);
+			let fileInfo = null;
+			try {
+				fileInfo = await downloadFile(doc.url, saveTo, filename);
+			} catch (error) {
+				logger.error(error);
+				await vk.sendError(error);
+			}
 			if (!fileInfo) continue;
 			media.type = 'document';
 			media.media = fileInfo.buffer;
