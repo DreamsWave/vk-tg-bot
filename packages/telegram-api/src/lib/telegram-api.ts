@@ -64,17 +64,19 @@ export default class TG implements ITG {
 	}
 
 	async sendMessage(text: string, options?: SendMessageOptions): Promise<void> {
-		const chunkedText = chunkString(text, 4096);
-		for (let i = 0; i < chunkedText.length; i++) {
-			if (i === 0) {
-				await this.api.sendMessage(this.chatId, chunkedText[0], {
-					...options
-				});
-			} else {
-				await this.api.sendMessage(this.chatId, chunkedText[i], {
-					...options,
-					disable_notification: true
-				});
+		if (text.length) {
+			const chunkedText = chunkString(text, 4096);
+			for (let i = 0; i < chunkedText.length; i++) {
+				if (i === 0) {
+					await this.api.sendMessage(this.chatId, chunkedText[0], {
+						...options
+					});
+				} else {
+					await this.api.sendMessage(this.chatId, chunkedText[i], {
+						...options,
+						disable_notification: true
+					});
+				}
 			}
 		}
 	}
@@ -94,7 +96,7 @@ export default class TG implements ITG {
 				} else {
 					await this.api.sendPhoto(this.chatId, media.media, {
 						...options,
-						caption: firstText
+						caption: firstText ?? ''
 					});
 				}
 			}
@@ -102,7 +104,7 @@ export default class TG implements ITG {
 			if (media.type === 'video') {
 				await this.api.sendVideo(this.chatId, media.media, {
 					...options,
-					caption: firstText
+					caption: firstText ?? ''
 				});
 			}
 
@@ -110,12 +112,12 @@ export default class TG implements ITG {
 				if (media.ext === 'gif') {
 					await this.api.sendAnimation(this.chatId, media.media, {
 						...options,
-						caption: firstText
+						caption: firstText ?? ''
 					});
 				} else {
 					await this.api.sendDocument(this.chatId, media.media, {
 						...options,
-						caption: firstText
+						caption: firstText ?? ''
 					});
 				}
 			}
@@ -138,7 +140,7 @@ export default class TG implements ITG {
 		if (mediaGroup.length) {
 			const [firstText, ...restText] = chunkString(text, MAX_TEXT_LENGTH, CAPTION_TEXT_LENGTH);
 			let media = mediaGroup.filter((m) => m.type === 'video' || m.type === 'photo') as InputMedia[];
-			media[0].caption = firstText;
+			media[0].caption = firstText ?? '';
 			media = media.slice(0, 9);
 			await this.api.sendMediaGroup(this.chatId, media, {
 				...mediaGroupOptions
