@@ -93,7 +93,7 @@ data "archive_file" "wall-post-new" {
 
 resource "yandex_function" "message-new" {
   name               = "message-new"
-  description        = "VK event 'wall_post_new'"
+  description        = "VK event 'message_new'"
   user_hash          = data.archive_file.message-new.output_base64sha256
   runtime            = "nodejs16"
   entrypoint         = "main.handler"

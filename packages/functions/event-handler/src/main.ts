@@ -31,7 +31,7 @@ export const handler = async (event: Event, context: Context) => {
 		}
 	} catch (error) {
 		logger.error(JSON.stringify(error));
-		vk.sendError(new Error(error));
+		await vk.sendError(error);
 	}
 	return {
 		statusCode: 200,
