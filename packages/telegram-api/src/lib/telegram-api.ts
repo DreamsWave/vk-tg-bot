@@ -1,9 +1,10 @@
 process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
 import TelegramBot, { InputMedia, SendMediaGroupOptions, SendMessageOptions } from 'node-telegram-bot-api';
-import { MediaType } from '@yc-bot/types';
+import { FileInfo, MediaType } from '@yc-bot/types';
 import { logger, chunkString, createLinkedPhoto } from '@yc-bot/shared';
 import dotenv from 'dotenv';
+import { Stream } from 'stream';
 dotenv.config();
 
 export interface ITG {
@@ -104,8 +105,13 @@ export default class TG implements ITG {
 			if (media.type === 'video') {
 				await this.api.sendVideo(this.chatId, media.media, {
 					...options,
+					duration: media.duration,
+					height: media.height,
+					width: media.width,
+					thumb: media.thumb,
+					supports_streaming: true,
 					caption: firstText ?? ''
-				});
+				} as TelegramBot.SendVideoOptions & { thumb?: Stream | string | Buffer; supports_streaming?: boolean });
 			}
 
 			if (media.type === 'document') {
@@ -139,7 +145,12 @@ export default class TG implements ITG {
 	): Promise<void> {
 		if (mediaGroup.length) {
 			const [firstText, ...restText] = chunkString(text, MAX_TEXT_LENGTH, CAPTION_TEXT_LENGTH);
-			let media = mediaGroup.filter((m) => m.type === 'video' || m.type === 'photo') as InputMedia[];
+			const mediaVP = mediaGroup.filter((m) => m.type === 'video' || m.type === 'photo') as (InputMedia & FileInfo)[];
+			let media = mediaVP.map((m) => {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				const { thumb, ...rest } = m;
+				return { ...rest };
+			});
 			media[0].caption = firstText ?? '';
 			media = media.slice(0, 9);
 			await this.api.sendMediaGroup(this.chatId, media, {
