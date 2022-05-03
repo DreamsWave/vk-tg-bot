@@ -8,6 +8,8 @@ import ytdl from 'ytdl-core';
 import pathToFfmpeg from 'ffmpeg-static';
 import child_process from 'child_process';
 import { promisify } from 'util';
+import jimp from 'jimp';
+import { convertWebpToJpg, isWebp } from './convertWebpToJpg';
 promisify(child_process.exec);
 const exec = child_process.exec;
 
@@ -23,7 +25,9 @@ export const downloadFile = async (fileUrl: string, saveTo: string, filename: st
 				const ext = extension(mime);
 				const filePath = path.join(saveTo, `${filename}.${ext}`);
 
-				if (size > 51200) reject(`File is bigger than 50MB. Expected less than 50MB. Current size is ${size / 1024}MB`);
+				if (size > 51200)
+					reject(`File is bigger than 50MB. Current size is ${Math.round(size / 1024)}MB. 
+					${fileUrl}`);
 
 				const fileStream = fs.createWriteStream(filePath);
 				resp.pipe(fileStream);
@@ -58,30 +62,34 @@ export const downloadFile = async (fileUrl: string, saveTo: string, filename: st
 export const downloadVideo = async (videoUrl: string, saveTo: string, filename: string | number): Promise<FileInfo | null> => {
 	let filePath = path.join(saveTo, `${filename}.mp4`);
 	let fileInfo: FileInfo = null;
+
 	const result = await youtubeDlExec(videoUrl, {
 		dumpJson: true,
-		format: '(mp4)[height<=640][height>=360][width<=640][width>=360]'
+		format: '(mp4)[height<=720][width<=720]'
 	});
+
 	if (result.duration > 600) {
-		throw `Video is longer than 10 minutes. "${result.fulltitle ?? ''}" ${result.webpage_url ?? ''} `;
+		throw new Error(`Video is longer than 10 minutes. 
+		${videoUrl}`);
 	}
+
 	if (result.extractor === 'youtube') {
-		await downloadYoutubeVideo(result.webpage_url, saveTo, filename);
+		filePath = await downloadYoutubeVideo(result.webpage_url, saveTo, filename);
 	} else {
 		await youtubeDlExec(videoUrl, {
 			output: filePath,
-			format: '(mp4)[height<=640][height>=360][width<=640][width>=360]'
+			format: `(mp4)[height<=${result.height}][width<=${result.width}]`
 		});
 		filePath = await convertVideoToMP4(filePath);
 	}
 
 	const size = Math.round(fs.statSync(filePath).size / 1024); // kb
 	if (size > 51200) {
-		throw `Video size is bigger than 50MB. Expected less than 50MB. Current size is ${size / 1024}MB. "${result.fulltitle ?? ''}" ${
-			result.webpage_url ?? ''
-		} `;
+		throw new Error(`Video size is bigger than 50MB. Current size is ${Math.round(size / 1024)}MB. 
+		${videoUrl}`);
 	}
 	const [name, ext] = path.basename(filePath).split('.');
+	const thumbInfo = await downloadThumb(result.thumbnail, saveTo, name);
 	fileInfo = {
 		ext,
 		filename: name,
@@ -92,12 +100,52 @@ export const downloadVideo = async (videoUrl: string, saveTo: string, filename: 
 		duration: result.duration,
 		height: result.height,
 		width: result.width,
-		thumb: result.thumbnail
+		thumb: thumbInfo.buffer
 	};
 	return fileInfo;
 };
 
-export const downloadYoutubeVideo = (videoUrl: string, saveTo: string, filename: string | number): Promise<void> => {
+export interface Thumb {
+	height: number;
+	width: number;
+	resolution: string;
+	url: string;
+	id: string;
+}
+
+export const downloadThumb = async (thumbUrl: string, saveTo: string, filename: string): Promise<FileInfo> => {
+	let thumbInfo = await downloadFile(thumbUrl, saveTo, `${filename}_thumb`);
+	if (isWebp(thumbInfo.path)) {
+		thumbInfo = await convertWebpToJpg(thumbInfo.path);
+	}
+	const thumb = await jimp.read(thumbInfo.path);
+	const { width, height } = calculateImageDimensions(thumb.bitmap.width, thumb.bitmap.height, 300, 300);
+	await thumb.resize(width, height).quality(60).writeAsync(thumbInfo.path);
+	const size = Math.round(fs.statSync(thumbInfo.path).size / 1024);
+	if (size > 200) return null;
+	thumbInfo.height = height;
+	thumbInfo.width = width;
+	thumbInfo.size = size;
+	thumbInfo.buffer = fs.createReadStream(thumbInfo.path);
+	return thumbInfo;
+};
+
+function calculateImageDimensions(width: number, height: number, maxWidth: number, maxHeight: number): { width: number; height: number } {
+	if (width > height) {
+		if (width > maxWidth) {
+			height = Math.round((height *= maxWidth / width));
+			width = maxWidth;
+		}
+	} else {
+		if (height > maxHeight) {
+			width = Math.round((width *= maxHeight / height));
+			height = maxHeight;
+		}
+	}
+	return { width, height };
+}
+
+export const downloadYoutubeVideo = (videoUrl: string, saveTo: string, filename: string | number): Promise<string> => {
 	return new Promise((resolve, reject) => {
 		const filePath = path.join(saveTo, `${filename}.mp4`);
 		const fileStream = fs.createWriteStream(filePath);
@@ -105,7 +153,7 @@ export const downloadYoutubeVideo = (videoUrl: string, saveTo: string, filename:
 		video.pipe(fileStream);
 		video.on('error', (err) => reject(err));
 		video.on('end', () => {
-			resolve();
+			resolve(filePath);
 		});
 	});
 };

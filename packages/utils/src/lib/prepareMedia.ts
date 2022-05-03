@@ -2,9 +2,8 @@ import { DocumentAttachment, PhotoAttachment, VideoAttachment } from 'vk-io';
 import os from 'os';
 import { downloadVideo, downloadFile } from './download';
 import { convertWebpToJpg, isWebp } from './convertWebpToJpg';
-import { logger, makeID } from '@yc-bot/shared';
+import { makeID } from '@yc-bot/shared';
 import { MediaType } from '@yc-bot/types';
-import { vk } from '@yc-bot/vk-api';
 
 export interface IPrepareMediaOptions {
 	saveTo?: string;
@@ -16,65 +15,73 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 	const saveTo = options?.saveTo ?? os.tmpdir();
 	const randomFilenames = options?.randomFilenames;
 	let mediaArray = [] as MediaType[];
+
 	for (const attachment of attachments) {
 		const media = {} as MediaType;
 		if (attachment.type === 'photo') {
 			const photo = new PhotoAttachment({ api: null, payload: attachment.photo });
 			const photoUrl = photo.largeSizeUrl;
-			const filename = randomFilenames ? makeID() : photo.id;
-			let imageInfo = null;
 			try {
+				const filename = randomFilenames ? makeID() : photo.id;
+				let imageInfo = null;
 				imageInfo = await downloadFile(photoUrl, saveTo, filename);
 				if (!imageInfo) continue;
 				if (isWebp(imageInfo.path)) {
 					imageInfo = await convertWebpToJpg(imageInfo.path);
 				}
+				media.type = 'photo';
+				media.media = imageInfo.buffer;
+				media.ext = imageInfo.ext;
+				media.origin = photoUrl;
 			} catch (error) {
-				logger.error(error);
-				await vk.sendError(error);
+				if (error.stderr) {
+					error.stderr += ` ${photoUrl}`;
+				}
+				throw error;
 			}
-			media.type = 'photo';
-			media.media = imageInfo.buffer;
-			media.ext = imageInfo.ext;
-			media.origin = photoUrl;
 		}
 		if (attachment.type === 'video') {
 			const video = new VideoAttachment({ api: null, payload: attachment.video });
 			const videoUrl = `https://m.vk.com/video${video.ownerId}_${video.id}`;
-			const filename = randomFilenames ? makeID() : video.id;
-			let videoInfo = null;
 			try {
+				const filename = randomFilenames ? makeID() : video.id;
+				let videoInfo = null;
 				videoInfo = await downloadVideo(videoUrl, saveTo, filename);
+				if (!videoInfo) continue;
+				media.type = 'video';
+				media.media = videoInfo.buffer;
+				media.ext = videoInfo.ext;
+				media.duration = videoInfo.duration;
+				media.height = videoInfo.height;
+				media.width = videoInfo.width;
+				media.thumb = videoInfo.thumb;
 			} catch (error) {
-				logger.error(error);
-				await vk.sendError(error);
+				if (error.stderr) {
+					error.stderr += ` ${videoUrl}`;
+				}
+				throw error;
 			}
-			if (!videoInfo) continue;
-			media.type = 'video';
-			media.media = videoInfo.buffer;
-			media.ext = videoInfo.ext;
-			media.duration = videoInfo.duration;
-			media.height = videoInfo.height;
-			media.width = videoInfo.width;
-			media.thumb = videoInfo.thumb;
 		}
 		if (attachment.type === 'doc') {
 			const doc = new DocumentAttachment({ api: null, payload: attachment.doc });
-			const filename = randomFilenames ? makeID() : doc.title.split('.')[0];
-			let fileInfo = null;
 			try {
+				const filename = randomFilenames ? makeID() : doc.title.split('.')[0];
+				let fileInfo = null;
 				fileInfo = await downloadFile(doc.url, saveTo, filename);
+				if (!fileInfo) continue;
+				media.type = 'document';
+				media.media = fileInfo.buffer;
+				media.ext = fileInfo.ext;
 			} catch (error) {
-				logger.error(error);
-				await vk.sendError(error);
+				if (error.stderr) {
+					error.stderr += ` ${doc.url}`;
+				}
+				throw error;
 			}
-			if (!fileInfo) continue;
-			media.type = 'document';
-			media.media = fileInfo.buffer;
-			media.ext = fileInfo.ext;
 		}
 		mediaArray.push(media);
 	}
 	mediaArray = mediaArray.filter((media) => media.media);
+
 	return mediaArray;
 };

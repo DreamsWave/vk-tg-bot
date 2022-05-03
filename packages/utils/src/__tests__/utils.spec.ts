@@ -63,7 +63,7 @@ describe('Utils', () => {
 				let imageInfo = await downloadFile(image, downloadLocation, makeID());
 				if (isWebp(imageInfo.path)) {
 					const cImageInfo = await convertWebpToJpg(imageInfo.path);
-					expect(cImageInfo.ext).toBe('jpg');
+					expect(cImageInfo.ext).toBe('jpeg');
 					imageInfo = cImageInfo;
 				}
 				expect(fs.existsSync(imageInfo.path)).toBeTruthy();

@@ -3,6 +3,8 @@ import path from 'path';
 import fs from 'fs';
 import { logger } from '@yc-bot/shared';
 import { FileInfo } from '@yc-bot/types';
+import { promisify } from 'util';
+const unlink = promisify(fs.unlink);
 
 export const convertWebpToJpg = async (filePath: string): Promise<FileInfo> => {
 	const fullFilename = path.basename(filePath);
@@ -10,15 +12,13 @@ export const convertWebpToJpg = async (filePath: string): Promise<FileInfo> => {
 	const name = path.basename(filePath, fileExt);
 	if (!isWebp(filePath)) {
 		logger.warn(`convertWebpToJpg expected webp image but got: ${fileExt}`);
-		return;
+		return null;
 	}
-	const newfilePath = path.join(path.dirname(filePath), `${name}.jpg`);
+	const newfilePath = path.join(path.dirname(filePath), `${name}.jpeg`);
 	await webp.dwebp(filePath, newfilePath, '-o');
-	fs.unlink(filePath, (err) => {
-		if (err) logger.error(err);
-	});
-	const size = Math.round(fs.statSync(newfilePath).size / 1000); // kb
-	if (size > 50000) throw 'File is bigger than 50mb';
+	await unlink(filePath);
+	const size = Math.round(fs.statSync(newfilePath).size / 1024); // kb
+	if (size > 10240) throw new Error('File is bigger than 10MB');
 	const [filename, ext] = path.basename(newfilePath).split('.');
 	const fileInfo: FileInfo = {
 		ext,
