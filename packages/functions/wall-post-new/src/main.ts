@@ -28,7 +28,7 @@ export const handler = async (messages: Messages, context: Context) => {
 		}
 	} catch (error) {
 		logger.error(JSON.stringify(error));
-		vk.sendError(error.message);
+		await vk.sendError(error);
 	}
 	return {
 		statusCode: 200,

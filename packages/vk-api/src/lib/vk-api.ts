@@ -29,10 +29,18 @@ class VK implements IVK {
 		}
 	}
 
-	async sendError(error: Error): Promise<void> {
-		if (this.errorChatId && this.api) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	async sendError(error: any): Promise<void> {
+		if (this.errorChatId && this.api && error) {
 			try {
-				const message = error.message ?? JSON.stringify(error);
+				let message = '';
+				if (error.stderr) {
+					message = error.stderr;
+				} else if (error instanceof Error) {
+					message = error.message;
+				} else {
+					JSON.stringify(error);
+				}
 				await this.api.messages.send({ peer_id: this.errorChatId, random_id: getRandomId(), message });
 			} catch (error) {
 				logger.error(error.message);
