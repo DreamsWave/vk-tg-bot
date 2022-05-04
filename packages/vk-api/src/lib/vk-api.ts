@@ -13,15 +13,29 @@ interface IVK {
 class VK implements IVK {
 	errorChatId: number;
 	api: API;
+	instance: VKAPI;
 	constructor() {
-		this.api = new VKAPI({ token: process.env.VK_TOKEN }).api;
+		this.instance = new VKAPI({ token: process.env.VK_TOKEN });
+		this.api = this.instance.api;
 		this.errorChatId = +process.env.VK_ERROR_CHAT_ID;
 	}
 
-	async sendMessage(peerId: number | string, message: string): Promise<void> {
-		if (peerId && message.length) {
+	async sendMessage(peerId: number | string, message?: string, attachments?: string): Promise<void> {
+		if (peerId) {
 			try {
-				await this.api.messages.send({ peer_id: +peerId, message, random_id: getRandomId() });
+				const sendOptions = { peer_id: +peerId, message, random_id: getRandomId() } as {
+					peer_id: number;
+					message?: string;
+					random_id: number;
+					attachment?: string;
+				};
+				if (attachments) {
+					sendOptions.attachment = attachments;
+					await this.api.messages.send(sendOptions);
+					return;
+				}
+				if (!message.length) return;
+				await this.api.messages.send(sendOptions);
 			} catch (error) {
 				logger.error(error);
 				this.sendError(error);
