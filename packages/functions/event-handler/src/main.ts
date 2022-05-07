@@ -1,6 +1,6 @@
-import { Event, Context, VKEvent } from '@yc-bot/types';
+import { Event, Context, VKEvent, Post } from '@yc-bot/types';
 import { logger } from '@yc-bot/shared';
-import { ymq } from '@yc-bot/yandex-api';
+import { isPostUnique, ymq } from '@yc-bot/yandex-api';
 import { vk } from '@yc-bot/vk-api';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -20,8 +20,10 @@ export const handler = async (event: Event, context: Context) => {
 
 		if (vkEvent?.type === 'wall_post_new') {
 			logger.info('wall_post_new');
-			const ymqUrl = process.env.YMQ_WALL_POST_NEW_URL;
-			await ymq.sendMessage(ymqUrl, vkEvent);
+			if (await isPostUnique(event, context)) {
+				const ymqUrl = process.env.YMQ_WALL_POST_NEW_URL;
+				await ymq.sendMessage(ymqUrl, vkEvent);
+			}
 		}
 
 		if (vkEvent?.type === 'message_new') {

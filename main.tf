@@ -56,6 +56,7 @@ resource "yandex_function" "event-handler" {
     "LOG_LEVEL"             = "ALL"
     "VK_TOKEN"              = var.vk_token
     "VK_ERROR_CHAT_ID"      = var.vk_error_chat_id
+    "YC_TOKEN"              = var.token
   }
 }
 data "archive_file" "event-handler" {
