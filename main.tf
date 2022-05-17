@@ -13,25 +13,46 @@ terraform {
 }
 
 provider "yandex" {
-  token     = var.token
-  cloud_id  = var.cloud_id
-  folder_id = var.folder_id
+  token     = var.yc_token
+  cloud_id  = var.yc_cloud_id
+  folder_id = var.yc_folder_id
 }
 
 ### IAM
 resource "yandex_iam_service_account" "this" {
-  name        = var.service_account_name
+  name        = var.yc_service_account_name
   description = "Service account to manage Functions"
 }
 resource "yandex_resourcemanager_folder_iam_member" "this" {
   for_each  = toset(["admin"])
-  folder_id = var.folder_id
+  folder_id = var.yc_folder_id
   member    = "serviceAccount:${yandex_iam_service_account.this.id}"
   role      = each.value
 }
 resource "yandex_iam_service_account_static_access_key" "sa-static-key" {
   service_account_id = yandex_iam_service_account.this.id
   description        = "static access key for YMQ"
+}
+
+### Yandex Database
+resource "yandex_ydb_database_serverless" "bots" {
+  name      = "bots"
+  folder_id = var.yc_folder_id
+  provisioner "local-exec" {
+    environment = {
+      AWS_ACCESS_KEY_ID     = yandex_iam_service_account_static_access_key.sa-static-key.access_key
+      AWS_SECRET_ACCESS_KEY = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
+      AWS_ENDPOINT          = yandex_ydb_database_serverless.bots.document_api_endpoint
+      NAME                  = var.name
+      TG_CHAT_ID            = var.tg_chat_id
+      TG_TOKEN              = var.tg_token
+      TG_ERROR_CHAT_ID      = var.tg_error_chat_id
+      VK_GROUP_CALLBACK     = var.vk_group_callback
+      VK_GROUP_ID           = var.vk_group_id
+      VK_GROUP_TOKEN        = var.vk_group_token
+    }
+    command = "node ./scripts/createConfigsTable.js"
+  }
 }
 
 ### Functions
@@ -50,13 +71,9 @@ resource "yandex_function" "event-handler" {
   environment = {
     "AWS_ACCESS_KEY_ID"     = yandex_iam_service_account_static_access_key.sa-static-key.access_key
     "AWS_SECRET_ACCESS_KEY" = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
+    "AWS_ENDPOINT"          = yandex_ydb_database_serverless.bots.document_api_endpoint
     "YMQ_WALL_POST_NEW_URL" = data.yandex_message_queue.wall-post-new.url
     "YMQ_MESSAGE_NEW_URL"   = data.yandex_message_queue.message-new.url
-    "VK_CONFIRMATION"       = var.vk_confirmation
-    "LOG_LEVEL"             = "ALL"
-    "VK_TOKEN"              = var.vk_token
-    "VK_ERROR_CHAT_ID"      = var.vk_error_chat_id
-    "YC_TOKEN"              = var.token
   }
 }
 data "archive_file" "event-handler" {
@@ -71,18 +88,16 @@ resource "yandex_function" "wall-post-new" {
   user_hash          = data.archive_file.wall-post-new.output_base64sha256
   runtime            = "nodejs16"
   entrypoint         = "main.handler"
-  memory             = "128"
+  memory             = "256"
   execution_timeout  = "180"
   service_account_id = yandex_iam_service_account.this.id
   content {
     zip_filename = "${path.module}/dist/packages/functions/wall-post-new.zip"
   }
   environment = {
-    "TG_TOKEN"         = var.tg_token
-    "TG_CHAT_ID"       = var.tg_chat_id
-    "LOG_LEVEL"        = "ALL"
-    "VK_TOKEN"         = var.vk_token
-    "VK_ERROR_CHAT_ID" = var.vk_error_chat_id
+    "AWS_ENDPOINT"          = yandex_ydb_database_serverless.bots.document_api_endpoint
+    "AWS_ACCESS_KEY_ID"     = yandex_iam_service_account_static_access_key.sa-static-key.access_key
+    "AWS_SECRET_ACCESS_KEY" = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
   }
   depends_on = [yandex_message_queue.wall-post-new]
 }
@@ -105,10 +120,9 @@ resource "yandex_function" "message-new" {
     zip_filename = "${path.module}/dist/packages/functions/message-new.zip"
   }
   environment = {
-    "LOG_LEVEL"        = "ALL"
-    "CURRENCY_TOKEN"   = var.currency_token
-    "VK_TOKEN"         = var.vk_token
-    "VK_ERROR_CHAT_ID" = var.vk_error_chat_id
+    "AWS_ENDPOINT"          = yandex_ydb_database_serverless.bots.document_api_endpoint
+    "AWS_ACCESS_KEY_ID"     = yandex_iam_service_account_static_access_key.sa-static-key.access_key
+    "AWS_SECRET_ACCESS_KEY" = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
   }
   depends_on = [yandex_message_queue.message-new]
 }
@@ -122,7 +136,7 @@ data "archive_file" "message-new" {
 resource "yandex_function_trigger" "ymq-wall-post-new" {
   name        = "ymq-wall-post-new"
   description = "Trigger for ymq-wall-post-new"
-  folder_id   = var.folder_id
+  folder_id   = var.yc_folder_id
   message_queue {
     queue_id           = yandex_message_queue.wall-post-new.arn
     service_account_id = yandex_iam_service_account.this.id
@@ -139,7 +153,7 @@ resource "yandex_function_trigger" "ymq-wall-post-new" {
 resource "yandex_function_trigger" "ymq-message-new" {
   name        = "ymq-message-new"
   description = "Trigger for ymq-message-new"
-  folder_id   = var.folder_id
+  folder_id   = var.yc_folder_id
   message_queue {
     queue_id           = yandex_message_queue.message-new.arn
     service_account_id = yandex_iam_service_account.this.id
@@ -154,6 +168,11 @@ resource "yandex_function_trigger" "ymq-message-new" {
 }
 
 ### Message Queue
+resource "yandex_message_queue" "d-wall-post-new" {
+  name       = "d-wall-post-new"
+  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
+  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
+}
 resource "yandex_message_queue" "wall-post-new" {
   name                       = "wall-post-new"
   visibility_timeout_seconds = 600
@@ -165,11 +184,6 @@ resource "yandex_message_queue" "wall-post-new" {
     deadLetterTargetArn = yandex_message_queue.d-wall-post-new.arn
     maxReceiveCount     = 3
   })
-}
-resource "yandex_message_queue" "d-wall-post-new" {
-  name       = "d-wall-post-new"
-  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
 }
 data "yandex_message_queue" "wall-post-new" {
   name       = "wall-post-new"
@@ -209,4 +223,15 @@ paths:
         service_account_id: ${yandex_iam_service_account.this.id}
       operationId: event-handler
 EOT
+}
+
+### Outputs
+output "AWS_ENDPOINT" {
+  value = yandex_ydb_database_serverless.bots.document_api_endpoint
+}
+output "AWS_ACCESS_KEY_ID" {
+  value = yandex_iam_service_account_static_access_key.sa-static-key.access_key
+}
+output "AWS_SECRET_ACCESS_KEY" {
+  value = nonsensitive(yandex_iam_service_account_static_access_key.sa-static-key.secret_key)
 }
