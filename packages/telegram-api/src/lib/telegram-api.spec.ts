@@ -1,23 +1,20 @@
-import dotenv from 'dotenv';
 import path from 'path';
 import { getAttachment } from '@yc-bot/mocks';
-import { makeString } from '@yc-bot/shared';
+import { Config, initConfig, makeString } from '@yc-bot/shared';
 import { prepareTemp, prepareMedia } from '@yc-bot/utils';
 import TG from './telegram-api';
+import dotenv from 'dotenv';
 dotenv.config();
 
 const tmpDir = path.join(path.resolve(), 'tmp', 'assets', 'telegram-api');
 
 describe('APIs tests', () => {
 	jest.setTimeout(60000);
-	const tg = new TG(process.env.TG_TOKEN, +process.env.TG_CHAT_ID);
+	const tg = new TG();
 
-	beforeAll(() => {
+	beforeAll(async () => {
 		prepareTemp(tmpDir);
 	});
-	// beforeEach(() => {
-	//     prepareTemp(tmpDir)
-	// })
 	it('should send message with 1 photo and text', async () => {
 		let text = makeString(500);
 		text = 'START ' + text + ' END';

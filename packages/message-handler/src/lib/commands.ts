@@ -28,6 +28,5 @@ export const stocks = async (message: Message): Promise<void> => {
 		return `${currency.symbol}: ${currency.lastPrice}`;
 	});
 	const text = textArray.join('\n');
-	console.log(text);
 	await vk.sendMessage(peer_id, text);
 };

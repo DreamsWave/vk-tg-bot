@@ -1,5 +1,5 @@
 import { Event, Context, VKEvent, Post } from '@yc-bot/types';
-import { getConfig, logger } from '@yc-bot/shared';
+import { getConfig, initConfig, logger } from '@yc-bot/shared';
 import { isPostUnique, ymq } from '@yc-bot/yandex-api';
 import { vk } from '@yc-bot/vk-api';
 import dotenv from 'dotenv';
@@ -11,7 +11,7 @@ export const handler = async (event: Event, context: Context) => {
 		const vkEvent: VKEvent = JSON.parse(event.body) ?? {};
 		logger.debug(JSON.stringify(vkEvent));
 
-		const config = await getConfig(vkEvent?.group_id);
+		const config = await initConfig(vkEvent?.group_id);
 		if (!config) return { statusCode: 200, body: 'ok' };
 
 		if (vkEvent?.type === 'confirmation') {
@@ -36,7 +36,7 @@ export const handler = async (event: Event, context: Context) => {
 		// }
 	} catch (error) {
 		logger.error(JSON.stringify(error));
-		await vk.sendError(error);
+		// await vk.sendError(error);
 	}
 	return {
 		statusCode: 200,

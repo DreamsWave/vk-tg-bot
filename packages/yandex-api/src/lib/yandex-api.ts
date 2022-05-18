@@ -1,9 +1,9 @@
-import { logger } from '@yc-bot/shared';
+import { getConfig, logger } from '@yc-bot/shared';
 import { SQS } from 'aws-sdk';
 import { Session, cloudApi, serviceClients } from '@yandex-cloud/nodejs-sdk';
 import { Event, Context, VKEvent, Post } from '@yc-bot/types';
-import dotenv from 'dotenv';
-dotenv.config();
+
+const config = getConfig();
 
 export const ymq = {
 	sendMessage: async (url: string, message: unknown, options?: { apiOptions: object; sendParams: object }): Promise<SQS.SendMessageResult> => {
