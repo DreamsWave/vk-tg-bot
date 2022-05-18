@@ -2,7 +2,7 @@ import { DocumentAttachment, PhotoAttachment, VideoAttachment } from 'vk-io';
 import os from 'os';
 import { downloadVideo, downloadFile } from './download';
 import { convertWebpToJpg, isWebp } from './convertWebpToJpg';
-import { makeID } from '@yc-bot/shared';
+import { makeID } from '@yc-bot/shared/utils';
 import { MediaType } from '@yc-bot/types';
 
 export interface IPrepareMediaOptions {

@@ -1,10 +1,8 @@
 import { Messages, Context, VKEvent, Post } from '@yc-bot/types';
 import { prepareMedia } from '@yc-bot/utils';
 import { TG } from '@yc-bot/telegram-api';
-import { initConfig, logger } from '@yc-bot/shared';
-import dotenv from 'dotenv';
-import { vk } from '@yc-bot/vk-api';
-dotenv.config();
+import { initConfig } from '@yc-bot/shared/config';
+import { logger } from '@yc-bot/shared/utils';
 
 export const handler = async (messages: Messages, context: Context) => {
 	try {

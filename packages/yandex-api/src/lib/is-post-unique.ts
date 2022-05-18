@@ -1,4 +1,4 @@
-import { logger } from '@yc-bot/shared';
+import { logger } from '@yc-bot/shared/utils';
 import { Session, cloudApi, serviceClients } from '@yandex-cloud/nodejs-sdk';
 import { Event, Context, VKEvent, Post } from '@yc-bot/types';
 import dotenv from 'dotenv';

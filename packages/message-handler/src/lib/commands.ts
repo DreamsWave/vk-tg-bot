@@ -1,10 +1,10 @@
 import { Message } from '@yc-bot/types';
-import { vk } from '@yc-bot/vk-api';
+import { sendMessage } from '@yc-bot/vk-api';
 import fetch from 'node-fetch';
 
 export const test = async (message: Message): Promise<void> => {
 	const { peer_id } = message.message;
-	await vk.sendMessage(peer_id, 'test');
+	await sendMessage(peer_id, 'test');
 };
 
 export const stocks = async (message: Message): Promise<void> => {
@@ -28,5 +28,5 @@ export const stocks = async (message: Message): Promise<void> => {
 		return `${currency.symbol}: ${currency.lastPrice}`;
 	});
 	const text = textArray.join('\n');
-	await vk.sendMessage(peer_id, text);
+	await sendMessage(peer_id, text);
 };

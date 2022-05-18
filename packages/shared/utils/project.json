@@ -1,20 +1,20 @@
 {
-	"root": "packages/shared",
-	"sourceRoot": "packages/shared/src",
+	"root": "packages/shared/utils",
+	"sourceRoot": "packages/shared/utils/src",
 	"projectType": "library",
 	"targets": {
 		"lint": {
 			"executor": "@nrwl/linter:eslint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["packages/shared/**/*.ts"]
+				"lintFilePatterns": ["packages/shared/utils/**/*.ts"]
 			}
 		},
 		"test": {
 			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/packages/shared"],
+			"outputs": ["coverage/packages/shared/utils"],
 			"options": {
-				"jestConfig": "packages/shared/jest.config.js",
+				"jestConfig": "packages/shared/utils/jest.config.js",
 				"passWithNoTests": true
 			}
 		}

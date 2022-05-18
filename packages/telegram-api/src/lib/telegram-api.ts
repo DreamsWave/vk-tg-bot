@@ -2,7 +2,8 @@ process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
 import TelegramBot, { InputMedia, SendMediaGroupOptions, SendMessageOptions } from 'node-telegram-bot-api';
 import { FileInfo, MediaType } from '@yc-bot/types';
-import { logger, chunkString, createLinkedPhoto, getConfig } from '@yc-bot/shared';
+import { logger, chunkString, createLinkedPhoto } from '@yc-bot/shared/utils';
+import { getConfig } from '@yc-bot/shared/config';
 import { Stream } from 'stream';
 
 export interface ITG {

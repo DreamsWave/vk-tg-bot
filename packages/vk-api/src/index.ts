@@ -1,1 +1,1 @@
-export * from './lib/vk-api';
+export * from './lib/send-message';
