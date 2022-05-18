@@ -1,1 +1,4 @@
-export { default as TG } from './lib/telegram-api';
+export * from './lib/send';
+export * from './lib/send-message';
+export * from './lib/send-media-message';
+export * from './lib/send-media-group-message';

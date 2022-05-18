@@ -1,6 +1,6 @@
 import { Messages, Context, VKEvent, Post } from '@yc-bot/types';
 import { prepareMedia } from '@yc-bot/utils';
-import { TG } from '@yc-bot/telegram-api';
+import * as tg from '@yc-bot/telegram-api';
 import { initConfig } from '@yc-bot/shared/config';
 import { logger } from '@yc-bot/shared/utils';
 
@@ -11,7 +11,6 @@ export const handler = async (messages: Messages, context: Context) => {
 			const event: VKEvent = JSON.parse(message.details.message.body) ?? '';
 			const config = await initConfig(event?.group_id);
 			if (!config) return { statusCode: 200, body: 'ok' };
-			const tg = new TG();
 			const post = event.object as Post;
 			if (post.marked_as_ads) continue;
 			if (post.post_type !== 'post') continue;
