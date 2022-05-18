@@ -1,6 +1,6 @@
-import { Event, Context, VKEvent, Post } from '@yc-bot/types';
-import { getConfig, initConfig, logger } from '@yc-bot/shared';
-import { isPostUnique, ymq } from '@yc-bot/yandex-api';
+import { Event, Context, VKEvent } from '@yc-bot/types';
+import { initConfig, logger } from '@yc-bot/shared';
+import { isPostUnique, sendMessageYMQ } from '@yc-bot/yandex-api';
 import { vk } from '@yc-bot/vk-api';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -9,8 +9,6 @@ dotenv.config();
 export const handler = async (event: Event, context: Context) => {
 	try {
 		const vkEvent: VKEvent = JSON.parse(event.body) ?? {};
-		logger.debug(JSON.stringify(vkEvent));
-
 		const config = await initConfig(vkEvent?.group_id);
 		if (!config) return { statusCode: 200, body: 'ok' };
 
@@ -22,10 +20,9 @@ export const handler = async (event: Event, context: Context) => {
 		}
 
 		if (vkEvent?.type === 'wall_post_new') {
-			logger.info('wall_post_new');
 			if (await isPostUnique(event, context)) {
 				const ymqUrl = process.env.YMQ_WALL_POST_NEW_URL;
-				await ymq.sendMessage(ymqUrl, vkEvent);
+				await sendMessageYMQ(ymqUrl, vkEvent);
 			}
 		}
 
@@ -35,6 +32,7 @@ export const handler = async (event: Event, context: Context) => {
 		// 	await ymq.sendMessage(ymqUrl, vkEvent);
 		// }
 	} catch (error) {
+		console.log(error);
 		logger.error(JSON.stringify(error));
 		// await vk.sendError(error);
 	}
