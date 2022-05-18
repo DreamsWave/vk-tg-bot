@@ -30,4 +30,15 @@ describe('Message Handler', () => {
 			spy.mockRestore();
 		});
 	});
+	describe('test', () => {
+		it(`should work`, async () => {
+			try {
+				const message = vkEvents.messageNew.simple.object;
+				message.message.text = 'test';
+				await commands.test(message);
+			} catch (error) {
+				expect(false).toBe(true);
+			}
+		});
+	});
 });

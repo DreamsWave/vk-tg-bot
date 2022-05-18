@@ -1,7 +1,7 @@
 import { Messages, Context, VKEvent, Message } from '@yc-bot/types';
-import { initConfig, logger } from '@yc-bot/shared';
+import { initConfig } from '@yc-bot/shared/config';
+import { logger } from '@yc-bot/shared/utils';
 import dotenv from 'dotenv';
-import { vk } from '@yc-bot/vk-api';
 import { messageHandler } from '@yc-bot/message-handler';
 dotenv.config();
 

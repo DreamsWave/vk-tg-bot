@@ -1,0 +1,23 @@
+{
+	"root": "packages/shared/config",
+	"sourceRoot": "packages/shared/config/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["packages/shared/config/**/*.ts"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/packages/shared/config"],
+			"options": {
+				"jestConfig": "packages/shared/config/jest.config.js",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}

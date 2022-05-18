@@ -1,6 +1,7 @@
 import path from 'path';
 import { getAttachment } from '@yc-bot/mocks';
-import { Config, initConfig, makeString } from '@yc-bot/shared';
+import { Config, initConfig } from '@yc-bot/shared/config';
+import { makeString } from '@yc-bot/shared/utils';
 import { prepareTemp, prepareMedia } from '@yc-bot/utils';
 import TG from './telegram-api';
 import dotenv from 'dotenv';

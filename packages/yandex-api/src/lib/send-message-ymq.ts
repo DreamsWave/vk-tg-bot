@@ -1,4 +1,4 @@
-import { logger } from '@yc-bot/shared';
+import { logger } from '@yc-bot/shared/utils';
 import { SQS } from 'aws-sdk';
 import dotenv from 'dotenv';
 dotenv.config();

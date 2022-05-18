@@ -1,7 +1,7 @@
 import { Event, Context, VKEvent } from '@yc-bot/types';
-import { initConfig, logger } from '@yc-bot/shared';
+import { initConfig } from '@yc-bot/shared/config';
+import { logger } from '@yc-bot/shared/utils';
 import { isPostUnique, sendMessageYMQ } from '@yc-bot/yandex-api';
-import { vk } from '@yc-bot/vk-api';
 import dotenv from 'dotenv';
 dotenv.config();
 

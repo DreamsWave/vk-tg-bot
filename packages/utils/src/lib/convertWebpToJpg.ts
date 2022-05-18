@@ -1,7 +1,7 @@
 import webp from 'webp-converter';
 import path from 'path';
 import fs from 'fs';
-import { logger } from '@yc-bot/shared';
+import { logger } from '@yc-bot/shared/utils';
 import { FileInfo } from '@yc-bot/types';
 import { promisify } from 'util';
 const unlink = promisify(fs.unlink);

@@ -2,7 +2,7 @@ import { getAttachment } from '@yc-bot/mocks';
 import path from 'path';
 import fs from 'fs';
 import { prepareTemp, downloadFile, downloadVideo, convertWebpToJpg, prepareMedia, isWebp } from '../';
-import { makeID, makeString, chunkString } from '@yc-bot/shared';
+import { makeID, makeString, chunkString } from '@yc-bot/shared/utils';
 
 describe('Utils', () => {
 	const downloadLocation = path.join(path.resolve(), 'tmp', 'assets', 'utils');

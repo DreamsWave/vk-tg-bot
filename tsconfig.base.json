@@ -19,7 +19,8 @@
 		"paths": {
 			"@yc-bot/message-handler": ["packages/message-handler/src/index.ts"],
 			"@yc-bot/mocks": ["packages/mocks/src/index.ts"],
-			"@yc-bot/shared": ["packages/shared/src/index.ts"],
+			"@yc-bot/shared/config": ["packages/shared/config/src/index.ts"],
+			"@yc-bot/shared/utils": ["packages/shared/utils/src/index.ts"],
 			"@yc-bot/telegram-api": ["packages/telegram-api/src/index.ts"],
 			"@yc-bot/types": ["packages/types/src/index.ts"],
 			"@yc-bot/utils": ["packages/utils/src/index.ts"],
