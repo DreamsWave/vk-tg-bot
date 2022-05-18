@@ -226,12 +226,15 @@ EOT
 }
 
 ### Outputs
-output "AWS_ENDPOINT" {
-  value = yandex_ydb_database_serverless.bots.document_api_endpoint
-}
-output "AWS_ACCESS_KEY_ID" {
-  value = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-}
-output "AWS_SECRET_ACCESS_KEY" {
-  value = nonsensitive(yandex_iam_service_account_static_access_key.sa-static-key.secret_key)
+# output "AWS_ENDPOINT" {
+#   value = yandex_ydb_database_serverless.bots.document_api_endpoint
+# }
+# output "AWS_ACCESS_KEY_ID" {
+#   value = yandex_iam_service_account_static_access_key.sa-static-key.access_key
+# }
+# output "AWS_SECRET_ACCESS_KEY" {
+#   value = nonsensitive(yandex_iam_service_account_static_access_key.sa-static-key.secret_key)
+# }
+output "entry_url" {
+  value = "https://${yandex_api_gateway.bot-gateway.domain}"
 }

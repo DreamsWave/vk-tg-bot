@@ -2,7 +2,7 @@ import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
 dotenv.config();
 
-interface Config {
+export interface Config {
 	vk_group_id: string;
 	vk_group_token: string;
 	vk_group_callback: string;
@@ -36,10 +36,10 @@ AWS.config.update({
 	secretAccessKey: process.env['AWS_SECRET_ACCESS_KEY']
 });
 
-export const getConfig = (vkGroupId: string | number): Promise<Config> => {
-	vkGroupId = String(vkGroupId).charAt(0) === '-' ? String(vkGroupId).substring(1) : String(vkGroupId);
-	if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') return Promise.resolve(devConfig);
-	if (cachedConfig) return Promise.resolve(cachedConfig);
+export const initConfig = (vkGroupId?: string | number): Promise<Config> => {
+	if (vkGroupId) {
+		vkGroupId = String(vkGroupId).charAt(0) === '-' ? String(vkGroupId).substring(1) : String(vkGroupId);
+	}
 	return new Promise((resolve, reject) => {
 		const documentClient = new AWS.DynamoDB.DocumentClient();
 		documentClient.get(
@@ -47,8 +47,7 @@ export const getConfig = (vkGroupId: string | number): Promise<Config> => {
 				TableName: configsTableName,
 				ConsistentRead: true,
 				Key: {
-					vk_group_id: vkGroupId,
-					name: 'dev'
+					vk_group_id: vkGroupId
 				}
 			},
 			function (err, data) {
@@ -59,8 +58,15 @@ export const getConfig = (vkGroupId: string | number): Promise<Config> => {
 						cachedConfig = data.Item as Config;
 						return resolve(cachedConfig);
 					}
+					return resolve(null);
 				}
 			}
 		);
 	});
+};
+
+export const getConfig = (): Config => {
+	if (cachedConfig) return cachedConfig;
+	if (process.env.NODE_ENV === 'development' || (process.env.NODE_ENV === 'test' && devConfig.vk_group_id)) return devConfig;
+	return null;
 };
