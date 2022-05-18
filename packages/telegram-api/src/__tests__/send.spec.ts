@@ -1,18 +1,13 @@
 import path from 'path';
 import { getAttachment } from '@yc-bot/mocks';
-import { Config, initConfig } from '@yc-bot/shared/config';
 import { makeString } from '@yc-bot/shared/utils';
 import { prepareTemp, prepareMedia } from '@yc-bot/utils';
-import TG from './telegram-api';
-import dotenv from 'dotenv';
-dotenv.config();
+import { send } from '../';
 
 const tmpDir = path.join(path.resolve(), 'tmp', 'assets', 'telegram-api');
 
-describe('APIs tests', () => {
+describe('send', () => {
 	jest.setTimeout(60000);
-	const tg = new TG();
-
 	beforeAll(async () => {
 		prepareTemp(tmpDir);
 	});
@@ -24,7 +19,7 @@ describe('APIs tests', () => {
 			saveTo: tmpDir
 		});
 		try {
-			await tg.send(text, media, { disable_notification: true });
+			await send(text, media, { disable_notification: true });
 			expect(true).toBeTruthy();
 		} catch (error) {
 			expect(false).toBeTruthy();
@@ -37,7 +32,7 @@ describe('APIs tests', () => {
 			saveTo: tmpDir
 		});
 		try {
-			await tg.send(text, media, { disable_notification: true });
+			await send(text, media, { disable_notification: true });
 			expect(true).toBeTruthy();
 		} catch (error) {
 			expect(false).toBeTruthy();
@@ -47,7 +42,7 @@ describe('APIs tests', () => {
 		const text = 'should send message with gif';
 		const media = await prepareMedia([getAttachment('doc', 'gif')], { randomFilenames: true, saveTo: tmpDir });
 		try {
-			await tg.send(text, media, { disable_notification: true });
+			await send(text, media, { disable_notification: true });
 			expect(true).toBeTruthy();
 		} catch (error) {
 			expect(false).toBeTruthy();
