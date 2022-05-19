@@ -1,6 +1,9 @@
 {
 	"version": 2,
 	"projects": {
+		"api-telegram": "packages/api/telegram",
+		"api-vk": "packages/api/vk",
+		"api-yandex-cloud": "packages/api/yandex-cloud",
 		"functions-event-handler": "packages/functions/event-handler",
 		"functions-message-new": "packages/functions/message-new",
 		"functions-wall-post-new": "packages/functions/wall-post-new",
@@ -8,10 +11,7 @@
 		"mocks": "packages/mocks",
 		"shared-config": "packages/shared/config",
 		"shared-utils": "packages/shared/utils",
-		"telegram-api": "packages/telegram-api",
 		"types": "packages/types",
-		"utils": "packages/utils",
-		"vk-api": "packages/vk-api",
-		"yandex-api": "packages/yandex-api"
+		"utils": "packages/utils"
 	}
 }
