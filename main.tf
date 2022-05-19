@@ -73,7 +73,6 @@ resource "yandex_function" "event-handler" {
     "AWS_SECRET_ACCESS_KEY" = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
     "AWS_ENDPOINT"          = yandex_ydb_database_serverless.bots.document_api_endpoint
     "YMQ_WALL_POST_NEW_URL" = data.yandex_message_queue.wall-post-new.url
-    "YMQ_MESSAGE_NEW_URL"   = data.yandex_message_queue.message-new.url
   }
 }
 data "archive_file" "event-handler" {
@@ -107,31 +106,6 @@ data "archive_file" "wall-post-new" {
   output_path = "${path.module}/dist/packages/functions/wall-post-new.zip"
 }
 
-resource "yandex_function" "message-new" {
-  name               = "message-new"
-  description        = "VK event 'message_new'"
-  user_hash          = data.archive_file.message-new.output_base64sha256
-  runtime            = "nodejs16"
-  entrypoint         = "main.handler"
-  memory             = "128"
-  execution_timeout  = "180"
-  service_account_id = yandex_iam_service_account.this.id
-  content {
-    zip_filename = "${path.module}/dist/packages/functions/message-new.zip"
-  }
-  environment = {
-    "AWS_ENDPOINT"          = yandex_ydb_database_serverless.bots.document_api_endpoint
-    "AWS_ACCESS_KEY_ID"     = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-    "AWS_SECRET_ACCESS_KEY" = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
-  }
-  depends_on = [yandex_message_queue.message-new]
-}
-data "archive_file" "message-new" {
-  type        = "zip"
-  source_dir  = "${path.module}/dist/packages/functions/message-new"
-  output_path = "${path.module}/dist/packages/functions/message-new.zip"
-}
-
 ### Triggers
 resource "yandex_function_trigger" "ymq-wall-post-new" {
   name        = "ymq-wall-post-new"
@@ -145,23 +119,6 @@ resource "yandex_function_trigger" "ymq-wall-post-new" {
   }
   function {
     id                 = yandex_function.wall-post-new.id
-    tag                = "$latest"
-    service_account_id = yandex_iam_service_account.this.id
-  }
-}
-
-resource "yandex_function_trigger" "ymq-message-new" {
-  name        = "ymq-message-new"
-  description = "Trigger for ymq-message-new"
-  folder_id   = var.yc_folder_id
-  message_queue {
-    queue_id           = yandex_message_queue.message-new.arn
-    service_account_id = yandex_iam_service_account.this.id
-    batch_cutoff       = 1
-    batch_size         = 1
-  }
-  function {
-    id                 = yandex_function.message-new.id
     tag                = "$latest"
     service_account_id = yandex_iam_service_account.this.id
   }
@@ -187,20 +144,6 @@ resource "yandex_message_queue" "wall-post-new" {
 }
 data "yandex_message_queue" "wall-post-new" {
   name       = "wall-post-new"
-  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
-}
-
-resource "yandex_message_queue" "message-new" {
-  name                       = "message-new"
-  visibility_timeout_seconds = 600
-  receive_wait_time_seconds  = 0
-  message_retention_seconds  = 86400
-  access_key                 = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key                 = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
-}
-data "yandex_message_queue" "message-new" {
-  name       = "message-new"
   access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
   secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
 }
