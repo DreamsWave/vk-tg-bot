@@ -9,7 +9,7 @@ import pathToFfmpeg from 'ffmpeg-static';
 import child_process from 'child_process';
 import { promisify } from 'util';
 import jimp from 'jimp';
-import { convertWebpToJpg, isWebp } from './convertWebpToJpg';
+import { convertWebpToJpg, isWebp } from './convert-webp-to-jpg';
 promisify(child_process.exec);
 const exec = child_process.exec;
 

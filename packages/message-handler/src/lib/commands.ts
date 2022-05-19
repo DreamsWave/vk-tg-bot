@@ -1,5 +1,5 @@
 import { Message } from '@yc-bot/types';
-import * as vk from '@yc-bot/vk-api';
+import * as vk from '@yc-bot/api/vk';
 import fetch from 'node-fetch';
 
 export const test = async (message: Message): Promise<void> => {

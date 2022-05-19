@@ -1,4 +1,4 @@
 export * from './lib/download';
-export * from './lib/prepareMedia';
-export * from './lib/convertWebpToJpg';
-export { default as prepareTemp } from './lib/prepareTemp';
+export * from './lib/prepare-media';
+export * from './lib/convert-webp-to-jpg';
+export * from './lib/prepare-temp';

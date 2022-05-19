@@ -1,6 +1,6 @@
 import { Messages, Context, VKEvent, Post } from '@yc-bot/types';
 import { prepareMedia } from '@yc-bot/utils';
-import * as tg from '@yc-bot/telegram-api';
+import * as tg from '@yc-bot/api/telegram';
 import { initConfig } from '@yc-bot/shared/config';
 import { logger } from '@yc-bot/shared/utils';
 

@@ -1,0 +1,23 @@
+{
+	"root": "packages/api/telegram",
+	"sourceRoot": "packages/api/telegram/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["packages/api/telegram/**/*.ts"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/packages/api/telegram"],
+			"options": {
+				"jestConfig": "packages/api/telegram/jest.config.js",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}
