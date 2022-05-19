@@ -1,34 +1,18 @@
 import webp from 'webp-converter';
 import path from 'path';
-import fs from 'fs';
-import { logger } from '@yc-bot/shared/utils';
+import os from 'os';
 import { FileInfo } from '@yc-bot/types';
-import { promisify } from 'util';
-const unlink = promisify(fs.unlink);
+import { getFileInfo } from './get-file-info';
 
-export const convertWebpToJpg = async (filePath: string): Promise<FileInfo> => {
-	const fullFilename = path.basename(filePath);
-	const fileExt = path.extname(fullFilename);
-	const name = path.basename(filePath, fileExt);
-	if (!isWebp(filePath)) {
-		logger.warn(`convertWebpToJpg expected webp image but got: ${fileExt}`);
-		return null;
+export const convertWebpToJpg = async (filepath: string, saveTo: string = os.tmpdir()): Promise<FileInfo> => {
+	if (!isWebp(filepath)) {
+		return getFileInfo(filepath);
 	}
-	const newfilePath = path.join(path.dirname(filePath), `${name}.jpeg`);
-	await webp.dwebp(filePath, newfilePath, '-o');
-	await unlink(filePath);
-	const size = Math.round(fs.statSync(newfilePath).size / 1024); // kb
-	if (size > 10240) throw new Error('File is bigger than 10MB');
-	const [filename, ext] = path.basename(newfilePath).split('.');
-	const fileInfo: FileInfo = {
-		ext,
-		filename,
-		mime: 'image/jpeg',
-		path: newfilePath,
-		size,
-		buffer: fs.createReadStream(newfilePath)
-	};
-
+	const [filename] = path.basename(filepath).split('.');
+	const newFilepath = path.join(saveTo, `c-${filename}.jpeg`);
+	await webp.dwebp(filepath, newFilepath, '-o');
+	const fileInfo = getFileInfo(newFilepath);
+	// if (fileInfo.size > 10240) throw new Error('File is bigger than 10MB');
 	return fileInfo;
 };
 
