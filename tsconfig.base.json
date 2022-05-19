@@ -29,9 +29,6 @@
 			"@yc-bot/api/yandex-cloud": [
 				"packages/api/yandex-cloud/src/index.ts"
 			],
-			"@yc-bot/message-handler": [
-				"packages/message-handler/src/index.ts"
-			],
 			"@yc-bot/mocks": [
 				"packages/mocks/src/index.ts"
 			],

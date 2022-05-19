@@ -25,12 +25,6 @@ export const handler = async (event: Event, context: Context) => {
 				await yc.sendMessageYMQ(ymqUrl, vkEvent);
 			}
 		}
-		if (vkEvent?.type === 'message_new') {
-			if (await yc.isPostUnique(event, context)) {
-				const ymqUrl = process.env.YMQ_MESSAGE_NEW_URL;
-				await yc.sendMessageYMQ(ymqUrl, vkEvent);
-			}
-		}
 	} catch (error) {
 		console.log(error);
 		logger.error(JSON.stringify(error));
