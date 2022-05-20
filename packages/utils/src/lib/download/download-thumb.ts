@@ -1,41 +1,76 @@
-import https from 'https';
-import fs from 'fs';
-import youtubeDlExec from 'youtube-dl-exec';
 import { FileInfo } from '@yc-bot/types';
 import path from 'path';
-import { extension } from 'mime-types';
-import ytdl from 'ytdl-core';
-import pathToFfmpeg from 'ffmpeg-static';
-import child_process from 'child_process';
-import { promisify } from 'util';
 import jimp from 'jimp';
 import { convertWebpToJpg, isWebp } from '../convert-webp-to-jpg';
 import { downloadFile } from './download-file';
 import { calculateImageDimensions } from '../common';
-promisify(child_process.exec);
-const exec = child_process.exec;
+import { getFileInfo } from '../get-file-info';
 
-export interface Thumb {
-	height: number;
-	width: number;
-	resolution: string;
+// export interface Thumb {
+// 	height: number;
+// 	width: number;
+// 	resolution: string;
+// 	url: string;
+// 	id: string;
+// }
+
+interface DownloadThumbOptions {
 	url: string;
-	id: string;
+	saveTo: string;
+	filename: string | number;
+	maxWidth?: number;
+	maxHeight?: number;
+	maxSize?: number;
+	quality?: number;
 }
 
-export const downloadThumb = async (thumbUrl: string, saveTo: string, filename: string): Promise<FileInfo> => {
-	let thumbInfo = await downloadFile(thumbUrl, saveTo, `${filename}_thumb`);
-	if (isWebp(thumbInfo.path)) {
-		thumbInfo = await convertWebpToJpg(thumbInfo.path);
+export const downloadThumb = async ({
+	url,
+	saveTo,
+	filename,
+	maxWidth = 320,
+	maxHeight = 320,
+	maxSize = 200,
+	quality = 70
+}: DownloadThumbOptions): Promise<FileInfo> => {
+	// Скачиваем превью
+	let originalThumbInfo = await downloadFile(url, saveTo, `${filename}_thumb`);
+
+	// Если превью webp, то конвертируем в jpeg
+	if (isWebp(originalThumbInfo.path)) {
+		originalThumbInfo = await convertWebpToJpg({ filepath: originalThumbInfo.path, saveTo, filename });
 	}
-	const thumb = await jimp.read(thumbInfo.path);
-	const { width, height } = calculateImageDimensions(thumb.bitmap.width, thumb.bitmap.height, 300, 300);
-	await thumb.resize(width, height).quality(60).writeAsync(thumbInfo.path);
-	const size = Math.round(fs.statSync(thumbInfo.path).size / 1024);
-	if (size > 200) return null;
+
+	// Изменяем размер превью
+	const resizedThumbInfo = await resizeThumb({ filepath: originalThumbInfo.path, saveTo, maxHeight, maxWidth, quality, maxSize });
+
+	if (resizedThumbInfo) {
+		return resizedThumbInfo;
+	} else {
+		return null;
+	}
+};
+
+export const resizeThumb = async ({ filepath, saveTo, maxHeight, maxWidth, quality, maxSize }): Promise<FileInfo> => {
+	const thumb = await jimp.read(filepath);
+	// Получаем размер превью на основе пропорций и максимальной ширины и высоты
+	const { width, height } = calculateImageDimensions(thumb.bitmap.width, thumb.bitmap.height, maxWidth, maxHeight);
+	const [filename, ext] = path.basename(filepath).split('.');
+	const newThumbPath = path.join(saveTo, `${filename}-${quality}.${ext}`);
+	// Изменяем размер превью и сохраняем в файл виде "imagename_thumb-60.jpeg"
+	await thumb.resize(width, height).quality(quality).writeAsync(newThumbPath);
+	const thumbInfo = getFileInfo(newThumbPath);
+	// Если размер(в Кбайт) больше максимального,
+	// то снижаем качество сжатия на 10%, пока не подойдет(минимум 30%),
+	// либо возвращаем null
+	if (thumbInfo.size >= maxSize) {
+		if (quality - 20 >= 30) {
+			return resizeThumb({ filepath, saveTo, maxHeight, maxWidth, maxSize, quality: quality - 20 });
+		} else {
+			return null;
+		}
+	}
 	thumbInfo.height = height;
 	thumbInfo.width = width;
-	thumbInfo.size = size;
-	thumbInfo.buffer = fs.createReadStream(thumbInfo.path);
 	return thumbInfo;
 };

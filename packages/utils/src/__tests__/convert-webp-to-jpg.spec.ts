@@ -8,15 +8,17 @@ describe('convertWebpToJpg', () => {
 	});
 	jest.setTimeout(30000);
 	it('should convert webp to jpg', async () => {
-		const webpImagePath = path.join(__dirname, '..', 'assets', 'image-webp.webp');
-		const imageInfo = await convertWebpToJpg(webpImagePath, downloadLocation);
+		const filename = 'image-webp';
+		const webpImagePath = path.join(__dirname, '..', 'assets', `${filename}.webp`);
+		const imageInfo = await convertWebpToJpg({ filepath: webpImagePath, saveTo: downloadLocation, filename });
 		expect(imageInfo.ext).toBe('jpeg');
-		expect(imageInfo.filename).toBe('c-image-webp');
+		expect(imageInfo.filename).toBe(`c-${filename}`);
 	});
 	it('should return passed image if image is not webp', async () => {
-		const someImagePath = path.join(__dirname, '..', 'assets', 'image-jpeg.jpeg');
-		const imageInfo = await convertWebpToJpg(someImagePath, downloadLocation);
+		const filename = 'image-jpeg';
+		const someImagePath = path.join(__dirname, '..', 'assets', `${filename}.jpeg`);
+		const imageInfo = await convertWebpToJpg({ filepath: someImagePath, saveTo: downloadLocation, filename });
 		expect(imageInfo.ext).toBe('jpeg');
-		expect(imageInfo.filename).toBe('image-jpeg.jpeg');
+		expect(imageInfo.filename).toBe(`${filename}`);
 	});
 });
