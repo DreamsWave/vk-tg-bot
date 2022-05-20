@@ -29,13 +29,31 @@ describe('downloadFile', () => {
 		expect(fileInfo.mime).toBe('application/pdf');
 		expect(fileInfo.filename).toBe(String(fileId));
 	});
-	it('should throw error', async () => {
-		const pdfUrl = 'https://www.w3.org/qweqwewqew/qweqweqwewqe.qweqwewqe';
+	it('should download vk video', async () => {
+		const videoUrl = 'https://vk.com/video-191117934_456239115';
 		const fileId = makeID();
-		try {
-			await downloadFile(pdfUrl, downloadLocation, fileId);
-		} catch (error) {
-			expect(error.status).toBe(404);
-		}
+		const fileInfo = await downloadFile(videoUrl, downloadLocation, fileId);
+		expect(fs.existsSync(fileInfo.path)).toBeTruthy();
+		expect(fileInfo.size).toBe(40);
+		expect(fileInfo.height).toBe(360);
+		expect(fileInfo.width).toBe(638);
+		expect(fileInfo.duration).toBe(1);
+		expect(fileInfo.ext).toBe('mp4');
+		expect(fileInfo.mime).toBe('video/mp4');
+		expect(fileInfo.filename).toBe(`c-${fileId}`);
 	});
+	it('should download youtube video', async () => {
+		const videoUrl = 'https://www.youtube.com/watch?v=tbnLqRW9Ef0';
+		const fileId = makeID();
+		const fileInfo = await downloadFile(videoUrl, downloadLocation, fileId);
+		expect(fs.existsSync(fileInfo.path)).toBeTruthy();
+		expect(fileInfo.size).toBe(18);
+		expect(fileInfo.height).toBe(360);
+		expect(fileInfo.width).toBe(640);
+		expect(fileInfo.duration).toBe(1);
+		expect(fileInfo.ext).toBe('mp4');
+		expect(fileInfo.mime).toBe('video/mp4');
+		expect(fileInfo.filename).toBe(String(fileId));
+	});
+	it.todo('should throw error');
 });
