@@ -1,10 +1,13 @@
 import { FileInfo } from '@yc-bot/types';
 import { DownloaderHelper } from 'node-downloader-helper';
+import mime from 'mime';
 import { getFileInfo } from '../get-file-info';
 
 export const downloadFile = async (fileUrl: string, saveTo: string, filename: string | number): Promise<FileInfo> => {
 	return new Promise((resolve, reject) => {
-		const dl = new DownloaderHelper(fileUrl, saveTo, { fileName: { name: String(filename) } });
+		const dl = new DownloaderHelper(fileUrl, saveTo, {
+			fileName: (fileName, filePath, contentType) => `${filename}.${mime.getExtension(contentType)}`
+		});
 		dl.on('end', (stats) => {
 			const fileInfo = getFileInfo(stats.filePath);
 			return resolve(fileInfo);

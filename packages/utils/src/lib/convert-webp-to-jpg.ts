@@ -4,11 +4,18 @@ import os from 'os';
 import { FileInfo } from '@yc-bot/types';
 import { getFileInfo } from './get-file-info';
 
-export const convertWebpToJpg = async (filepath: string, saveTo: string = os.tmpdir()): Promise<FileInfo> => {
+export const convertWebpToJpg = async ({
+	filepath,
+	saveTo = os.tmpdir(),
+	filename
+}: {
+	filepath: string;
+	saveTo: string;
+	filename: string | number;
+}): Promise<FileInfo> => {
 	if (!isWebp(filepath)) {
 		return getFileInfo(filepath);
 	}
-	const [filename] = path.basename(filepath).split('.');
 	const newFilepath = path.join(saveTo, `c-${filename}.jpeg`);
 	await webp.dwebp(filepath, newFilepath, '-o');
 	const fileInfo = getFileInfo(newFilepath);
