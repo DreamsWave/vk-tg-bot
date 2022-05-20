@@ -1,7 +1,7 @@
 import { DocumentAttachment, PhotoAttachment, VideoAttachment } from 'vk-io';
 import os from 'os';
-import { downloadVideo, downloadFile } from './download';
-import { convertWebpToJpg, isWebp } from './convert-webp-to-jpg';
+import { downloadFile } from './download';
+import { convertWebpToJpg, isWebp } from './convert/convert-webp-to-jpg';
 import { makeID } from '@yc-bot/shared/utils';
 import { MediaType } from '@yc-bot/types';
 
@@ -46,7 +46,7 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 			try {
 				const filename = randomFilenames ? makeID() : video.id;
 				let videoInfo = null;
-				videoInfo = await downloadVideo(videoUrl, saveTo, filename);
+				videoInfo = await downloadFile(videoUrl, saveTo, filename);
 				if (!videoInfo) continue;
 				media.type = 'video';
 				media.media = videoInfo.buffer;

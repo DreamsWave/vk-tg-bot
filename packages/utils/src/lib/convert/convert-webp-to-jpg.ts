@@ -2,7 +2,7 @@ import webp from 'webp-converter';
 import path from 'path';
 import os from 'os';
 import { FileInfo } from '@yc-bot/types';
-import { getFileInfo } from './get-file-info';
+import { getFileInfo } from '../get-file-info';
 
 export const convertWebpToJpg = async ({
 	filepath,

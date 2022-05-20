@@ -1,7 +1,7 @@
 import { FileInfo } from '@yc-bot/types';
 import path from 'path';
 import jimp from 'jimp';
-import { convertWebpToJpg, isWebp } from '../convert-webp-to-jpg';
+import { convertWebpToJpg, isWebp } from '../convert/convert-webp-to-jpg';
 import { downloadFile } from './download-file';
 import { calculateImageDimensions } from '../common';
 import { getFileInfo } from '../get-file-info';
