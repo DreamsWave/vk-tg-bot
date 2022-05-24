@@ -1,3 +1,11 @@
 {
-    "jest.jestCommandLine": "jest"
+    "jest.jestCommandLine": "jest",
+    "jest.nodeEnv": {
+        "NODE_OPTIONS": "--experimental-vm-modules --no-warnings"
+    },
+    "jestrunner.debugOptions": {
+        "env": {
+            "NODE_OPTIONS": "--experimental-vm-modules --no-warnings",
+        }
+    },
 }

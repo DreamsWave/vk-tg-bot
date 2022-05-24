@@ -27,6 +27,6 @@ export const makeString = (size: number): string => {
 	}).substring(0, size);
 };
 
-export const makeID = (): number => Math.floor(Math.random() * 10000000);
+export const makeID = (): string => String(Math.floor(Math.random() * 10000000));
 
 export const createLinkedPhoto = (url: string): string => `<a href="${url}">­</a>`;

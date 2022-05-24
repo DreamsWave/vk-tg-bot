@@ -22,7 +22,7 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 			const photo = new PhotoAttachment({ api: null, payload: attachment.photo });
 			const photoUrl = photo.largeSizeUrl;
 			try {
-				const filename = randomFilenames ? makeID() : photo.id;
+				const filename = randomFilenames ? makeID() : String(photo.id);
 				let imageInfo = null;
 				imageInfo = await downloadFile(photoUrl, saveTo, filename);
 				if (!imageInfo) continue;
@@ -44,7 +44,7 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 			const video = new VideoAttachment({ api: null, payload: attachment.video });
 			const videoUrl = `https://m.vk.com/video${video.ownerId}_${video.id}`;
 			try {
-				const filename = randomFilenames ? makeID() : video.id;
+				const filename = randomFilenames ? makeID() : String(video.id);
 				let videoInfo = null;
 				videoInfo = await downloadFile(videoUrl, saveTo, filename);
 				if (!videoInfo) continue;
