@@ -4,7 +4,7 @@ import jimp from 'jimp';
 import { convertWebpToJpg, isWebp } from '../convert/convert-webp-to-jpg';
 import { downloadFile } from './download-file';
 import { calculateImageDimensions } from '../common';
-import { getFileInfo } from '../get-file-info';
+import { getFileInfo } from '../file-info';
 
 // export interface Thumb {
 // 	height: number;
@@ -33,22 +33,20 @@ export const downloadThumb = async ({
 	maxSize = 200,
 	quality = 70
 }: DownloadThumbOptions): Promise<FileInfo> => {
+	return {} as FileInfo;
 	// Скачиваем превью
-	let originalThumbInfo = await downloadFile(url, saveTo, `${filename}_thumb`);
-
-	// Если превью webp, то конвертируем в jpeg
-	if (isWebp(originalThumbInfo.path)) {
-		originalThumbInfo = await convertWebpToJpg({ filepath: originalThumbInfo.path, saveTo, filename });
-	}
-
-	// Изменяем размер превью
-	const resizedThumbInfo = await resizeThumb({ filepath: originalThumbInfo.path, saveTo, maxHeight, maxWidth, quality, maxSize });
-
-	if (resizedThumbInfo) {
-		return resizedThumbInfo;
-	} else {
-		return null;
-	}
+	// let originalThumbInfo = await downloadFile(url, saveTo, `${filename}_thumb`);
+	// // Если превью webp, то конвертируем в jpeg
+	// if (isWebp(originalThumbInfo.path)) {
+	// 	originalThumbInfo = await convertWebpToJpg({ filepath: originalThumbInfo.path, saveTo, filename });
+	// }
+	// // Изменяем размер превью
+	// const resizedThumbInfo = await resizeThumb({ filepath: originalThumbInfo.path, saveTo, maxHeight, maxWidth, quality, maxSize });
+	// if (resizedThumbInfo) {
+	// 	return resizedThumbInfo;
+	// } else {
+	// 	return null;
+	// }
 };
 
 export const resizeThumb = async ({ filepath, saveTo, maxHeight, maxWidth, quality, maxSize }): Promise<FileInfo> => {
@@ -70,7 +68,7 @@ export const resizeThumb = async ({ filepath, saveTo, maxHeight, maxWidth, quali
 			return null;
 		}
 	}
-	thumbInfo.height = height;
-	thumbInfo.width = width;
+	// thumbInfo.height = height;
+	// thumbInfo.width = width;
 	return thumbInfo;
 };
