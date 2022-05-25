@@ -1,14 +1,14 @@
 process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
-import Telegram, { InputMedia, SendMessageOptions } from 'node-telegram-bot-api';
-import { MediaType } from '@yc-bot/types';
+import Telegram, { SendMessageOptions } from 'node-telegram-bot-api';
+import { InputMedia, MediaType } from '@yc-bot/types';
 import { logger } from '@yc-bot/shared/utils';
 import { getConfig } from '@yc-bot/shared/config';
 import { sendMessage } from './send-message';
 import { sendMediaMessage } from './send-media-message';
 import { sendMediaGroupMessage } from './send-media-group-message';
 
-export const send = async (text: string, media?: MediaType[], options?: SendMessageOptions): Promise<void> => {
+export const send = async (text: string, media?: InputMedia[], options?: SendMessageOptions): Promise<void> => {
 	try {
 		const config = getConfig();
 		const tg = new Telegram(config.tg_token);

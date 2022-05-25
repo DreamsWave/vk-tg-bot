@@ -1,5 +1,5 @@
 import { Messages, Context, VKEvent, Post } from '@yc-bot/types';
-import { prepareMedia } from '@yc-bot/utils';
+import { prepareMediaForTG } from '@yc-bot/utils';
 import * as tg from '@yc-bot/api/telegram';
 import { initConfig } from '@yc-bot/shared/config';
 import { logger } from '@yc-bot/shared/utils';
@@ -15,7 +15,7 @@ export const handler = async (messages: Messages, context: Context) => {
 			if (post.marked_as_ads) continue;
 			if (post.post_type !== 'post') continue;
 			if (post.attachments) {
-				const media = await prepareMedia(post.attachments);
+				const media = await prepareMediaForTG(post.attachments);
 				if (media?.length) {
 					await tg.send(post.text, media);
 				} else {

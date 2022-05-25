@@ -1,20 +1,20 @@
 import { DocumentAttachment, PhotoAttachment, VideoAttachment } from 'vk-io';
 import os from 'os';
-import { downloadFile } from './download';
+import { downloadFile, downloadImage, downloadVideo } from './download';
 import { convertWebpToJpg, isWebp } from './convert/convert-webp-to-jpg';
 import { makeID } from './common';
-import { MediaType } from '@yc-bot/types';
-
+import { ImageInfo, MediaType } from '@yc-bot/types';
+import { InputMedia, InputMediaPhoto, InputMediaVideo, InputMediaDocument } from '@yc-bot/types';
 export interface IPrepareMediaOptions {
-	saveTo?: string;
+	destination?: string;
 	randomFilenames?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOptions): Promise<MediaType[]> => {
-	const saveTo = options?.saveTo ?? os.tmpdir();
+export const prepareMediaForTG = async (attachments: any[], options?: IPrepareMediaOptions): Promise<InputMedia[]> => {
+	const destination = options?.destination ?? os.tmpdir();
 	const randomFilenames = options?.randomFilenames;
-	let mediaArray = [] as MediaType[];
+	let mediaArray = [] as InputMedia[];
 
 	for (const attachment of attachments) {
 		const media = {} as MediaType;
@@ -23,16 +23,17 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 			const photoUrl = photo.largeSizeUrl;
 			try {
 				const filename = randomFilenames ? makeID() : String(photo.id);
-				let imageInfo = null;
-				imageInfo = await downloadFile(photoUrl, saveTo, filename);
+				let imageInfo = null as ImageInfo;
+				imageInfo = await downloadImage(photoUrl, destination, filename, { maxHeight: 10000, maxWidth: 10000, maxSize: 10240 });
 				if (!imageInfo) continue;
 				if (isWebp(imageInfo.path)) {
-					imageInfo = await convertWebpToJpg(imageInfo.path);
+					imageInfo = await convertWebpToJpg(imageInfo.path, destination, filename);
 				}
-				media.type = 'photo';
-				media.media = imageInfo.buffer;
-				media.ext = imageInfo.ext;
-				media.origin = photoUrl;
+				const media = {
+					type: 'photo',
+					media: imageInfo.buffer
+				} as InputMediaPhoto;
+				mediaArray.push(media);
 			} catch (error) {
 				if (error.stderr) {
 					error.stderr += ` ${photoUrl}`;
@@ -46,15 +47,18 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 			try {
 				const filename = randomFilenames ? makeID() : String(video.id);
 				let videoInfo = null;
-				videoInfo = await downloadFile(videoUrl, saveTo, filename);
+				videoInfo = await downloadVideo(videoUrl, destination, filename);
 				if (!videoInfo) continue;
-				media.type = 'video';
-				media.media = videoInfo.buffer;
-				media.ext = videoInfo.ext;
-				media.duration = videoInfo.duration;
-				media.height = videoInfo.height;
-				media.width = videoInfo.width;
-				media.thumb = videoInfo.thumb;
+				const media = {
+					type: 'video',
+					media: videoInfo.buffer,
+					duration: videoInfo.duration,
+					height: videoInfo.height,
+					width: videoInfo.width,
+					supports_streaming: true
+					// thumb: videoInfo.thumb.buffer
+				} as InputMediaVideo;
+				mediaArray.push(media);
 			} catch (error) {
 				if (error.stderr) {
 					error.stderr += ` ${videoUrl}`;
@@ -67,11 +71,13 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 			try {
 				const filename = randomFilenames ? makeID() : doc.title.split('.')[0];
 				let fileInfo = null;
-				fileInfo = await downloadFile(doc.url, saveTo, filename);
+				fileInfo = await downloadFile(doc.url, destination, filename);
 				if (!fileInfo) continue;
-				media.type = 'document';
-				media.media = fileInfo.buffer;
-				media.ext = fileInfo.ext;
+				const media = {
+					type: 'document',
+					media: fileInfo.buffer
+				} as InputMediaDocument;
+				mediaArray.push(media);
 			} catch (error) {
 				if (error.stderr) {
 					error.stderr += ` ${doc.url}`;
@@ -79,7 +85,6 @@ export const prepareMedia = async (attachments: any[], options?: IPrepareMediaOp
 				throw error;
 			}
 		}
-		mediaArray.push(media);
 	}
 	mediaArray = mediaArray.filter((media) => media.media);
 

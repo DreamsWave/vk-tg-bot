@@ -1,26 +1,18 @@
 import webp from 'webp-converter';
 import path from 'path';
 import os from 'os';
-import { FileInfo } from '@yc-bot/types';
-import { getFileInfo } from '../file-info';
+import { ImageInfo } from '@yc-bot/types';
+import { getImageInfo } from '../file-info';
 
-export const convertWebpToJpg = async ({
-	filepath,
-	destination = os.tmpdir(),
-	filename
-}: {
-	filepath: string;
-	destination: string;
-	filename: string | number;
-}): Promise<FileInfo> => {
+export const convertWebpToJpg = async (filepath: string, destination = os.tmpdir(), filename: string): Promise<ImageInfo> => {
 	if (!isWebp(filepath)) {
-		return getFileInfo(filepath);
+		return await getImageInfo(filepath);
 	}
 	const newFilepath = path.join(destination, `c-${filename}.jpeg`);
 	await webp.dwebp(filepath, newFilepath, '-o');
-	const fileInfo = getFileInfo(newFilepath);
+	const imageInfo = getImageInfo(newFilepath);
 	// if (fileInfo.size > 10240) throw new Error('File is bigger than 10MB');
-	return fileInfo;
+	return imageInfo;
 };
 
 export const isWebp = (location: string): boolean => {
