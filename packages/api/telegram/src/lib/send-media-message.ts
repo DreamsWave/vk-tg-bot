@@ -2,7 +2,7 @@ process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
 import Telegram, { SendMessageOptions, SendVideoOptions } from 'node-telegram-bot-api';
 import { MediaType } from '@yc-bot/types';
-import { chunkString, createLinkedPhoto } from '@yc-bot/shared/utils';
+import { chunkString, createLinkedPhoto } from '@yc-bot/utils';
 import { getConfig } from '@yc-bot/shared/config';
 import { Stream } from 'stream';
 

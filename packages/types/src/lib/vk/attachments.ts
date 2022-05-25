@@ -36,7 +36,7 @@ export interface VideoInfo extends FileInfo {
 	height: number;
 	width: number;
 	duration: number;
-	thumb: Buffer;
+	thumb: ImageInfo;
 }
 export interface DownloadDocumentOptions {
 	filename: string | number;

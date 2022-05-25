@@ -1,8 +1,8 @@
 process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
-import Telegram, { InputMedia, SendMediaGroupOptions, SendMessageOptions } from 'node-telegram-bot-api';
-import { FileInfo } from '@yc-bot/types';
-import { chunkString } from '@yc-bot/shared/utils';
+import Telegram, { InputMedia, InputMediaPhoto, InputMediaVideo, SendMediaGroupOptions, SendMessageOptions } from 'node-telegram-bot-api';
+import { FileInfo, ImageInfo, VideoInfo } from '@yc-bot/types';
+import { chunkString } from '@yc-bot/utils';
 import { getConfig } from '@yc-bot/shared/config';
 
 const MAX_TEXT_LENGTH = 4096;
@@ -18,11 +18,27 @@ export const sendMediaGroupMessage = async (
 		const config = getConfig();
 		const tg = new Telegram(config.tg_token);
 		const [firstText, ...restText] = chunkString(text, MAX_TEXT_LENGTH, CAPTION_TEXT_LENGTH);
-		const mediaVP = mediaGroup.filter((m) => m.type === 'video' || m.type === 'photo') as (InputMedia & FileInfo)[];
+		const mediaVP = mediaGroup.filter((m) => m.type === 'video' || m.type === 'photo') as InputMedia[];
 		let media = mediaVP.map((m) => {
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const { thumb, ...rest } = m;
-			return { ...rest };
+			if (m.type === 'video') {
+				const { buffer, thumb, width, height, duration } = m as VideoInfo;
+				return {
+					type: 'video',
+					media: buffer,
+					thumb: thumb.buffer,
+					width,
+					height,
+					duration,
+					supports_streaming: true
+				} as InputMediaVideo;
+			}
+			if (m.type === 'photo') {
+				const { buffer } = m as ImageInfo;
+				return {
+					type: 'photo',
+					media: buffer
+				} as InputMediaPhoto;
+			}
 		});
 		media[0].caption = firstText ?? '';
 		media = media.slice(0, 9);

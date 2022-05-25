@@ -1,6 +1,6 @@
 import path from 'path';
 import { getAttachment } from '@yc-bot/mocks';
-import { makeString } from '@yc-bot/shared/utils';
+import { makeString } from '@yc-bot/utils';
 import { prepareTemp, prepareMedia } from '@yc-bot/utils';
 import { send } from '../';
 
