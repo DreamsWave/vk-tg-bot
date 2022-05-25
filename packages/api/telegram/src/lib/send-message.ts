@@ -1,7 +1,7 @@
 process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
 import Telegram, { SendMessageOptions } from 'node-telegram-bot-api';
-import { chunkString } from '@yc-bot/shared/utils';
+import { chunkString } from '@yc-bot/utils';
 import { getConfig } from '@yc-bot/shared/config';
 
 const MAX_TEXT_LENGTH = 4096;
