@@ -1,7 +1,7 @@
 process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
 import Telegram, { SendMessageOptions, SendVideoOptions } from 'node-telegram-bot-api';
-import { MediaType } from '@yc-bot/types';
+import { InputMedia, InputMediaVideo, MediaType } from '@yc-bot/types';
 import { chunkString, createLinkedPhoto } from '@yc-bot/utils';
 import { getConfig } from '@yc-bot/shared/config';
 import { Stream } from 'stream';
@@ -9,7 +9,7 @@ import { Stream } from 'stream';
 const MAX_TEXT_LENGTH = 4096;
 const CAPTION_TEXT_LENGTH = 1024;
 
-export const sendMediaMessage = async (text: string, media: MediaType, options?: SendMessageOptions): Promise<void> => {
+export const sendMediaMessage = async (text: string, media: InputMedia, options?: SendMessageOptions): Promise<void> => {
 	if (media) {
 		const [firstText, ...restText] = chunkString(text, MAX_TEXT_LENGTH, CAPTION_TEXT_LENGTH);
 		const config = getConfig();
@@ -31,12 +31,13 @@ export const sendMediaMessage = async (text: string, media: MediaType, options?:
 		}
 
 		if (media.type === 'video') {
+			const mediaVideo = media as InputMediaVideo;
 			await tg.sendVideo(-config.tg_chat_id, media.media, {
 				...options,
-				duration: media.duration,
-				height: media.height,
-				width: media.width,
-				thumb: media.thumb,
+				duration: mediaVideo.duration,
+				height: mediaVideo.height,
+				width: mediaVideo.width,
+				thumb: mediaVideo.thumb,
 				supports_streaming: true,
 				caption: firstText ?? ''
 			} as SendVideoOptions & { thumb?: Stream | string | Buffer; supports_streaming?: boolean });

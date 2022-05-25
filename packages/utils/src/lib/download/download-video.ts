@@ -45,9 +45,9 @@ export const downloadVideo = async (url: string, destination = os.tmpdir(), file
 	return null;
 };
 
-export const downloadYoutubeVideo = (videoUrl: string, saveTo: string, filename: string | number): Promise<string> => {
+export const downloadYoutubeVideo = (videoUrl: string, destination: string, filename: string): Promise<string> => {
 	return new Promise((resolve, reject) => {
-		const filePath = path.join(saveTo, `${filename}.mp4`);
+		const filePath = path.join(destination, `${filename}.mp4`);
 		const fileStream = fs.createWriteStream(filePath);
 		const video = ytdl(videoUrl);
 		video.pipe(fileStream);

@@ -39,7 +39,7 @@ export interface VideoInfo extends FileInfo {
 	thumb: ImageInfo;
 }
 export interface DownloadDocumentOptions {
-	filename: string | number;
+	filename: string;
 	location?: string;
 	ext: string;
 }

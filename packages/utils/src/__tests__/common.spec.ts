@@ -1,4 +1,4 @@
-import { logger, chunkString, makeString } from '..';
+import { chunkString, makeString } from '..';
 
 describe('chunkString', () => {
 	it('should chunk text(1000) to chunks with size less than 250', async () => {

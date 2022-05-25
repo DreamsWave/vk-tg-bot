@@ -14,21 +14,21 @@ import { resizeImage, ResizeOptions } from '../resize-image';
 
 export const downloadImage = async (url: string, destination: string, filename: string, resizeOptions?: ResizeOptions): Promise<ImageInfo> => {
 	// Скачиваем превью
-	let fileInfo = await downloadFile(url, destination, filename);
-
+	const fileInfo = await downloadFile(url, destination, filename);
+	let imageInfo = await getImageInfo(fileInfo.path);
 	// Если превью webp, то конвертируем в jpeg
-	if (isWebp(fileInfo.path)) {
-		fileInfo = await convertWebpToJpg({ filepath: fileInfo.path, destination, filename });
+	if (isWebp(imageInfo.path)) {
+		imageInfo = await convertWebpToJpg(imageInfo.path, destination, filename);
 	}
 
 	if (resizeOptions !== undefined) {
 		// Изменяем размер превью
-		const resizedImageInfo = await resizeImage(fileInfo.path, destination, resizeOptions);
+		const resizedImageInfo = await resizeImage(imageInfo.path, destination, resizeOptions);
 		if (resizedImageInfo) {
 			return resizedImageInfo;
 		} else {
 			return null;
 		}
 	}
-	return await getImageInfo(fileInfo.path);
+	return imageInfo;
 };

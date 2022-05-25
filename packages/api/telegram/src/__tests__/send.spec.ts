@@ -1,22 +1,21 @@
 import path from 'path';
 import { getAttachment } from '@yc-bot/mocks';
 import { makeString } from '@yc-bot/utils';
-import { prepareTemp, prepareMedia } from '@yc-bot/utils';
+import { prepareTemp, prepareMediaForTG } from '@yc-bot/utils';
 import { send } from '../';
 
-const tmpDir = path.join(path.resolve(), 'tmp', 'assets', 'telegram-api');
-
 describe('send', () => {
+	const destination = path.join(path.resolve(), 'tmp', 'send', 'telegram-api');
 	jest.setTimeout(60000);
 	beforeAll(async () => {
-		prepareTemp(tmpDir);
+		prepareTemp(destination);
 	});
 	it('should send message with 1 photo and text', async () => {
 		let text = makeString(500);
 		text = 'START ' + text + ' END';
-		const media = await prepareMedia([getAttachment('photo', 'small')], {
+		const media = await prepareMediaForTG([getAttachment('photo', 'small')], {
 			randomFilenames: true,
-			saveTo: tmpDir
+			destination
 		});
 		try {
 			await send(text, media, { disable_notification: true });
@@ -27,9 +26,9 @@ describe('send', () => {
 	});
 	it('should send media group with 1 photo and 1 video', async () => {
 		const text = 'should send media group with 1 photo and 1 video';
-		const media = await prepareMedia([getAttachment('photo', 'small'), getAttachment('video', 'small')], {
+		const media = await prepareMediaForTG([getAttachment('photo', 'small'), getAttachment('video', 'small')], {
 			randomFilenames: true,
-			saveTo: tmpDir
+			destination
 		});
 		try {
 			await send(text, media, { disable_notification: true });
@@ -40,7 +39,7 @@ describe('send', () => {
 	});
 	it('should send message with gif', async () => {
 		const text = 'should send message with gif';
-		const media = await prepareMedia([getAttachment('doc', 'gif')], { randomFilenames: true, saveTo: tmpDir });
+		const media = await prepareMediaForTG([getAttachment('doc', 'gif')], { randomFilenames: true, destination });
 		try {
 			await send(text, media, { disable_notification: true });
 			expect(true).toBeTruthy();

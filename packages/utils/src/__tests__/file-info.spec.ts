@@ -8,7 +8,7 @@ describe('getFileInfo', () => {
 		expect(fileInfo.ext).toBe('jpeg');
 		expect(fileInfo.filename).toBe('image-jpeg');
 		expect(fileInfo.path).toBe(filepath);
-		expect(fileInfo.size).toBe(1);
+		expect(fileInfo.size).toBe(2);
 		expect(fileInfo.buffer).toBeTruthy();
 	});
 	it('should return null if file does not exist', () => {
