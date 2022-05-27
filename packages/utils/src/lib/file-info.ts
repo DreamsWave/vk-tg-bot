@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import { FileInfo, ImageInfo } from '@yc-bot/types';
+import { AudioInfo, FileInfo, ImageInfo } from '@yc-bot/types';
 import mime from 'mime';
 import Jimp from 'jimp';
 
@@ -29,4 +29,8 @@ export const getImageInfo = async (filepath: string): Promise<ImageInfo> => {
 	imageInfo.height = imageJIMP.bitmap.height;
 	imageInfo.type = 'photo';
 	return imageInfo;
+};
+
+export const getAudioInfo = async (filepath: string): Promise<AudioInfo> => {
+	return {} as AudioInfo;
 };

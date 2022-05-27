@@ -39,6 +39,13 @@ export interface VideoInfo extends FileInfo {
 	duration: number;
 	thumb: ImageInfo;
 }
+
+export interface AudioInfo extends FileInfo {
+	duration: number;
+	artist: string;
+	title: string;
+}
+
 export type Files = (FileInfo | ImageInfo | VideoInfo)[];
 export interface DownloadDocumentOptions {
 	filename: string;

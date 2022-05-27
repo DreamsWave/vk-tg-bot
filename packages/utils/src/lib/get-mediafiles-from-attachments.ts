@@ -4,7 +4,7 @@ import { getLargeSizeUrl, makeID } from './common';
 import { convertWebpToJpg, isWebp } from './convert';
 import { downloadFile, downloadImage, downloadVideo } from './download';
 
-export const getMediaFilesFromAttachments = async (
+const getMediaFilesFromAttachments = async (
 	attachments,
 	{ destination = os.tmpdir(), randomFilenames = false }: { destination?: string; randomFilenames?: boolean }
 ): Promise<(FileInfo | ImageInfo | VideoInfo)[]> => {
@@ -65,3 +65,5 @@ export const getMediaFilesFromAttachments = async (
 	}
 	return mediaFiles;
 };
+
+export default getMediaFilesFromAttachments;
