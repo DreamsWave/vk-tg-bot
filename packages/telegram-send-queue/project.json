@@ -1,0 +1,23 @@
+{
+	"root": "packages/telegram-send-queue",
+	"sourceRoot": "packages/telegram-send-queue/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["packages/telegram-send-queue/**/*.ts"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/packages/telegram-send-queue"],
+			"options": {
+				"jestConfig": "packages/telegram-send-queue/jest.config.js",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}

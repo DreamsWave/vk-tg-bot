@@ -37,3 +37,13 @@ export const makeString = (size: number): string => {
 export const makeID = (): string => String(Math.floor(Math.random() * 10000000));
 
 export const createLinkedPhoto = (url: string): string => `<a href="${url}">­</a>`;
+
+export const getLargeSizeUrl = (sizes): string => {
+	const SMALL_SIZES = ['m', 's'];
+	const MEDIUM_SIZES = ['y', 'r', 'q', 'p', ...SMALL_SIZES];
+	const LARGE_SIZES = ['w', 'z', ...MEDIUM_SIZES];
+	if (!sizes) {
+		return null;
+	}
+	return LARGE_SIZES.map((sizeType) => sizes.find((size) => size.type === sizeType)).filter(Boolean)[0].url;
+};

@@ -40,6 +40,7 @@ export const downloadVideo = async (url: string, destination = os.tmpdir(), file
 		videoInfo.duration = fileData.duration;
 		videoInfo.height = fileData.height;
 		videoInfo.width = fileData.width;
+		videoInfo.type = 'video';
 		return videoInfo;
 	}
 	return null;
