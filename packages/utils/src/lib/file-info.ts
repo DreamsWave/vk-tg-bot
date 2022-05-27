@@ -15,7 +15,8 @@ export const getFileInfo = (filepath: string): FileInfo => {
 		mime: mime.getType(ext),
 		path: filepath,
 		size,
-		buffer: fs.createReadStream(filepath)
+		buffer: fs.createReadStream(filepath),
+		type: 'document'
 	};
 	return fileInfo;
 };
@@ -26,5 +27,6 @@ export const getImageInfo = async (filepath: string): Promise<ImageInfo> => {
 	const imageJIMP = await Jimp.read(filepath);
 	imageInfo.width = imageJIMP.bitmap.width;
 	imageInfo.height = imageJIMP.bitmap.height;
+	imageInfo.type = 'photo';
 	return imageInfo;
 };

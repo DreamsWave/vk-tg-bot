@@ -9,6 +9,7 @@
 		"mocks": "packages/mocks",
 		"shared-config": "packages/shared/config",
 		"shared-utils": "packages/shared/utils",
+		"telegram-send-queue": "packages/telegram-send-queue",
 		"types": "packages/types",
 		"utils": "packages/utils"
 	}

@@ -1,3 +1,5 @@
+import { Photo, Video } from './attachments';
+
 export * from './attachments';
 
 export interface VKEvent {
@@ -32,7 +34,11 @@ export interface Message {
 		lang_id?: number;
 	};
 }
-
+export interface Attachment {
+	type: string;
+	photo?: Photo;
+	video?: Video;
+}
 export interface Post {
 	id: number;
 	to_id?: number;
@@ -45,50 +51,50 @@ export interface Post {
 	reply_owner_id?: number;
 	reply_post_id?: number;
 	friends_only?: number;
-	comments?: {
+	comments?: Partial<{
 		count: number;
 		can_post: number;
 		groups_can_post: number;
 		can_close: number;
 		can_open: number;
-	};
-	copyright?: {
+	}>;
+	copyright?: Partial<{
 		id?: number;
 		link: string;
 		name: string;
 		type: string;
-	};
-	likes?: {
+	}>;
+	likes?: Partial<{
 		count: number;
 		user_likes: number;
 		can_like: number;
 		can_publish: number;
-	};
-	reposts?: {
+	}>;
+	reposts?: Partial<{
 		count: number;
 		user_reposted: number;
-	};
-	views?: {
+	}>;
+	views?: Partial<{
 		count: number;
-	};
+	}>;
 	post_type?: string;
-	post_source?: {
+	post_source?: Partial<{
 		type: string;
 		platform: string;
 		data: string;
 		url: string;
-	};
-	attachments?: object[];
+	}>;
+	attachments?: Attachment[];
 	geo?: object;
 	signer_id?: number;
 	copy_history?: Post[];
 	can_pin?: number;
 	can_delete?: number;
 	can_edit?: number;
-	is_pinned?: number;
+	is_pinned?: boolean;
 	marked_as_ads?: number;
-	is_favorite?: number;
-	donut?: {
+	is_favorite?: boolean;
+	donut?: Partial<{
 		is_donut: boolean;
 		paid_duration?: number;
 		placeholder?: {
@@ -100,5 +106,5 @@ export interface Post {
 			id: number;
 			name: string;
 		}[];
-	};
+	}>;
 }

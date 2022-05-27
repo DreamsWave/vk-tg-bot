@@ -1,3 +1,4 @@
+export * from './send-queue';
 import { Stream } from 'stream';
 
 export type MediaType = {
@@ -38,4 +39,11 @@ export interface InputMediaDocument extends InputMedia {
 	type: 'document';
 	thumb?: string | Stream | Buffer;
 	disable_content_type_detection?: boolean;
+}
+export interface InputMediaAudio extends InputMedia {
+	type: 'audio';
+	duration?: number;
+	performer?: string;
+	title?: string;
+	thumb?: string | Stream | Buffer;
 }
