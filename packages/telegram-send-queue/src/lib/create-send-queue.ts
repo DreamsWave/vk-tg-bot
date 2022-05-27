@@ -67,6 +67,7 @@ export const createSendQueue = async (post: Post, options?: createSendQueueOptio
 			eventQueue = [...eventQueue, ...eventCreator('sendMessage', post)];
 		}
 	}
+
 	// Сделать первое сообщение с оповещением(остальные без оповещения)
 	eventQueue[0].payload.options.disable_notification = false;
 	return eventQueue;
