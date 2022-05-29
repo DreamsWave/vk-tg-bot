@@ -1,7 +1,7 @@
 import { Files, Post, TelegramSendEvent } from '@yc-bot/types';
 import { SendDocumentOptions } from 'node-telegram-bot-api';
 
-export const sendDocument = (post: Post, mediaFiles: Files): TelegramSendEvent[] => {
+export const sendDocument = (text: string, mediaFiles: Files): TelegramSendEvent[] => {
 	const events = [] as TelegramSendEvent[];
 	mediaFiles.forEach((media) => {
 		const event = {

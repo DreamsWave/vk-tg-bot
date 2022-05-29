@@ -24,10 +24,7 @@ export interface FileInfo {
 	ext: string;
 	filename: string | number;
 	buffer: string | Stream | Buffer | ReadStream;
-	// duration?: number;
-	// height?: number;
-	// width?: number;
-	// thumb?: string | Stream | Buffer | ReadStream;
+	origin?: string;
 }
 export interface ImageInfo extends FileInfo {
 	height: number;

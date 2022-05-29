@@ -5,9 +5,9 @@ import { InputMediaPhoto, InputMediaVideo, SendMessageOptions } from 'node-teleg
 const MAX_TEXT_LENGTH = 4096;
 const CAPTION_TEXT_LENGTH = 1024;
 
-export const sendMediaGroup = (post: Post, mediaFiles: Files): TelegramSendEvent[] => {
+export const sendMediaGroup = (text: string, mediaFiles: Files): TelegramSendEvent[] => {
 	const events = [] as TelegramSendEvent[];
-	const [firstText, ...restText] = chunkString(post.text, MAX_TEXT_LENGTH, CAPTION_TEXT_LENGTH);
+	const [firstText, ...restText] = chunkString(text, MAX_TEXT_LENGTH, CAPTION_TEXT_LENGTH);
 	if (mediaFiles) {
 		const media = [];
 		mediaFiles.forEach((file) => {

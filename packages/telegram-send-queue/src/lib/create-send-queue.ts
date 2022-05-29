@@ -1,5 +1,5 @@
 import os from 'os';
-import { Post, TelegramSendEvent, Files, VideoInfo, ImageInfo } from '@yc-bot/types';
+import { Post, TelegramSendEvent, VideoInfo, ImageInfo } from '@yc-bot/types';
 import { getMediaFilesFromAttachments } from '@yc-bot/utils';
 import { eventCreator } from './event-creator';
 
@@ -13,36 +13,41 @@ export const createSendQueue = async (post: Post, options?: createSendQueueOptio
 	const randomFilenames = options?.randomFilenames ?? false;
 	let eventQueue = [] as TelegramSendEvent[];
 	if (!post) return eventQueue;
-	if (post.attachments) {
+	const { text, attachments } = post;
+	if (attachments) {
 		// Если имеются прикрепленные файлы, то обрабатываем их и получаем информацию о них
-		const mediaFiles = await getMediaFilesFromAttachments(post.attachments, { destination, randomFilenames });
+		const mediaFiles = await getMediaFilesFromAttachments(attachments, { destination, randomFilenames });
 		// Если файлы обработались, то продолжаем работать с событиями
 		if (mediaFiles.length) {
 			if (mediaFiles.length === 1) {
 				const mediaFile = mediaFiles[0];
-				let eventsToAdd = [] as TelegramSendEvent[];
 				if (mediaFile.type === 'photo') {
-					eventsToAdd = eventCreator('sendPhoto', post, mediaFiles);
+					const sendEvents = await eventCreator('sendPhoto', text, mediaFiles);
+					eventQueue = [...eventQueue, ...sendEvents];
 				} else if (mediaFile.type === 'video') {
-					eventsToAdd = eventCreator('sendVideo', post, mediaFiles);
+					const sendEvents = await eventCreator('sendVideo', text, mediaFiles);
+					eventQueue = [...eventQueue, ...sendEvents];
 				} else if (mediaFile.type === 'document') {
-					eventsToAdd = eventCreator('sendDocument', post, mediaFiles);
+					const sendEvents = await eventCreator('sendDocument', text, mediaFiles);
+					eventQueue = [...eventQueue, ...sendEvents];
 				}
-				// TODO: добавить sendAudio, sendAnimation(для GIF)
-				eventQueue = [...eventQueue, ...eventsToAdd];
+				// TODO:
+				// sendAudio
+				// sendAnimation(для GIF)
 			} else {
 				// Если есть документы, то отправляем отдельно
 				const documents = mediaFiles.filter((m) => m.type === 'document');
 				if (documents.length) {
 					if (documents.length === 1) {
 						// Если один документ, то отправляем через sendDocument
-						eventQueue = [...eventQueue, ...eventCreator('sendDocument', post, documents)];
+						const sendEvents = await eventCreator('sendDocument', text, documents);
+						eventQueue = [...eventQueue, ...sendEvents];
 					} else if (documents.length >= 2) {
 						// Если больше 2х, то отправляем через sendMediaGroup
-						eventQueue = [...eventQueue, ...eventCreator('sendMediaGroup', post, documents)];
+						const sendEvents = await eventCreator('sendMediaGroup', text, documents);
+						eventQueue = [...eventQueue, ...sendEvents];
 					}
 				}
-
 				// TODO: Если есть аудио, то отправляем отдельно
 				// TODO: Если есть GIF, то отправляем отдельно
 
@@ -51,20 +56,24 @@ export const createSendQueue = async (post: Post, options?: createSendQueueOptio
 				if (photosAndVideos.length) {
 					if (photosAndVideos.length === 1) {
 						if (photosAndVideos[0].type === 'video') {
-							eventQueue = [...eventQueue, ...eventCreator('sendVideo', post, photosAndVideos)];
+							const sendEvents = await eventCreator('sendVideo', text, photosAndVideos);
+							eventQueue = [...eventQueue, ...sendEvents];
 						} else if (photosAndVideos[0].type === 'photo') {
-							eventQueue = [...eventQueue, ...eventCreator('sendPhoto', post, photosAndVideos)];
+							const sendEvents = await eventCreator('sendPhoto', text, photosAndVideos);
+							eventQueue = [...eventQueue, ...sendEvents];
 						}
 					} else if (photosAndVideos.length >= 2) {
-						eventQueue = [...eventQueue, ...eventCreator('sendMediaGroup', post, photosAndVideos)];
+						const sendEvents = await eventCreator('sendMediaGroup', text, photosAndVideos);
+						eventQueue = [...eventQueue, ...sendEvents];
 					}
 				}
 			}
 		}
 	} else {
 		// Или если есть текст, то добавляем в очередь событие sendMessage
-		if (post.text) {
-			eventQueue = [...eventQueue, ...eventCreator('sendMessage', post)];
+		if (text) {
+			const sendEvents = await eventCreator('sendMessage', text);
+			eventQueue = [...eventQueue, ...sendEvents];
 		}
 	}
 
