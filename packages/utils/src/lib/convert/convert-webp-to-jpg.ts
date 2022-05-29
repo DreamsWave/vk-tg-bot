@@ -11,7 +11,6 @@ export const convertWebpToJpg = async (filepath: string, destination = os.tmpdir
 	const newFilepath = path.join(destination, `c-${filename}.jpeg`);
 	await webp.dwebp(filepath, newFilepath, '-o');
 	const imageInfo = getImageInfo(newFilepath);
-	// if (fileInfo.size > 10240) throw new Error('File is bigger than 10MB');
 	return imageInfo;
 };
 

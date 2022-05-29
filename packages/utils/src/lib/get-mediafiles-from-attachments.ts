@@ -1,5 +1,5 @@
 import os from 'os';
-import { FileInfo, ImageInfo, Photo, Video, Document, VideoInfo } from '@yc-bot/types';
+import { FileInfo, ImageInfo, Photo, Video, Document, VideoInfo, Files } from '@yc-bot/types';
 import { getLargeSizeUrl, makeID } from './common';
 import { convertWebpToJpg, isWebp } from './convert';
 import { downloadFile, downloadImage, downloadVideo } from './download';
@@ -7,7 +7,7 @@ import { downloadFile, downloadImage, downloadVideo } from './download';
 const getMediaFilesFromAttachments = async (
 	attachments,
 	{ destination = os.tmpdir(), randomFilenames = false }: { destination?: string; randomFilenames?: boolean }
-): Promise<(FileInfo | ImageInfo | VideoInfo)[]> => {
+): Promise<Files> => {
 	const mediaFiles = [];
 	for (const attachment of attachments) {
 		// photo
@@ -21,10 +21,6 @@ const getMediaFilesFromAttachments = async (
 				// Скачиваем изображение на сервер
 				imageInfo = await downloadImage(photoUrl, destination, filename, { maxHeight: 10000, maxWidth: 10000, maxSize: 10240 });
 				if (!imageInfo) continue;
-				// Если расширение изображения webp, то конвертируем в jpeg
-				if (isWebp(imageInfo.path)) {
-					imageInfo = await convertWebpToJpg(imageInfo.path, destination, filename);
-				}
 				imageInfo.origin = photoUrl;
 				mediaFiles.push(imageInfo);
 			} catch (error) {
