@@ -4,10 +4,11 @@ import { Messages, Context } from '@yc-bot/types';
 
 describe('Wall Post New Function', () => {
 	jest.setTimeout(30000);
-	it('Should return "ok"', async () => {
-		const messages: Messages = ymq.messages;
-		const context: Context = {};
-		const result = await handler(messages, context);
-		expect(result.body).toEqual('ok');
-	});
+	// it('Should return "ok"', async () => {
+	// 	const messages: Messages = ymq.messages;
+	// 	const context: Context = {};
+	// 	const result = await handler(messages, context);
+	// 	expect(result.body).toEqual('ok');
+	// });
+	it.todo("should return 'ok'");
 });

@@ -1,4 +1,3 @@
-// import fetch from 'node-fetch';
 import { FileInfo } from '@yc-bot/types';
 import { DownloaderHelper } from 'node-downloader-helper';
 import mime from 'mime';
