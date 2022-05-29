@@ -1,0 +1,2 @@
+export const MAX_MESSAGE_TEXT_LENGTH = 4096;
+export const MAX_CAPTION_TEXT_LENGTH = 1024;

@@ -1,5 +1,8 @@
+import {} from 'vk-io';
+import fetch from 'node-fetch';
 import { loremIpsum } from 'lorem-ipsum';
 import chunk from 'chunk-text';
+import { getShortLink } from '@yc-bot/api/vk';
 
 export const calculateImageDimensions = (width: number, height: number, maxWidth: number, maxHeight: number): { width: number; height: number } => {
 	if (width > height) {
@@ -35,8 +38,6 @@ export const makeString = (size: number): string => {
 };
 
 export const makeID = (): string => String(Math.floor(Math.random() * 10000000));
-
-export const createLinkedPhoto = (url: string): string => `<a href="${url}">­</a>`;
 
 export const getLargeSizeUrl = (sizes): string => {
 	const SMALL_SIZES = ['m', 's'];

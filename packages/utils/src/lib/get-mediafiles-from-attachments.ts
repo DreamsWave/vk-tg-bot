@@ -25,6 +25,7 @@ const getMediaFilesFromAttachments = async (
 				if (isWebp(imageInfo.path)) {
 					imageInfo = await convertWebpToJpg(imageInfo.path, destination, filename);
 				}
+				imageInfo.origin = photoUrl;
 				mediaFiles.push(imageInfo);
 			} catch (error) {
 				if (error.stderr) {

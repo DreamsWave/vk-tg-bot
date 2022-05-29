@@ -1,7 +1,7 @@
 import { Files, Post, TelegramSendEvent, VideoInfo } from '@yc-bot/types';
 import { SendVideoOptions } from 'node-telegram-bot-api';
 
-export const sendVideo = (post: Post, mediaFiles: Files): TelegramSendEvent[] => {
+export const sendVideo = (text: string, mediaFiles: Files): TelegramSendEvent[] => {
 	const events = [] as TelegramSendEvent[];
 	mediaFiles.forEach((media) => {
 		const { path, duration, height, width, thumb } = media as VideoInfo;

@@ -1,4 +1,5 @@
-import { chunkString, makeString } from '..';
+import { wallPostNew } from 'packages/mocks/src/vk-events';
+import { chunkString, createLinkedPhoto, makeString } from '..';
 
 describe('chunkString', () => {
 	it('should chunk text(1000) to chunks with size less than 250', async () => {
@@ -39,5 +40,13 @@ describe('chunkString', () => {
 				}
 			}
 		}
+	});
+});
+
+describe('createLinkedPhoto', () => {
+	jest.setTimeout(10000);
+	it("should get short url and return <a href='{shortUrl}'></a>", async () => {
+		const linkedPhoto = await createLinkedPhoto(wallPostNew.withPhoto.object.attachments[0].photo.sizes[0].url);
+		expect(linkedPhoto).toBeTruthy();
 	});
 });

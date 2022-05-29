@@ -1,22 +1,22 @@
-import { Files, Post, TelegramSendMethods, TelegramSendEvent } from '@yc-bot/types';
+import { Files, TelegramSendMethods, TelegramSendEvent } from '@yc-bot/types';
 import { sendAnimation, sendAudio, sendDocument, sendMediaGroup, sendMessage, sendPhoto, sendVideo } from './events';
 
-export const eventCreator = (method: TelegramSendMethods, post: Post, mediaFiles?: Files): TelegramSendEvent[] => {
+export const eventCreator = async (method: TelegramSendMethods, text: string, mediaFiles?: Files): Promise<TelegramSendEvent[]> => {
 	switch (method) {
 		case 'sendMessage':
-			return sendMessage(post);
+			return sendMessage(text);
 		case 'sendPhoto':
-			return sendPhoto(post, mediaFiles);
+			return sendPhoto(text, mediaFiles);
 		case 'sendVideo':
-			return sendVideo(post, mediaFiles);
+			return sendVideo(text, mediaFiles);
 		case 'sendDocument':
-			return sendDocument(post, mediaFiles);
+			return sendDocument(text, mediaFiles);
 		case 'sendAnimation':
-			return sendAnimation(post, mediaFiles);
+			return sendAnimation(text, mediaFiles);
 		case 'sendMediaGroup':
-			return sendMediaGroup(post, mediaFiles);
+			return sendMediaGroup(text, mediaFiles);
 		case 'sendAudio':
-			return sendAudio(post, mediaFiles);
+			return sendAudio(text, mediaFiles);
 		default:
 			return [];
 	}

@@ -1,7 +1,7 @@
 import { AudioInfo, Files, Post, TelegramSendEvent } from '@yc-bot/types';
 import { SendAudioOptions } from 'node-telegram-bot-api';
 
-export const sendAudio = (post: Post, mediaFiles: Files): TelegramSendEvent[] => {
+export const sendAudio = (text: string, mediaFiles: Files): TelegramSendEvent[] => {
 	const events = [] as TelegramSendEvent[];
 	mediaFiles.forEach((media) => {
 		const { duration, artist, title, path } = media as AudioInfo;
