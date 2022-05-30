@@ -1,13 +1,28 @@
-import { Files, Post, TelegramSendEvent } from '@yc-bot/types';
-import { SendDocumentOptions } from 'node-telegram-bot-api';
+import { FileInfo, Files, TelegramSendEvent } from '@yc-bot/types';
+import { SendAnimationOptions, SendDocumentOptions } from 'node-telegram-bot-api';
 
 export const sendDocument = (text: string, mediaFiles: Files): TelegramSendEvent[] => {
 	const events = [] as TelegramSendEvent[];
-	mediaFiles.forEach((media) => {
+	const doc = (mediaFiles[0] ?? null) as FileInfo;
+	if (!doc) return events;
+	if (doc.ext === 'gif') {
 		const event = {
 			payload: {
 				content: {
-					media: media.path
+					media: doc.path
+				},
+				options: {
+					disable_notification: true
+				} as SendAnimationOptions
+			},
+			method: 'sendAnimation'
+		} as TelegramSendEvent;
+		events.push(event);
+	} else {
+		const event = {
+			payload: {
+				content: {
+					media: doc.path
 				},
 				options: {
 					disable_notification: true
@@ -16,6 +31,7 @@ export const sendDocument = (text: string, mediaFiles: Files): TelegramSendEvent
 			method: 'sendDocument'
 		} as TelegramSendEvent;
 		events.push(event);
-	});
+	}
+
 	return events;
 };
