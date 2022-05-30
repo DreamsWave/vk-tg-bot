@@ -1,7 +1,5 @@
 // import fetch from 'node-fetch';
-import { FileInfo, VideoInfo } from '@yc-bot/types';
-import { DownloaderHelper } from 'node-downloader-helper';
-import mime from 'mime';
+import { VideoInfo } from '@yc-bot/types';
 import os from 'os';
 import { getFileInfo } from '../file-info';
 import youtubeDlExec from 'youtube-dl-exec';
@@ -9,9 +7,9 @@ import { convertVideoToMP4 } from '../convert';
 import path from 'path';
 import ytdl from 'ytdl-core';
 import fs from 'fs';
-import { downloadImage } from './download-image';
+import { downloadImage } from '../download';
 
-export const downloadVideo = async (url: string, destination = os.tmpdir(), filename: string): Promise<VideoInfo> => {
+const downloadVideo = async (url: string, destination = os.tmpdir(), filename: string): Promise<VideoInfo> => {
 	// Получаем информацию о файле
 	const fileData = await youtubeDlExec(url, {
 		dumpJson: true,
@@ -41,10 +39,13 @@ export const downloadVideo = async (url: string, destination = os.tmpdir(), file
 		videoInfo.height = fileData.height;
 		videoInfo.width = fileData.width;
 		videoInfo.type = 'video';
+		videoInfo.origin = url;
 		return videoInfo;
 	}
 	return null;
 };
+
+export default downloadVideo;
 
 export const downloadYoutubeVideo = (videoUrl: string, destination: string, filename: string): Promise<string> => {
 	return new Promise((resolve, reject) => {
