@@ -72,7 +72,17 @@ export const videoMp4: VideoInfo = {
 	duration: 30,
 	height: 240,
 	width: 320,
-	thumb: null,
+	thumb: {
+		ext: 'jpeg',
+		filename: 'image-video-thumb',
+		mime: 'image/jpeg',
+		path: 'D:\\Web\\yc-bot\\assets\\image-video-thumb.jpeg',
+		size: 4,
+		type: 'photo',
+		height: 150,
+		width: 150,
+		origin: 'https://some-origin-url.com/file'
+	},
 	origin: 'https://some-origin-url.com/file'
 };
 export const videoVk: VideoInfo = {

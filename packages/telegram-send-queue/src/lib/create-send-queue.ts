@@ -14,7 +14,7 @@ export const createSendQueue = async (post: Post, options?: createSendQueueOptio
 	let eventQueue = [] as TelegramSendEvent[];
 	if (!post) return eventQueue;
 	const { text, attachments } = post;
-	if (attachments) {
+	if (attachments?.length) {
 		// Если имеются прикрепленные файлы, то обрабатываем их и получаем информацию о них
 		const mediaFiles = await getMediaFilesFromAttachments(attachments, { destination, randomFilenames });
 		// Если файлы обработались, то продолжаем работать с событиями
