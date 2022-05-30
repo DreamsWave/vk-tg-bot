@@ -1,34 +1,28 @@
 import { ImageInfo } from '@yc-bot/types';
-import { convertWebpToJpg, isWebp } from '../convert/convert-webp-to-jpg';
-import { downloadFile } from './download-file';
-import { getImageInfo } from '../file-info';
+import path from 'path';
+import convertWebpToJpg from '../convert/convert-webp-to-jpg';
+import { downloadFile } from '../download';
 import { resizeImage, ResizeOptions } from '../resize-image';
+import { getImageSizes } from '../get-image-sizes';
 
-// export interface Thumb {
-// 	height: number;
-// 	width: number;
-// 	resolution: string;
-// 	url: string;
-// 	id: string;
-// }
-
-export const downloadImage = async (url: string, destination: string, filename: string, resizeOptions?: ResizeOptions): Promise<ImageInfo> => {
+const downloadImage = async (url: string, destination: string, filename: string, resizeOptions?: ResizeOptions): Promise<ImageInfo> => {
 	let fileInfo = await downloadFile(url, destination, filename);
 	// Если изображение webp, то конвертируем в jpeg
-	if (isWebp(fileInfo.path)) {
+	if (path.extname(path.basename(fileInfo.path)) === '.webp') {
 		fileInfo = await convertWebpToJpg(fileInfo.path, destination, filename);
 	}
 
-	const imageInfo = await getImageInfo(fileInfo.path);
-
-	if (resizeOptions !== undefined) {
+	if (resizeOptions) {
 		// Изменяем размер изображения
-		const resizedImageInfo = await resizeImage(imageInfo.path, destination, resizeOptions);
+		const resizedImageInfo = await resizeImage(fileInfo.path, destination, resizeOptions);
 		if (resizedImageInfo) {
-			return resizedImageInfo;
+			return { ...resizedImageInfo, origin: url } as ImageInfo;
 		} else {
 			return null;
 		}
 	}
+	const imageInfo = { ...fileInfo, ...(await getImageSizes(fileInfo.path)), type: 'photo', origin: url } as ImageInfo;
 	return imageInfo;
 };
+
+export default downloadImage;

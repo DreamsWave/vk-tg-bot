@@ -1,7 +1,7 @@
 import os from 'os';
 import { FileInfo, ImageInfo, Photo, Video, Document, VideoInfo, Files } from '@yc-bot/types';
 import { getLargeSizeUrl, makeID } from './common';
-import { convertWebpToJpg, isWebp } from './convert';
+import { convertWebpToJpg } from './convert';
 import { downloadFile, downloadImage, downloadVideo } from './download';
 
 const getMediaFilesFromAttachments = async (
@@ -21,7 +21,6 @@ const getMediaFilesFromAttachments = async (
 				// Скачиваем изображение на сервер
 				imageInfo = await downloadImage(photoUrl, destination, filename, { maxHeight: 10000, maxWidth: 10000, maxSize: 10240 });
 				if (!imageInfo) continue;
-				imageInfo.origin = photoUrl;
 				mediaFiles.push(imageInfo);
 			} catch (error) {
 				if (error.stderr) {

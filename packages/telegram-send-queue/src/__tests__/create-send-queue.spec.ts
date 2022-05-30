@@ -1,34 +1,14 @@
 import path from 'path';
-import { getFileInfo, getImageInfo, prepareTemp } from '@yc-bot/utils';
+import { prepareTemp } from '@yc-bot/utils';
 import { createSendQueue } from '..';
-import { vkEvents } from '@yc-bot/mocks';
+import { filesInfo, vkEvents } from '@yc-bot/mocks';
 import * as utils from '@yc-bot/utils';
-import { VideoInfo } from '@yc-bot/types';
 import { MAX_CAPTION_TEXT_LENGTH, MAX_MESSAGE_TEXT_LENGTH } from '../lib/constants';
 describe('createSendQueue', () => {
-	let imageInfo;
-	let videoInfo;
-	let documentInfo;
-	let gifInfo;
-
 	jest.setTimeout(30000);
 	const destination = path.join(path.resolve(), 'tmp/createSendQueue');
-
 	beforeAll(async () => {
 		prepareTemp(destination);
-		imageInfo = {
-			...(await getImageInfo(path.join(path.resolve(), '/assets/image-jpeg.jpeg')))
-		};
-		videoInfo = {
-			...(await getFileInfo(path.join(path.resolve(), '/assets/video-youtube.mp4'))),
-			width: 640,
-			height: 360,
-			duration: 1,
-			thumb: await getImageInfo(path.join(path.resolve(), '/assets/image-video-thumb.jpeg')),
-			type: 'video'
-		} as VideoInfo;
-		documentInfo = await getFileInfo(path.join(path.resolve(), '/assets/file-pdf.pdf'));
-		gifInfo = await getFileInfo(path.join(path.resolve(), '/assets/file-gif.gif'));
 	});
 
 	it('should create queue with 1 sendMessage', async () => {
@@ -46,7 +26,7 @@ describe('createSendQueue', () => {
 		});
 	});
 	it('should create queue with 1 sendMediaGroup', async () => {
-		jest.spyOn(utils, 'getMediaFilesFromAttachments').mockResolvedValue([imageInfo, videoInfo]);
+		jest.spyOn(utils, 'getMediaFilesFromAttachments').mockResolvedValue([filesInfo.imageJpeg, filesInfo.videoVk]);
 		const post = vkEvents.wallPostNew.withPhotoAndVideo.object;
 		const queue = await createSendQueue(post, { destination, randomFilenames: true });
 		expect(queue).toHaveLength(1);
@@ -54,7 +34,7 @@ describe('createSendQueue', () => {
 		jest.clearAllMocks();
 	});
 	it('should create queue with 1 sendDocument and 1 sendMediaGroup', async () => {
-		jest.spyOn(utils, 'getMediaFilesFromAttachments').mockResolvedValue([imageInfo, videoInfo, documentInfo]);
+		jest.spyOn(utils, 'getMediaFilesFromAttachments').mockResolvedValue([filesInfo.imageJpeg, filesInfo.videoVk, filesInfo.filePdf]);
 		const post = vkEvents.wallPostNew.withPhotoVideoDoc.object;
 		const queue = await createSendQueue(post, { destination, randomFilenames: true });
 		expect(queue).toHaveLength(2);
@@ -63,7 +43,7 @@ describe('createSendQueue', () => {
 		jest.clearAllMocks();
 	});
 	it('should create queue with 1 sendPhoto and 2 sendMessage', async () => {
-		jest.spyOn(utils, 'getMediaFilesFromAttachments').mockResolvedValue([imageInfo]);
+		jest.spyOn(utils, 'getMediaFilesFromAttachments').mockResolvedValue([filesInfo.imageBig]);
 		jest.spyOn(utils, 'createLinkedPhoto').mockResolvedValue('https://vk.cc/cdXIpW');
 		const post = vkEvents.wallPostNew.withPhotoAndLongText.object;
 		const queue = await createSendQueue(post, { destination, randomFilenames: true });

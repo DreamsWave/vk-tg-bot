@@ -1,8 +1,7 @@
 import path from 'path';
 import fs from 'fs';
-import { AudioInfo, FileInfo, ImageInfo } from '@yc-bot/types';
+import { FileInfo } from '@yc-bot/types';
 import mime from 'mime';
-import Jimp from 'jimp';
 
 export const getFileInfo = (filepath: string): FileInfo => {
 	if (!fs.existsSync(filepath)) return null;
@@ -15,22 +14,21 @@ export const getFileInfo = (filepath: string): FileInfo => {
 		mime: mime.getType(ext),
 		path: filepath,
 		size,
-		buffer: fs.createReadStream(filepath),
 		type: 'document'
 	};
 	return fileInfo;
 };
 
-export const getImageInfo = async (filepath: string): Promise<ImageInfo> => {
-	if (!fs.existsSync(filepath)) return null;
-	const imageInfo = getFileInfo(filepath) as ImageInfo;
-	const imageJIMP = await Jimp.read(filepath);
-	imageInfo.width = imageJIMP.bitmap.width;
-	imageInfo.height = imageJIMP.bitmap.height;
-	imageInfo.type = 'photo';
-	return imageInfo;
-};
+// export const getImageInfo = async (filepath: string): Promise<ImageInfo> => {
+// 	if (!fs.existsSync(filepath)) return null;
+// 	const imageInfo = getFileInfo(filepath) as ImageInfo;
+// 	const imageJIMP = await Jimp.read(filepath);
+// 	imageInfo.width = imageJIMP.bitmap.width;
+// 	imageInfo.height = imageJIMP.bitmap.height;
+// 	imageInfo.type = 'photo';
+// 	return imageInfo;
+// };
 
-export const getAudioInfo = async (filepath: string): Promise<AudioInfo> => {
-	return {} as AudioInfo;
-};
+// export const getAudioInfo = async (filepath: string): Promise<AudioInfo> => {
+// 	return {} as AudioInfo;
+// };

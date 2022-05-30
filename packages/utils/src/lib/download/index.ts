@@ -1,3 +1,3 @@
-export * from './download-file';
-export * from './download-image';
-export * from './download-video';
+export { default as downloadFile } from './download-file';
+export { default as downloadImage } from './download-image';
+export { default as downloadVideo } from './download-video';
