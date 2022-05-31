@@ -110,4 +110,16 @@ describe('createSendQueue', () => {
 		expect(queue[0].payload.content.media).toHaveLength(10);
 		expect(queue[0].method).toBe('sendMediaGroup');
 	});
+	it('should create queue with 1 sendMessage with attached photo in the bottom of the message', async () => {
+		jest.spyOn(utils, 'getMediaFilesFromAttachments').mockResolvedValue([filesInfo.imageJpeg]);
+		jest.spyOn(utils, 'createLinkedPhoto').mockResolvedValue('<a href="https://vk.cc/cdXIpW">­</a>');
+		const post = vkEvents.wallPostNew.withPhoto.object;
+		post.text = makeString(3000);
+		const queue = await createSendQueue(post, { destination, randomFilenames: true });
+		expect(queue).toHaveLength(1);
+		expect(queue[0].method).toBe('sendMessage');
+		expect(queue[0].payload.content.text.length).toBeGreaterThan(1);
+		expect(queue[0].payload.content.text.length).toBeLessThan(MAX_MESSAGE_TEXT_LENGTH);
+		expect(queue[0].payload.content.text.includes('<a href=')).toBeTruthy();
+	});
 });

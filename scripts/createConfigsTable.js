@@ -20,6 +20,7 @@ const createConfigsTable = () => {
 					{ AttributeName: 'vk_group_id', AttributeType: 'S' },
 					{ AttributeName: 'vk_group_callback', AttributeType: 'S' },
 					{ AttributeName: 'vk_group_token', AttributeType: 'S' },
+					{ AttributeName: 'vk_last_post_id', AttributeType: 'S' },
 					{ AttributeName: 'name', AttributeType: 'S' },
 					{ AttributeName: 'tg_token', AttributeType: 'S' },
 					{ AttributeName: 'tg_chat_id', AttributeType: 'S' },

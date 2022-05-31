@@ -7,7 +7,7 @@ export interface VKEvent {
 	type?: string;
 	event_id?: string;
 	v?: string;
-	object?: object;
+	object?: Post;
 	secret?: string;
 }
 
