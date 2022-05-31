@@ -5,12 +5,13 @@
   "targets": {
     "build": {
       "executor": "@nrwl/node:webpack",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/functions/wall-post-new",
         "main": "packages/functions/wall-post-new/src/main.ts",
-        "tsConfig": "packages/functions/wall-post-new/tsconfig.app.json",
-        "assets": ["packages/functions/wall-post-new/src/assets"]
+        "tsConfig": "packages/functions/wall-post-new/tsconfig.app.json"
       },
       "configurations": {
         "production": {
@@ -34,14 +35,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["packages/functions/wall-post-new/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/functions/wall-post-new/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/functions/wall-post-new"],
+      "outputs": [
+        "coverage/packages/functions/wall-post-new"
+      ],
       "options": {
         "jestConfig": "packages/functions/wall-post-new/jest.config.js",
         "passWithNoTests": true

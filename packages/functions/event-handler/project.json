@@ -5,12 +5,13 @@
   "targets": {
     "build": {
       "executor": "@nrwl/node:webpack",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/functions/event-handler",
         "main": "packages/functions/event-handler/src/main.ts",
-        "tsConfig": "packages/functions/event-handler/tsconfig.app.json",
-        "assets": ["packages/functions/event-handler/src/assets"]
+        "tsConfig": "packages/functions/event-handler/tsconfig.app.json"
       },
       "configurations": {
         "production": {
@@ -34,14 +35,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["packages/functions/event-handler/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/functions/event-handler/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/functions/event-handler"],
+      "outputs": [
+        "coverage/packages/functions/event-handler"
+      ],
       "options": {
         "jestConfig": "packages/functions/event-handler/jest.config.js",
         "passWithNoTests": true

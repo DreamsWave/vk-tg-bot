@@ -50,9 +50,25 @@ resource "yandex_ydb_database_serverless" "bots" {
       VK_GROUP_CALLBACK     = var.vk_group_callback
       VK_GROUP_ID           = var.vk_group_id
       VK_GROUP_TOKEN        = var.vk_group_token
+      VK_LAST_POST_ID       = 0
     }
     command = "node ./scripts/createConfigsTable.js"
   }
+}
+
+### Message Queue
+resource "yandex_message_queue" "wall-post-new" {
+  name                       = "wall-post-new"
+  visibility_timeout_seconds = 600
+  receive_wait_time_seconds  = 0
+  message_retention_seconds  = 86400
+  access_key                 = yandex_iam_service_account_static_access_key.sa-static-key.access_key
+  secret_key                 = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
+}
+data "yandex_message_queue" "wall-post-new" {
+  name       = "wall-post-new"
+  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
+  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
 }
 
 ### Functions
@@ -122,30 +138,6 @@ resource "yandex_function_trigger" "ymq-wall-post-new" {
     tag                = "$latest"
     service_account_id = yandex_iam_service_account.this.id
   }
-}
-
-### Message Queue
-resource "yandex_message_queue" "d-wall-post-new" {
-  name       = "d-wall-post-new"
-  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
-}
-resource "yandex_message_queue" "wall-post-new" {
-  name                       = "wall-post-new"
-  visibility_timeout_seconds = 600
-  receive_wait_time_seconds  = 0
-  message_retention_seconds  = 86400
-  access_key                 = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key                 = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
-  redrive_policy = jsonencode({
-    deadLetterTargetArn = yandex_message_queue.d-wall-post-new.arn
-    maxReceiveCount     = 3
-  })
-}
-data "yandex_message_queue" "wall-post-new" {
-  name       = "wall-post-new"
-  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
 }
 
 ### API Gateway

@@ -8,7 +8,7 @@ const YMQOptions = {
 	region: 'ru-central1'
 };
 
-export const sendMessageYMQ = async (url: string, message: unknown, options?: { apiOptions: object; sendParams: object }): Promise<SQS.SendMessageResult> => {
+const sendMessageYMQ = async (url: string, message: unknown, options?: { apiOptions: object; sendParams: object }): Promise<SQS.SendMessageResult> => {
 	if (!url) throw new Error('Url is required');
 	const { endpoint, region } = YMQOptions;
 	const ymq = new SQS({
@@ -23,10 +23,11 @@ export const sendMessageYMQ = async (url: string, message: unknown, options?: { 
 	};
 	try {
 		const result = await ymq.sendMessage(params).promise();
-		logger.debug(JSON.stringify(result));
 		return result;
 	} catch (error) {
 		logger.error(JSON.stringify(error));
 		throw error;
 	}
 };
+
+export default sendMessageYMQ;
