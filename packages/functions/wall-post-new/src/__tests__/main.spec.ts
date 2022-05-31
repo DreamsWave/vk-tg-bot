@@ -2,13 +2,17 @@ import { handler } from '../main';
 import { ymq } from '@yc-bot/mocks';
 import { Messages, Context } from '@yc-bot/types';
 
-describe('Wall Post New Function', () => {
+describe('Function wall-post-new', () => {
 	jest.setTimeout(30000);
-	// it('Should return "ok"', async () => {
-	// 	const messages: Messages = ymq.messages;
-	// 	const context: Context = {};
-	// 	const result = await handler(messages, context);
-	// 	expect(result.body).toEqual('ok');
-	// });
-	it.todo("should return 'ok'");
+	it('should handle wall_post_new vk event and return { statusCode: 200, body: ok }', async () => {
+		try {
+			const messages: Messages = ymq.messages;
+			const context: Context = {};
+			const result = await handler(messages, context);
+			expect(result.body).toBe('ok');
+			expect(result.statusCode).toBe(200);
+		} catch (error) {
+			expect(false).toBe(true);
+		}
+	});
 });

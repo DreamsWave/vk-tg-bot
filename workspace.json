@@ -7,9 +7,9 @@
 		"functions-event-handler": "packages/functions/event-handler",
 		"functions-wall-post-new": "packages/functions/wall-post-new",
 		"mocks": "packages/mocks",
+		"queue": "packages/queue",
 		"shared-config": "packages/shared/config",
 		"shared-utils": "packages/shared/utils",
-		"telegram-send-queue": "packages/telegram-send-queue",
 		"types": "packages/types",
 		"utils": "packages/utils"
 	}

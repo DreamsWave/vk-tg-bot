@@ -1,10 +1,10 @@
 import { VK } from 'vk-io';
 import { logger } from '@yc-bot/shared/utils';
-import { getConfig } from '@yc-bot/shared/config';
+import { config } from '@yc-bot/shared/config';
 
 export const getShortLink = async (url: string): Promise<string> => {
-	const config = getConfig();
-	const vk = new VK({ token: config.vk_group_token });
+	const conf = config.get();
+	const vk = new VK({ token: conf.vk_group_token });
 	let shortUrl = '';
 	if (url) {
 		try {
