@@ -3,14 +3,10 @@ import * as yc from '@yc-bot/api/yandex-cloud';
 import { Event } from '@yc-bot/types';
 import { handler } from '../main';
 
-jest.mock('@yc-bot/api/yandex-cloud');
-
 describe('Event Handler Function', () => {
-	beforeAll(() => {
+	it('should return "ok"', async () => {
 		jest.spyOn(yc, 'isPostUnique').mockResolvedValue(true);
 		jest.spyOn(yc, 'sendMessageYMQ').mockResolvedValue({});
-	});
-	it('should return "ok"', async () => {
 		try {
 			const event = {} as Event;
 			event['body'] = JSON.stringify(vkEvents.wallPostNew.simple);
@@ -19,5 +15,6 @@ describe('Event Handler Function', () => {
 		} catch (error) {
 			expect(true).toBe(false);
 		}
+		jest.clearAllMocks();
 	});
 });

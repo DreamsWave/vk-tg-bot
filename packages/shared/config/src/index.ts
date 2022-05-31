@@ -1,1 +1,1 @@
-export { default as config } from './lib/config';
+export { default as Config } from './lib/config';

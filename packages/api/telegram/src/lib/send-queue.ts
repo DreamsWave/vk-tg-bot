@@ -2,11 +2,11 @@ process.env['NTBA_FIX_350'] = '1';
 process.env['NTBA_FIX_319'] = '1';
 import Telegram from 'node-telegram-bot-api';
 import { TelegramSendEvent } from '@yc-bot/types';
-import { config } from '@yc-bot/shared/config';
+import { Config } from '@yc-bot/shared/config';
 
 const sendQueue = async (queue: TelegramSendEvent[]): Promise<void> => {
 	if (!queue?.length) return;
-	const conf = config.get();
+	const conf = Config.get();
 	const tg = new Telegram(conf.tg_token);
 	const chatId = -conf.tg_chat_id;
 	for (const event of queue) {

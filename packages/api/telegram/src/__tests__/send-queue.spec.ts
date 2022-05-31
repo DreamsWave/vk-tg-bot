@@ -3,7 +3,6 @@ import path from 'path';
 import sendQueue from '../lib/send-queue';
 import { queueEvents } from '@yc-bot/mocks';
 import { TelegramSendEvent } from '@yc-bot/types';
-import { initConfig } from '@yc-bot/shared/config';
 
 describe('sendQueue', () => {
 	const destination = path.join(path.resolve(), 'tmp', 'sendQueue');

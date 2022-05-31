@@ -1,9 +1,9 @@
 import { VK } from 'vk-io';
 import { logger } from '@yc-bot/shared/utils';
-import { config } from '@yc-bot/shared/config';
+import { Config } from '@yc-bot/shared/config';
 
 export const getShortLink = async (url: string): Promise<string> => {
-	const conf = config.get();
+	const conf = Config.get();
 	const vk = new VK({ token: conf.vk_group_token });
 	let shortUrl = '';
 	if (url) {

@@ -1,2 +1,2 @@
 export { default as isPostUnique } from './lib/is-post-unique';
-export * from './lib/send-message-ymq';
+export { default as sendMessageYMQ } from './lib/send-message-ymq';

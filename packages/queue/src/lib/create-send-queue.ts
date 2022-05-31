@@ -8,7 +8,7 @@ export interface createSendQueueOptions {
 	destination?: string;
 }
 
-export const createSendQueue = async (post: Post, options?: createSendQueueOptions): Promise<TelegramSendEvent[]> => {
+const createSendQueue = async (post: Post, options?: createSendQueueOptions): Promise<TelegramSendEvent[]> => {
 	const destination = options?.destination ?? os.tmpdir();
 	const randomFilenames = options?.randomFilenames ?? false;
 	let eventQueue = [] as TelegramSendEvent[];
@@ -81,3 +81,5 @@ export const createSendQueue = async (post: Post, options?: createSendQueueOptio
 	eventQueue[0].payload.options.disable_notification = false;
 	return eventQueue;
 };
+
+export default createSendQueue;

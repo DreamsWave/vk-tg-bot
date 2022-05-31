@@ -14,6 +14,18 @@ export interface IConfig {
 	extra: object;
 }
 
+const devConfig: IConfig = {
+	vk_group_id: process.env['VK_GROUP_ID'] ?? '',
+	vk_group_token: process.env['VK_GROUP_TOKEN'] ?? '',
+	vk_group_callback: process.env['VK_GROUP_CALLBACK'] ?? '',
+	vk_last_post_id: process.env['VK_LAST_POST_ID'] ?? '',
+	name: process.env['NAME'] ?? '',
+	tg_token: process.env['TG_TOKEN'] ?? '',
+	tg_chat_id: process.env['TG_CHAT_ID'] ?? '',
+	tg_error_chat_id: process.env['TG_ERROR_CHAT_ID'] ?? '',
+	extra: null
+};
+
 AWS.config.update({
 	dynamodb: {
 		endpoint: new AWS.Endpoint(process.env['AWS_ENDPOINT']),
@@ -24,20 +36,11 @@ AWS.config.update({
 });
 
 class Config {
-	devConfig: IConfig = {
-		vk_group_id: process.env['VK_GROUP_ID'] ?? '',
-		vk_group_token: process.env['VK_GROUP_TOKEN'] ?? '',
-		vk_group_callback: process.env['VK_GROUP_CALLBACK'] ?? '',
-		vk_last_post_id: process.env['VK_LAST_POST_ID'] ?? '',
-		name: process.env['NAME'] ?? '',
-		tg_token: process.env['TG_TOKEN'] ?? '',
-		tg_chat_id: process.env['TG_CHAT_ID'] ?? '',
-		tg_error_chat_id: process.env['TG_ERROR_CHAT_ID'] ?? '',
-		extra: null
-	};
-	cachedConfig: IConfig = null;
-	configsTableName = 'configs';
-	init = async (vkGroupId: string | number): Promise<IConfig> => {
+	private static cachedConfig: IConfig;
+	public static configsTableName = 'configs';
+
+	public static async init(vkGroupId: string | number): Promise<IConfig> {
+		if (process.env['NODE_ENV'] === 'development' || process.env.NODE_ENV === 'test') return devConfig;
 		vkGroupId = String(vkGroupId).charAt(0) === '-' ? String(vkGroupId).substring(1) : String(vkGroupId);
 		return new Promise((resolve, reject) => {
 			const documentClient = new AWS.DynamoDB.DocumentClient();
@@ -54,20 +57,19 @@ class Config {
 						return reject(err);
 					} else {
 						if (data.Item.vk_group_id === vkGroupId) {
-							this.cachedConfig = data.Item as IConfig;
-							return resolve(this.cachedConfig);
+							Config.cachedConfig = data.Item as IConfig;
+							return resolve(Config.cachedConfig);
 						}
 						return resolve(null);
 					}
 				}
 			);
 		});
-	};
-	get = (): IConfig => {
-		if (this.cachedConfig) return this.cachedConfig;
-		if (process.env.NODE_ENV === 'development') return this.devConfig;
-		// if (process.env.NODE_ENV === 'development' || (process.env.NODE_ENV === 'test' && this.devConfig.vk_group_id)) return this.devConfig;
+	}
+	public static get(): IConfig {
+		if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') return devConfig;
+		if (Config.cachedConfig) return Config.cachedConfig;
 		return null;
-	};
+	}
 }
-export default new Config();
+export default Config;
