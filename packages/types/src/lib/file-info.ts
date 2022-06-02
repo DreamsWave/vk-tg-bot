@@ -25,3 +25,5 @@ export interface AudioInfo extends FileInfo {
 }
 
 export type Files = (FileInfo | ImageInfo | VideoInfo | AudioInfo)[];
+
+export type FileType = FileInfo | ImageInfo | VideoInfo | AudioInfo;
