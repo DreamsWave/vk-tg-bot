@@ -17,9 +17,9 @@ const sendQueue = async (queue: TelegramSendEvent[]): Promise<void> => {
 			case 'sendAnimation':
 				await tg.sendAnimation(chatId, content.media, options);
 				break;
-			// case "sendAudio":
-			//     await tg.sendAudio(chatId, content.media, options)
-			//     break;
+			case 'sendAudio':
+				await tg.sendAudio(chatId, content.media, options);
+				break;
 			case 'sendDocument':
 				await tg.sendDocument(chatId, content.media, options, fileOptions);
 				break;

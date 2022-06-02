@@ -2,7 +2,8 @@ import { Messages, Context, VKEvent, Post } from '@yc-bot/types';
 import { sendQueue } from '@yc-bot/api/telegram';
 import { Config } from '@yc-bot/shared/config';
 import { logger } from '@yc-bot/shared/utils';
-import { createSendQueue } from '@yc-bot/queue';
+import { Queue } from '@yc-bot/queue';
+import { getMediaFilesFromAttachments } from '@yc-bot/utils';
 
 export const handler = async (messages: Messages, context: Context) => {
 	try {
@@ -16,8 +17,16 @@ export const handler = async (messages: Messages, context: Context) => {
 			const config = await Config.init(event?.group_id);
 			if (!config) return { statusCode: 200, body: 'ok' };
 
-			const queue = await createSendQueue(post);
-			await sendQueue(queue);
+			const queue = new Queue();
+			if (post.attachments) {
+				const mediaFiles = await getMediaFilesFromAttachments(post.attachments, {});
+				queue.addFiles(mediaFiles);
+			}
+			if (post.text) {
+				queue.addText(post.text);
+			}
+			queue.addNotification();
+			await sendQueue(queue.getQueue());
 		}
 	} catch (error) {
 		logger.error(JSON.stringify(error));
