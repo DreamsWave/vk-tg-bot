@@ -3,7 +3,7 @@ import { sendQueue } from '@yc-bot/api/telegram';
 import { Config } from '@yc-bot/shared/config';
 import { logger } from '@yc-bot/shared/utils';
 import { Queue } from '@yc-bot/queue';
-import { getMediaFilesFromAttachments } from '@yc-bot/utils';
+import { getMediaFilesFromAttachments, Temp } from '@yc-bot/utils';
 
 export const handler = async (messages: Messages, context: Context) => {
 	try {
@@ -18,8 +18,9 @@ export const handler = async (messages: Messages, context: Context) => {
 			if (!config) return { statusCode: 200, body: 'ok' };
 
 			const queue = new Queue();
-			if (post.attachments) {
-				const mediaFiles = await getMediaFilesFromAttachments(post.attachments, {});
+			if (post.attachments?.length) {
+				Temp.prepare();
+				const mediaFiles = await getMediaFilesFromAttachments(post.attachments);
 				queue.addFiles(mediaFiles);
 			}
 			if (post.text) {
@@ -31,6 +32,8 @@ export const handler = async (messages: Messages, context: Context) => {
 	} catch (error) {
 		logger.error(JSON.stringify(error));
 		throw error;
+	} finally {
+		Temp.removeLocation();
 	}
 	return {
 		statusCode: 200,

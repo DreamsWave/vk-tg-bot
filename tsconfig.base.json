@@ -11,46 +11,23 @@
 		"target": "es2015",
 		"module": "commonjs",
 		"esModuleInterop": true,
-		"lib": [
-			"es2017",
-			"dom"
-		],
+		"lib": ["es2017", "dom"],
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
 		"resolveJsonModule": true,
 		"baseUrl": ".",
 		"paths": {
-			"@yc-bot/api/telegram": [
-				"packages/api/telegram/src/index.ts"
-			],
-			"@yc-bot/api/vk": [
-				"packages/api/vk/src/index.ts"
-			],
-			"@yc-bot/api/yandex-cloud": [
-				"packages/api/yandex-cloud/src/index.ts"
-			],
-			"@yc-bot/mocks": [
-				"packages/mocks/src/index.ts"
-			],
-			"@yc-bot/queue": [
-				"packages/queue/src/index.ts"
-			],
-			"@yc-bot/shared/config": [
-				"packages/shared/config/src/index.ts"
-			],
-			"@yc-bot/shared/utils": [
-				"packages/shared/utils/src/index.ts"
-			],
-			"@yc-bot/types": [
-				"packages/types/src/index.ts"
-			],
-			"@yc-bot/utils": [
-				"packages/utils/src/index.ts"
-			]
+			"@yc-bot/api/telegram": ["packages/api/telegram/src/index.ts"],
+			"@yc-bot/api/vk": ["packages/api/vk/src/index.ts"],
+			"@yc-bot/api/yandex-cloud": ["packages/api/yandex-cloud/src/index.ts"],
+			"@yc-bot/downloader": ["packages/downloader/src/index.ts"],
+			"@yc-bot/mocks": ["packages/mocks/src/index.ts"],
+			"@yc-bot/queue": ["packages/queue/src/index.ts"],
+			"@yc-bot/shared/config": ["packages/shared/config/src/index.ts"],
+			"@yc-bot/shared/utils": ["packages/shared/utils/src/index.ts"],
+			"@yc-bot/types": ["packages/types/src/index.ts"],
+			"@yc-bot/utils": ["packages/utils/src/index.ts"]
 		}
 	},
-	"exclude": [
-		"node_modules",
-		"tmp"
-	]
+	"exclude": ["node_modules", "tmp"]
 }

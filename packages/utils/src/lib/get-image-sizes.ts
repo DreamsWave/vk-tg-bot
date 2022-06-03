@@ -6,7 +6,7 @@ export type ImageSizes = {
 	width: number;
 };
 
-export const getImageSizes = async (filepath: string): Promise<ImageSizes> => {
+const getImageSizes = async (filepath: string): Promise<ImageSizes> => {
 	if (!fs.existsSync(filepath)) return null;
 	try {
 		const imageJIMP = await Jimp.read(filepath);
@@ -16,3 +16,5 @@ export const getImageSizes = async (filepath: string): Promise<ImageSizes> => {
 		return null;
 	}
 };
+
+export default getImageSizes;

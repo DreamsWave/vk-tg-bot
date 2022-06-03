@@ -48,3 +48,8 @@ export const getLargeSizeUrl = (sizes): string => {
 	}
 	return LARGE_SIZES.map((sizeType) => sizes.find((size) => size.type === sizeType)).filter(Boolean)[0].url;
 };
+
+export const createLinkedPhoto = (url: string): string => {
+	if (url) return `<a href="${url}">­</a>`;
+	return '';
+};

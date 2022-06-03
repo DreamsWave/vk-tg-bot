@@ -5,7 +5,7 @@ import createEvent from './create-event';
 
 export interface IQueue {
 	addFiles(mediaFiles: Files): TelegramSendEvent[];
-	addText(text: string): Promise<TelegramSendEvent[]>;
+	addText(text: string): TelegramSendEvent[];
 	addNotification(options: { onlyFirst: boolean; all: boolean }): TelegramSendEvent[];
 	getQueue(): TelegramSendEvent[];
 	clearQueue(): TelegramSendEvent[];
@@ -66,16 +66,16 @@ class Queue implements IQueue {
 		}
 		return this._queue;
 	}
-	public async addText(text: string): Promise<TelegramSendEvent[]> {
+	public addText(text: string): TelegramSendEvent[] {
 		if (!text) return this._queue;
 		const lastItemIndex = this._queue.length - 1;
 		const lastItem = this._queue[lastItemIndex];
 		if (this._queue.length && lastItem.method !== 'sendMessage') {
-			// if last event in queue sendPhoto and text length greater than 0 and less of equal max text message length - 50
+			// if last event in queue sendPhoto and text length greater than 0 and less of equal max text message length - 200
 			// modify that event to sendMessage and add photo as link
-			if (lastItem.method === 'sendPhoto' && text.length > MAX_CAPTION_TEXT_LENGTH && text.length <= MAX_MESSAGE_TEXT_LENGTH - 50) {
-				const linkedPhoto = await createLinkedPhoto(lastItem.payload.origin);
-				this._queue[lastItemIndex] = await createEvent({ method: 'sendMessage', text: text + ' ' + linkedPhoto });
+			if (lastItem.method === 'sendPhoto' && text.length > MAX_CAPTION_TEXT_LENGTH && text.length <= MAX_MESSAGE_TEXT_LENGTH - 200) {
+				const linkedPhoto = createLinkedPhoto(lastItem.payload.origin);
+				this._queue[lastItemIndex] = createEvent({ method: 'sendMessage', text: text + ' ' + linkedPhoto, options: { parse_mode: 'HTML' } });
 			} else {
 				const [textFirstChunk, ...textRestChunks] = chunkString(text, MAX_MESSAGE_TEXT_LENGTH, MAX_CAPTION_TEXT_LENGTH);
 				this._queue[lastItemIndex].payload.options.caption = textFirstChunk;
@@ -93,6 +93,7 @@ class Queue implements IQueue {
 	}
 	public addNotification(options?: { onlyFirst?: boolean; all?: boolean }): TelegramSendEvent[] {
 		const { onlyFirst = true, all = false } = options ?? {};
+		if (!this._queue.length) return this._queue;
 		if (onlyFirst) {
 			this._queue[0].payload.options.disable_notification = false;
 		}

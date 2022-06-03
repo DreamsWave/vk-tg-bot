@@ -1,14 +1,18 @@
 import { getAttachment } from '@yc-bot/mocks';
 import { FileInfo, ImageInfo, VideoInfo } from '@yc-bot/types';
 import path from 'path';
-import { prepareTemp, getMediaFilesFromAttachments } from '..';
-import * as download from '../lib/download';
+import { getMediaFilesFromAttachments, Temp } from '..';
+import { Downloader } from '@yc-bot/downloader';
 
 describe('getMediafilesFromAttachments', () => {
 	jest.setTimeout(60000);
-	const destination = path.join(path.resolve(), 'tmp', 'getMediafilesFromAttachments');
+	const destination = path.join(path.resolve(), 'tmp');
 	beforeAll(() => {
-		prepareTemp(destination);
+		Temp.setTmpdir(destination);
+		Temp.prepare();
+	});
+	afterAll(() => {
+		Temp.removeLocation();
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -38,13 +42,10 @@ describe('getMediafilesFromAttachments', () => {
 				origin: 'https://www.gstatic.com/webp/gallery/1.webp'
 			}
 		] as ImageInfo[];
-		jest.spyOn(download, 'downloadImage').mockResolvedValueOnce(imagesInfo[0]);
-		jest.spyOn(download, 'downloadImage').mockResolvedValueOnce(imagesInfo[0]);
+		jest.spyOn(Downloader, 'getImage').mockResolvedValueOnce(imagesInfo[0]);
+		jest.spyOn(Downloader, 'getImage').mockResolvedValueOnce(imagesInfo[0]);
 		const attachments = [getAttachment('photo', 'small'), getAttachment('photo', 'webp')];
-		const mediafiles = await getMediaFilesFromAttachments(attachments, {
-			randomFilenames: true,
-			destination
-		});
+		const mediafiles = await getMediaFilesFromAttachments(attachments);
 		expect(mediafiles).toHaveLength(2);
 		for (const media of mediafiles) {
 			expect(media.type).toBe('photo');
@@ -102,13 +103,10 @@ describe('getMediafilesFromAttachments', () => {
 				origin: 'https://m.vk.com/video-191117934_456239081'
 			}
 		] as VideoInfo[];
-		jest.spyOn(download, 'downloadVideo').mockResolvedValueOnce(videosInfo[0]);
-		jest.spyOn(download, 'downloadVideo').mockResolvedValueOnce(videosInfo[1]);
+		jest.spyOn(Downloader, 'getVideo').mockResolvedValueOnce(videosInfo[0]);
+		jest.spyOn(Downloader, 'getVideo').mockResolvedValueOnce(videosInfo[1]);
 		const attachments = [getAttachment('video', 'small'), getAttachment('video', 'youtube')];
-		const mediafiles = await getMediaFilesFromAttachments(attachments, {
-			randomFilenames: true,
-			destination
-		});
+		const mediafiles = await getMediaFilesFromAttachments(attachments);
 		expect(mediafiles).toHaveLength(2);
 		for (const media of mediafiles) {
 			expect(media.type).toBe('video');
@@ -137,13 +135,10 @@ describe('getMediafilesFromAttachments', () => {
 				origin: 'https://vk.com/doc11300623_634588582?hash=ZVf4gXnu5z3Cip9y1sp5dxXthozuIsWqa5Tu9toEjus&dl=GEYTGMBQGYZDG:1650715675:XD51jBLcAayC92roN4K0bI4h1zXu4zNC4QOZAtJbqVX&api=1&no_preview=1'
 			}
 		] as FileInfo[];
-		jest.spyOn(download, 'downloadFile').mockResolvedValueOnce(docsInfo[0]);
-		jest.spyOn(download, 'downloadFile').mockResolvedValueOnce(docsInfo[1]);
+		jest.spyOn(Downloader, 'getFile').mockResolvedValueOnce(docsInfo[0]);
+		jest.spyOn(Downloader, 'getFile').mockResolvedValueOnce(docsInfo[1]);
 		const attachments = [getAttachment('doc', 'pdf'), getAttachment('doc', 'gif')];
-		const mediafiles = await getMediaFilesFromAttachments(attachments, {
-			randomFilenames: true,
-			destination
-		});
+		const mediafiles = await getMediaFilesFromAttachments(attachments);
 		expect(mediafiles).toHaveLength(2);
 		expect(mediafiles[0].mime).toBe('application/pdf');
 		expect(mediafiles[0].ext).toBe('pdf');

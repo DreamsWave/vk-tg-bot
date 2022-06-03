@@ -6,7 +6,7 @@ import * as utils from '@yc-bot/utils';
 
 describe('Function wall-post-new', () => {
 	jest.setTimeout(30000);
-	it('should handle wall_post_new vk event', async () => {
+	it.only('should handle wall_post_new vk event', async () => {
 		jest.spyOn(utils, 'getMediaFilesFromAttachments').mockResolvedValue([filesInfo.imageJpeg]);
 		const sendQueue = jest.spyOn(telegram, 'sendQueue').mockResolvedValue();
 		try {
@@ -19,5 +19,6 @@ describe('Function wall-post-new', () => {
 		} catch (error) {
 			expect(false).toBe(true);
 		}
+		jest.clearAllMocks();
 	});
 });
