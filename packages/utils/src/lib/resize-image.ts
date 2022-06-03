@@ -1,17 +1,10 @@
-import { ImageInfo } from '@yc-bot/types';
+import { ImageInfo, ResizeOptions } from '@yc-bot/types';
 import jimp from 'jimp';
 import path from 'path';
 import { calculateImageDimensions } from './common';
 import { getFileInfo } from './file-info';
 
-export type ResizeOptions = {
-	maxWidth?: number;
-	maxHeight?: number;
-	maxSize?: number;
-	quality?: number;
-};
-
-export const resizeImage = async (
+const resizeImage = async (
 	filepath: string,
 	destination: string,
 	{ maxHeight = 10000, maxWidth = 10000, quality = 70, maxSize = 10240 }: ResizeOptions
@@ -40,3 +33,5 @@ export const resizeImage = async (
 		return null;
 	}
 };
+
+export default resizeImage;

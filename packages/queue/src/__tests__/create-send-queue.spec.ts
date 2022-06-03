@@ -1,5 +1,5 @@
 import path from 'path';
-import { makeString, prepareTemp } from '@yc-bot/utils';
+import { makeString, Temp } from '@yc-bot/utils';
 import { createSendQueue } from '..';
 import { filesInfo, vkEvents } from '@yc-bot/mocks';
 import * as utils from '@yc-bot/utils';
@@ -7,9 +7,13 @@ import { MAX_CAPTION_TEXT_LENGTH, MAX_MESSAGE_TEXT_LENGTH } from '../lib/constan
 import { TelegramSendMethods } from '@yc-bot/types';
 describe('createSendQueue', () => {
 	jest.setTimeout(30000);
-	const destination = path.join(path.resolve(), 'tmp/createSendQueue');
-	beforeAll(async () => {
-		prepareTemp(destination);
+	const destination = path.join(path.resolve(), 'tmp');
+	beforeAll(() => {
+		Temp.setTmpdir(destination);
+		Temp.prepare();
+	});
+	afterAll(() => {
+		Temp.removeLocation();
 	});
 	afterEach(() => jest.clearAllMocks());
 
@@ -57,7 +61,7 @@ describe('createSendQueue', () => {
 	});
 	it('should create queue with 1 sendPhoto and 2 sendMessage', async () => {
 		jest.spyOn(utils, 'getMediaFilesFromAttachments').mockResolvedValue([filesInfo.imageBig]);
-		jest.spyOn(utils, 'createLinkedPhoto').mockResolvedValue('https://vk.cc/cdXIpW');
+		utils.createLinkedPhoto;
 		const post = vkEvents.wallPostNew.withPhotoAndLongText.object;
 		const queue = await createSendQueue(post, { destination, randomFilenames: true });
 		expect(queue).toHaveLength(3);
@@ -112,7 +116,6 @@ describe('createSendQueue', () => {
 	});
 	it('should create queue with 1 sendMessage with attached photo in the bottom of the message', async () => {
 		jest.spyOn(utils, 'getMediaFilesFromAttachments').mockResolvedValue([filesInfo.imageJpeg]);
-		jest.spyOn(utils, 'createLinkedPhoto').mockResolvedValue('<a href="https://vk.cc/cdXIpW">­</a>');
 		const post = vkEvents.wallPostNew.withPhoto.object;
 		post.text = makeString(3000);
 		const queue = await createSendQueue(post, { destination, randomFilenames: true });

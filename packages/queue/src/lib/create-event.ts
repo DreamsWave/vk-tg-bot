@@ -6,9 +6,10 @@ export interface CreateEventOptions {
 	method: TelegramSendMethods;
 	text?: string;
 	media?: FileType | FileType[];
+	options?: any;
 }
 
-const createEvent = ({ method, text, media }: CreateEventOptions): TelegramSendEvent => {
+const createEvent = ({ method, text, media, options }: CreateEventOptions): TelegramSendEvent => {
 	const event = { method, payload: { content: {}, options: { disable_notification: true } } } as TelegramSendEvent;
 	if (method === 'sendMessage') {
 		event.payload.content.text = text;
@@ -45,6 +46,8 @@ const createEvent = ({ method, text, media }: CreateEventOptions): TelegramSendE
 		const mediaGroup = createMediaGroup(files);
 		event.payload.content.media = mediaGroup;
 	}
+
+	event.payload.options = { ...event.payload.options, ...options };
 
 	if (event.method && (event.payload.content.media || event.payload.content.text)) {
 		return event;

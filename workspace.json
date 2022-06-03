@@ -4,6 +4,7 @@
 		"api-telegram": "packages/api/telegram",
 		"api-vk": "packages/api/vk",
 		"api-yandex-cloud": "packages/api/yandex-cloud",
+		"downloader": "packages/downloader",
 		"functions-event-handler": "packages/functions/event-handler",
 		"functions-wall-post-new": "packages/functions/wall-post-new",
 		"mocks": "packages/mocks",

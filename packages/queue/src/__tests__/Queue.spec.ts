@@ -1,14 +1,18 @@
 import path from 'path';
-import { makeString, prepareTemp } from '@yc-bot/utils';
+import { makeString, Temp } from '@yc-bot/utils';
 import { filesInfo } from '@yc-bot/mocks';
 import { MAX_CAPTION_TEXT_LENGTH, MAX_MESSAGE_TEXT_LENGTH } from '../lib/constants';
 import Queue from '../lib/Queue';
 import * as utils from '@yc-bot/utils';
 describe('Queue', () => {
 	jest.setTimeout(30000);
-	const destination = path.join(path.resolve(), 'tmp/Queue');
-	beforeAll(async () => {
-		prepareTemp(destination);
+	const destination = path.join(path.resolve(), 'tmp');
+	beforeAll(() => {
+		Temp.setTmpdir(destination);
+		Temp.prepare();
+	});
+	afterAll(() => {
+		Temp.removeLocation();
 	});
 	afterEach(() => jest.clearAllMocks());
 
@@ -36,11 +40,11 @@ describe('Queue', () => {
 	});
 	it('should add text', async () => {
 		const queue = new Queue();
-		await queue.addText(makeString(1000));
+		queue.addText(makeString(1000));
 		expect(queue.getQueue()[0].method).toBe('sendMessage');
 		expect(queue.getQueue()[0].payload.content.text.length).toBeLessThanOrEqual(1000);
 		queue.clearQueue();
-		await queue.addText(makeString(5000));
+		queue.addText(makeString(5000));
 		expect(queue.getQueue()[0].method).toBe('sendMessage');
 		expect(queue.getQueue()[0].payload.content.text.length).toBeGreaterThan(0);
 		expect(queue.getQueue()[0].payload.content.text.length).toBeLessThanOrEqual(MAX_MESSAGE_TEXT_LENGTH);
@@ -53,7 +57,7 @@ describe('Queue', () => {
 		const mediaFiles = [filesInfo.imageJpeg];
 
 		queue.addFiles(mediaFiles);
-		await queue.addText(makeString(1000));
+		queue.addText(makeString(1000));
 		let queueEvents = queue.getQueue();
 		expect(queueEvents[0].method).toBe('sendPhoto');
 		expect(queueEvents[0].payload.options.caption.length).toBeGreaterThan(0);
@@ -61,7 +65,7 @@ describe('Queue', () => {
 		queue.clearQueue();
 
 		queue.addFiles(mediaFiles);
-		await queue.addText(makeString(5000));
+		queue.addText(makeString(5000));
 		queueEvents = queue.getQueue();
 		expect(queueEvents[0].method).toBe('sendPhoto');
 		expect(queueEvents[0].payload.options.caption.length).toBeGreaterThan(0);
@@ -72,7 +76,7 @@ describe('Queue', () => {
 	});
 	it('should add notification', async () => {
 		const queue = new Queue();
-		await queue.addText(makeString(10000));
+		queue.addText(makeString(10000));
 		const eventQueue = queue.getQueue();
 		for (let i = 0; i < eventQueue.length; i++) {
 			const disable_notification = eventQueue[i].payload.options.disable_notification;
@@ -94,12 +98,11 @@ describe('Queue', () => {
 		}
 	});
 	it('should move photo to the bottom of sendMessage', async () => {
-		jest.spyOn(utils, 'createLinkedPhoto').mockResolvedValue('<a href="https://vk.cc/cdXIpW">­</a>');
 		const queue = new Queue();
 		const mediaFiles = [filesInfo.imageJpeg];
 
 		queue.addFiles(mediaFiles);
-		await queue.addText(makeString(3000));
+		queue.addText(makeString(3000));
 		const queueEvents = queue.getQueue();
 		expect(queueEvents[0].method).toBe('sendMessage');
 		expect(queueEvents[0].payload.content.text.length).toBeGreaterThan(MAX_CAPTION_TEXT_LENGTH);

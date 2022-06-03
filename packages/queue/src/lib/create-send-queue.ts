@@ -9,14 +9,12 @@ export interface createSendQueueOptions {
 }
 
 const createSendQueue = async (post: Post, options?: createSendQueueOptions): Promise<TelegramSendEvent[]> => {
-	const destination = options?.destination ?? os.tmpdir();
-	const randomFilenames = options?.randomFilenames ?? false;
 	let eventQueue = [] as TelegramSendEvent[];
 	if (!post) return eventQueue;
 	const { text, attachments } = post;
 	if (attachments?.length) {
 		// Если имеются прикрепленные файлы, то обрабатываем их и получаем информацию о них
-		const mediaFiles = await getMediaFilesFromAttachments(attachments, { destination, randomFilenames });
+		const mediaFiles = await getMediaFilesFromAttachments(attachments);
 		// Если файлы обработались, то продолжаем работать с событиями
 		if (mediaFiles.length) {
 			if (mediaFiles.length === 1) {

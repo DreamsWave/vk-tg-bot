@@ -1,13 +1,9 @@
 import os from 'os';
-import { FileInfo, ImageInfo, Photo, Video, Document, VideoInfo, Files } from '@yc-bot/types';
+import { ImageInfo, Photo, Video, Document, Files } from '@yc-bot/types';
 import { getLargeSizeUrl, makeID } from './common';
-import { convertWebpToJpg } from './convert';
-import { downloadFile, downloadImage, downloadVideo } from './download';
+import { Downloader } from '@yc-bot/downloader';
 
-const getMediaFilesFromAttachments = async (
-	attachments,
-	{ destination = os.tmpdir(), randomFilenames = false }: { destination?: string; randomFilenames?: boolean }
-): Promise<Files> => {
+const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 	const mediaFiles = [];
 	for (const attachment of attachments) {
 		// photo
@@ -16,10 +12,10 @@ const getMediaFilesFromAttachments = async (
 			// Получаем ссылку на максимальный размер изображения
 			const photoUrl = getLargeSizeUrl(photo.sizes);
 			try {
-				const filename = randomFilenames ? makeID() : String(photo.id);
+				const filename = String(photo.id) ?? makeID();
 				let imageInfo = null as ImageInfo;
 				// Скачиваем изображение на сервер
-				imageInfo = await downloadImage(photoUrl, destination, filename, { maxHeight: 10000, maxWidth: 10000, maxSize: 10240 });
+				imageInfo = await Downloader.getImage(photoUrl, { filename, resizeOptions: { maxHeight: 10000, maxWidth: 10000, maxSize: 10240 } });
 				if (!imageInfo) continue;
 				mediaFiles.push(imageInfo);
 			} catch (error) {
@@ -30,11 +26,11 @@ const getMediaFilesFromAttachments = async (
 		}
 		if (attachment.type === 'video') {
 			const video = attachment.video as Video;
-			const videoUrl = `https://m.vk.com/video${video.owner_id}_${video.id}`;
+			const videoUrl = `https://vk.com/video${video.owner_id}_${video.id}`;
 			try {
-				const filename = randomFilenames ? makeID() : String(video.id);
+				const filename = String(video.id) ?? makeID();
 				let videoInfo = null;
-				videoInfo = await downloadVideo(videoUrl, destination, filename);
+				videoInfo = await Downloader.getVideo(videoUrl, { filename });
 				if (!videoInfo) continue;
 				mediaFiles.push(videoInfo);
 			} catch (error) {
@@ -46,9 +42,9 @@ const getMediaFilesFromAttachments = async (
 		if (attachment.type === 'doc') {
 			const doc = attachment.doc as Document;
 			try {
-				const filename = randomFilenames ? makeID() : doc.title.split('.')[0];
+				const filename = doc.title.split('.')[0] ?? makeID();
 				let fileInfo = null;
-				fileInfo = await downloadFile(doc.url, destination, filename);
+				fileInfo = await Downloader.getFile(doc.url, { filename });
 				if (!fileInfo) continue;
 				fileInfo.type = 'document';
 				mediaFiles.push(fileInfo);
