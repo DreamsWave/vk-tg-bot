@@ -72,11 +72,22 @@ class Queue implements IQueue {
 		const lastItem = this._queue[lastItemIndex];
 		if (this._queue.length && lastItem.method !== 'sendMessage') {
 			// if last event in queue sendPhoto and text length greater than 0 and less of equal max text message length - 200
-			// modify that event to sendMessage and add photo as link
+			// modify that event to sendMessage and add photo as a link
 			if (lastItem.method === 'sendPhoto' && text.length > MAX_CAPTION_TEXT_LENGTH && text.length <= MAX_MESSAGE_TEXT_LENGTH - 200) {
 				const linkedPhoto = createLinkedPhoto(lastItem.payload.origin);
 				this._queue[lastItemIndex] = createEvent({ method: 'sendMessage', text: text + ' ' + linkedPhoto, options: { parse_mode: 'HTML' } });
+			} else if (lastItem.method === 'sendMediaGroup') {
+				// if last event in queue sendMediaGroup
+				// add first text chunk in first element of media array in sendMediaGroup
+				// and create sendMessage events for each of rest text chunks
+				const [textFirstChunk, ...textRestChunks] = chunkString(text, MAX_MESSAGE_TEXT_LENGTH, MAX_CAPTION_TEXT_LENGTH);
+				this._queue[lastItemIndex].payload.content.media[0].caption = textFirstChunk;
+				for (const textChunk of textRestChunks) {
+					this.addEventInQueue(createEvent({ method: 'sendMessage', text: textChunk }));
+				}
 			} else {
+				// Or add first text chunk in caption in last event in queue
+				// and create sendMessage events for each of rest text chunks
 				const [textFirstChunk, ...textRestChunks] = chunkString(text, MAX_MESSAGE_TEXT_LENGTH, MAX_CAPTION_TEXT_LENGTH);
 				this._queue[lastItemIndex].payload.options.caption = textFirstChunk;
 				for (const textChunk of textRestChunks) {
