@@ -54,6 +54,8 @@ describe('wall-post-new e2e', () => {
 			expect(false).toBe(true);
 		}
 	});
+
+	// PHOTO
 	it('should send post with photo only', async () => {
 		try {
 			const text = '';

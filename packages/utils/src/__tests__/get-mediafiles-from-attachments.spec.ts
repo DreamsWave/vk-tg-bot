@@ -2,6 +2,7 @@ import { getAttachment } from '@yc-bot/mocks';
 import { FileInfo, ImageInfo, VideoInfo } from '@yc-bot/types';
 import path from 'path';
 import { getMediaFilesFromAttachments, Temp } from '..';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { Downloader } from '@yc-bot/downloader';
 
 describe('getMediafilesFromAttachments', () => {

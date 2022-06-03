@@ -18,7 +18,7 @@ describe('config', () => {
 	it('should init config', async () => {
 		try {
 			process.env['NODE_ENV'] = 'production';
-			const conf = await Config.init(vkGroupId);
+			await Config.init(vkGroupId);
 			const conf2 = Config.get();
 			expect(conf2.name).toBe('dev');
 		} catch (error) {

@@ -4,26 +4,20 @@ dotenv.config();
 
 export interface IConfig {
 	vk_group_id: string;
-	vk_group_token: string;
 	vk_group_callback: string;
 	vk_last_post_id: string;
 	name: string;
 	tg_token: string;
 	tg_chat_id: string;
-	tg_error_chat_id: string;
-	extra: object;
 }
 
 const devConfig: IConfig = {
 	vk_group_id: process.env['VK_GROUP_ID'] ?? '',
-	vk_group_token: process.env['VK_GROUP_TOKEN'] ?? '',
 	vk_group_callback: process.env['VK_GROUP_CALLBACK'] ?? '',
 	vk_last_post_id: process.env['VK_LAST_POST_ID'] ?? '',
 	name: process.env['NAME'] ?? '',
 	tg_token: process.env['TG_TOKEN'] ?? '',
-	tg_chat_id: process.env['TG_CHAT_ID'] ?? '',
-	tg_error_chat_id: process.env['TG_ERROR_CHAT_ID'] ?? '',
-	extra: null
+	tg_chat_id: process.env['TG_CHAT_ID'] ?? ''
 };
 
 AWS.config.update({
@@ -46,7 +40,7 @@ class Config {
 			const documentClient = new AWS.DynamoDB.DocumentClient();
 			documentClient.get(
 				{
-					TableName: this.configsTableName,
+					TableName: Config.configsTableName,
 					ConsistentRead: true,
 					Key: {
 						vk_group_id: vkGroupId
