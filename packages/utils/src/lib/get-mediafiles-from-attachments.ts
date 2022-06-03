@@ -1,6 +1,5 @@
-import os from 'os';
 import { ImageInfo, Photo, Video, Document, Files } from '@yc-bot/types';
-import { getLargeSizeUrl, makeID } from './common';
+import { getLargeSizeUrl } from './common';
 import { Downloader } from '@yc-bot/downloader';
 
 const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
@@ -12,10 +11,10 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 			// Получаем ссылку на максимальный размер изображения
 			const photoUrl = getLargeSizeUrl(photo.sizes);
 			try {
-				const filename = String(photo.id) ?? makeID();
+				// const filename = String(photo.id);
 				let imageInfo = null as ImageInfo;
 				// Скачиваем изображение на сервер
-				imageInfo = await Downloader.getImage(photoUrl, { filename, resizeOptions: { maxHeight: 10000, maxWidth: 10000, maxSize: 10240 } });
+				imageInfo = await Downloader.getImage(photoUrl, { resizeOptions: { maxHeight: 10000, maxWidth: 10000, maxSize: 10240 } });
 				if (!imageInfo) continue;
 				mediaFiles.push(imageInfo);
 			} catch (error) {
@@ -28,9 +27,9 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 			const video = attachment.video as Video;
 			const videoUrl = `https://vk.com/video${video.owner_id}_${video.id}`;
 			try {
-				const filename = String(video.id) ?? makeID();
+				// const filename = String(video.id);
 				let videoInfo = null;
-				videoInfo = await Downloader.getVideo(videoUrl, { filename });
+				videoInfo = await Downloader.getVideo(videoUrl);
 				if (!videoInfo) continue;
 				mediaFiles.push(videoInfo);
 			} catch (error) {
@@ -42,9 +41,9 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 		if (attachment.type === 'doc') {
 			const doc = attachment.doc as Document;
 			try {
-				const filename = doc.title.split('.')[0] ?? makeID();
+				// const filename = doc.title?.split('.')[0] ?? '';
 				let fileInfo = null;
-				fileInfo = await Downloader.getFile(doc.url, { filename });
+				fileInfo = await Downloader.getFile(doc.url);
 				if (!fileInfo) continue;
 				fileInfo.type = 'document';
 				mediaFiles.push(fileInfo);

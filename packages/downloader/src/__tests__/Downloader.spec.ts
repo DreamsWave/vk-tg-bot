@@ -63,10 +63,9 @@ describe('Downloader', () => {
 			origin: 'https://some-url.com'
 		};
 		jest.spyOn(Downloader, 'getFile').mockResolvedValue(webpInfo);
-		const imageInfo = await Downloader.getImage('https://some-url.com', { filename: 'some-image-name' });
+		const imageInfo = await Downloader.getImage('https://some-url.com');
 		expect(fs.existsSync(imageInfo.path)).toBeTruthy();
 		expect(imageInfo.ext).toBe(jpegInfo.ext);
-		expect(imageInfo.filename).toBe(jpegInfo.filename);
 		expect(imageInfo.mime).toBe(jpegInfo.mime);
 	});
 	it('should resize image and return image info', async () => {
