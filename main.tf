@@ -43,14 +43,6 @@ resource "yandex_ydb_database_serverless" "bots" {
       AWS_ACCESS_KEY_ID     = yandex_iam_service_account_static_access_key.sa-static-key.access_key
       AWS_SECRET_ACCESS_KEY = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
       AWS_ENDPOINT          = yandex_ydb_database_serverless.bots.document_api_endpoint
-      NAME                  = var.name
-      TG_CHAT_ID            = var.tg_chat_id
-      TG_TOKEN              = var.tg_token
-      TG_ERROR_CHAT_ID      = var.tg_error_chat_id
-      VK_GROUP_CALLBACK     = var.vk_group_callback
-      VK_GROUP_ID           = var.vk_group_id
-      VK_GROUP_TOKEN        = var.vk_group_token
-      VK_LAST_POST_ID       = 0
     }
     command = "node ./scripts/createConfigsTable.js"
   }

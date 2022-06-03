@@ -1,5 +1,6 @@
 import { ImageInfo, Photo, Video, Document, Files } from '@yc-bot/types';
 import { getLargeSizeUrl } from './common';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { Downloader } from '@yc-bot/downloader';
 
 const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
@@ -16,6 +17,7 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 				// Скачиваем изображение на сервер
 				imageInfo = await Downloader.getImage(photoUrl, { resizeOptions: { maxHeight: 10000, maxWidth: 10000, maxSize: 10240 } });
 				if (!imageInfo) continue;
+				// Skip photo if file size is greater than 10MB
 				if (imageInfo.size >= 10240) continue;
 				mediaFiles.push(imageInfo);
 			} catch (error) {
@@ -26,12 +28,15 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 		}
 		if (attachment.type === 'video') {
 			const video = attachment.video as Video;
+			// Skip video if longer than 15 minutes
+			if (video.duration > 900) continue;
 			const videoUrl = `https://vk.com/video${video.owner_id}_${video.id}`;
 			try {
 				// const filename = String(video.id);
 				let videoInfo = null;
 				videoInfo = await Downloader.getVideo(videoUrl);
 				if (!videoInfo) continue;
+				// Skip video if file size is greater than 50MB
 				if (videoInfo.size >= 51200) continue;
 				mediaFiles.push(videoInfo);
 			} catch (error) {
@@ -47,6 +52,7 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 				let fileInfo = null;
 				fileInfo = await Downloader.getFile(doc.url);
 				if (!fileInfo) continue;
+				// Skip photo if file size is greater than 50MB
 				if (fileInfo.size >= 51200) continue;
 				fileInfo.type = 'document';
 				mediaFiles.push(fileInfo);

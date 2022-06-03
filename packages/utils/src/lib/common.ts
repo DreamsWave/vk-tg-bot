@@ -1,8 +1,5 @@
-import {} from 'vk-io';
-import fetch from 'node-fetch';
 import { loremIpsum } from 'lorem-ipsum';
 import chunk from 'chunk-text';
-import { getShortLink } from '@yc-bot/api/vk';
 
 export const calculateImageDimensions = (width: number, height: number, maxWidth: number, maxHeight: number): { width: number; height: number } => {
 	if (width > height) {

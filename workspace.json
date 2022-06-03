@@ -2,7 +2,6 @@
 	"version": 2,
 	"projects": {
 		"api-telegram": "packages/api/telegram",
-		"api-vk": "packages/api/vk",
 		"api-yandex-cloud": "packages/api/yandex-cloud",
 		"downloader": "packages/downloader",
 		"functions-event-handler": "packages/functions/event-handler",
