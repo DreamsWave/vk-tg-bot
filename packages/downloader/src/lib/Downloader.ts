@@ -1,8 +1,8 @@
 import { FileInfo, ImageInfo, ResizeOptions, VideoInfo } from '@yc-bot/types';
 import { DownloaderHelper } from 'node-downloader-helper';
-import os from 'os';
 import path from 'path';
 import mime from 'mime';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { convertVideoToMP4, convertWebpToJpg, getFileInfo, getImageSizes, makeID, resizeImage, Temp } from '@yc-bot/utils';
 import youtubeDlExec from 'youtube-dl-exec';
 import ytdl from 'ytdl-core';

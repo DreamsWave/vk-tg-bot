@@ -16,6 +16,7 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 				// Скачиваем изображение на сервер
 				imageInfo = await Downloader.getImage(photoUrl, { resizeOptions: { maxHeight: 10000, maxWidth: 10000, maxSize: 10240 } });
 				if (!imageInfo) continue;
+				if (imageInfo.size >= 10240) continue;
 				mediaFiles.push(imageInfo);
 			} catch (error) {
 				if (error.stderr) {
@@ -31,6 +32,7 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 				let videoInfo = null;
 				videoInfo = await Downloader.getVideo(videoUrl);
 				if (!videoInfo) continue;
+				if (videoInfo.size >= 51200) continue;
 				mediaFiles.push(videoInfo);
 			} catch (error) {
 				if (error.stderr) {
@@ -45,6 +47,7 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 				let fileInfo = null;
 				fileInfo = await Downloader.getFile(doc.url);
 				if (!fileInfo) continue;
+				if (fileInfo.size >= 51200) continue;
 				fileInfo.type = 'document';
 				mediaFiles.push(fileInfo);
 			} catch (error) {
