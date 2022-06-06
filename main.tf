@@ -51,9 +51,9 @@ resource "yandex_ydb_database_serverless" "bots" {
 ### Message Queue
 resource "yandex_message_queue" "wall-post-new" {
   name                       = "wall-post-new"
-  visibility_timeout_seconds = 600
+  visibility_timeout_seconds = 60
   receive_wait_time_seconds  = 0
-  message_retention_seconds  = 86400
+  message_retention_seconds  = 60
   access_key                 = yandex_iam_service_account_static_access_key.sa-static-key.access_key
   secret_key                 = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
 }

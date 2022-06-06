@@ -21,7 +21,8 @@ export const handler = async (messages: Messages, context: Context) => {
 			if (post.attachments?.length) {
 				Temp.prepare();
 				const mediaFiles = await getMediaFilesFromAttachments(post.attachments);
-				if (mediaFiles.length !== post.attachments.length) throw 'Missed files';
+				if (post.attachments.length > 0 && mediaFiles?.length === 0) throw 'Missing files';
+				if (post.attachments.length === 1 && mediaFiles?.length !== 1) throw 'Missing file';
 				queue.addFiles(mediaFiles);
 			}
 			if (post.text) {
