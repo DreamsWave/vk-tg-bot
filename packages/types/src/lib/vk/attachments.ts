@@ -1,28 +1,3 @@
-import { ReadStream } from 'fs';
-import { Stream } from 'stream';
-import { FileInfo } from '../file-info';
-
-export interface PAttachments {
-	photos: PAttachment[];
-	videos: PAttachment[];
-	docs: PAttachment[];
-}
-export interface PAttachment extends DownloadedAttachment {
-	type: string;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	origin: any;
-	originUrl: string;
-}
-export interface DownloadedAttachment {
-	buffer: unknown;
-	info: FileInfo;
-}
-export interface DownloadDocumentOptions {
-	filename: string;
-	location?: string;
-	ext: string;
-}
-
 export interface PhotoSize {
 	type: string;
 	url: string;

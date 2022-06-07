@@ -9,7 +9,6 @@
 		"mocks": "packages/mocks",
 		"queue": "packages/queue",
 		"shared-config": "packages/shared/config",
-		"shared-utils": "packages/shared/utils",
 		"types": "packages/types",
 		"utils": "packages/utils"
 	}

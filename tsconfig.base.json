@@ -38,9 +38,6 @@
 			"@yc-bot/shared/config": [
 				"packages/shared/config/src/index.ts"
 			],
-			"@yc-bot/shared/utils": [
-				"packages/shared/utils/src/index.ts"
-			],
 			"@yc-bot/types": [
 				"packages/types/src/index.ts"
 			],

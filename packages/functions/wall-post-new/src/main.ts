@@ -1,7 +1,6 @@
 import { Messages, Context, VKEvent, Post } from '@yc-bot/types';
 import { sendQueue } from '@yc-bot/api/telegram';
 import { Config } from '@yc-bot/shared/config';
-import { logger } from '@yc-bot/shared/utils';
 import { Queue } from '@yc-bot/queue';
 import { getMediaFilesFromAttachments, Temp } from '@yc-bot/utils';
 
@@ -32,7 +31,7 @@ export const handler = async (messages: Messages, context: Context) => {
 			await sendQueue(queue.getQueue());
 		}
 	} catch (error) {
-		logger.error(JSON.stringify(error));
+		console.error(JSON.stringify(error));
 		throw error;
 	} finally {
 		Temp.removeLocation();
