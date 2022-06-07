@@ -1,4 +1,3 @@
-import { logger } from '@yc-bot/shared/utils';
 import { SQS } from 'aws-sdk';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -25,7 +24,7 @@ const sendMessageYMQ = async (url: string, message: unknown, options?: { apiOpti
 		const result = await ymq.sendMessage(params).promise();
 		return result;
 	} catch (error) {
-		logger.error(JSON.stringify(error));
+		console.error(JSON.stringify(error));
 		throw error;
 	}
 };

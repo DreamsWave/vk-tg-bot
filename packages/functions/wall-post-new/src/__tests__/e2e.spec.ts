@@ -27,6 +27,7 @@ describe('wall-post-new e2e', () => {
 		Temp.cleanTmpdir();
 	});
 
+	// Comment this for rest of these tests
 	it.only('only', () => expect(true).toBe(true));
 
 	// TEXT

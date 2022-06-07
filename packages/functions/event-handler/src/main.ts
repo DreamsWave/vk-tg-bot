@@ -1,6 +1,5 @@
 import { Event, Context, VKEvent } from '@yc-bot/types';
 import { Config } from '@yc-bot/shared/config';
-import { logger } from '@yc-bot/shared/utils';
 import { isPostUnique, sendMessageYMQ } from '@yc-bot/api/yandex-cloud';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -25,7 +24,7 @@ export const handler = async (event: Event, context: Context) => {
 			}
 		}
 	} catch (error) {
-		logger.error(JSON.stringify(error));
+		console.error(JSON.stringify(error));
 	}
 	return {
 		statusCode: 200,
