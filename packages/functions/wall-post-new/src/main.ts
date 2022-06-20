@@ -18,6 +18,17 @@ export const handler = async (messages: Messages, context: Context) => {
 
 			const queue = new Queue();
 			if (post.attachments?.length) {
+				// Remove FOR when youtube-dl will be fixed https://github.com/ytdl-org/youtube-dl/issues/31035
+				for (const attachement of post.attachments) {
+					if (attachement.type === 'video') {
+						console.log('Post has video');
+					}
+					return {
+						statusCode: 200,
+						body: 'ok'
+					};
+				}
+
 				Temp.prepare();
 				const mediaFiles = await getMediaFilesFromAttachments(post.attachments);
 				if (post.attachments.length > 0 && mediaFiles?.length === 0) throw 'Missing files';
