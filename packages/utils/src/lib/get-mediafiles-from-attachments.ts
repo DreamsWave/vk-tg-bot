@@ -24,6 +24,7 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 				if (error.stderr) {
 					error.stderr += ` ${photoUrl}`;
 				}
+				console.log(JSON.stringify(error));
 			}
 		}
 		if (attachment.type === 'video') {
@@ -43,6 +44,7 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 				if (error.stderr) {
 					error.stderr += ` ${videoUrl}`;
 				}
+				console.log(JSON.stringify(error));
 			}
 		}
 		if (attachment.type === 'doc') {
@@ -60,6 +62,7 @@ const getMediaFilesFromAttachments = async (attachments): Promise<Files> => {
 				if (error.stderr) {
 					error.stderr += ` ${doc.url}`;
 				}
+				console.log(JSON.stringify(error));
 			}
 		}
 	}
