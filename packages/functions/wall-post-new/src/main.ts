@@ -22,11 +22,11 @@ export const handler = async (messages: Messages, context: Context) => {
 				for (const attachement of post.attachments) {
 					if (attachement.type === 'video') {
 						console.log('Post has video');
+						return {
+							statusCode: 200,
+							body: 'ok'
+						};
 					}
-					return {
-						statusCode: 200,
-						body: 'ok'
-					};
 				}
 
 				Temp.prepare();
