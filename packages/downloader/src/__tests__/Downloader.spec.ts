@@ -83,18 +83,18 @@ describe('Downloader', () => {
 		const imageInfo = await Downloader.getImage('https://some-url.com', { filename: 'resized-image', resizeOptions: { maxSize: 35, quality: 100 } });
 		expect(imageInfo.size).toBeLessThanOrEqual(32);
 	});
-	it('should download vk(and convert) and youtube videos', async () => {
-		const videoPreviewInfo = { ...getFileInfo(path.join(path.resolve(), 'assets/image-video-thumb.jpeg')) } as ImageInfo;
-		jest.spyOn(Downloader, 'getImage').mockResolvedValue(videoPreviewInfo);
-		const videoUrls = ['https://vk.com/video-191117934_456239116', 'https://youtu.be/tbnLqRW9Ef0'];
-		for (const url of videoUrls) {
-			const videoInfo = await Downloader.getVideo(url, { filename: makeID() });
-			const videoExists = fs.existsSync(videoInfo.path);
-			expect(videoExists).toBeTruthy();
-			expect(videoInfo.size).toBeGreaterThan(0);
-			expect(videoInfo.size).toBeLessThan(50000);
-			expect(videoInfo.duration).toBeLessThan(600);
-			expect(videoInfo.thumb?.ext).toBe('jpeg');
-		}
-	});
+	// it('should download vk(and convert) and youtube videos', async () => {
+	// 	const videoPreviewInfo = { ...getFileInfo(path.join(path.resolve(), 'assets/image-video-thumb.jpeg')) } as ImageInfo;
+	// 	jest.spyOn(Downloader, 'getImage').mockResolvedValue(videoPreviewInfo);
+	// 	const videoUrls = ['https://vk.com/video-191117934_456239116', 'https://youtu.be/tbnLqRW9Ef0'];
+	// 	for (const url of videoUrls) {
+	// 		const videoInfo = await Downloader.getVideo(url, { filename: makeID() });
+	// 		const videoExists = fs.existsSync(videoInfo.path);
+	// 		expect(videoExists).toBeTruthy();
+	// 		expect(videoInfo.size).toBeGreaterThan(0);
+	// 		expect(videoInfo.size).toBeLessThan(50000);
+	// 		expect(videoInfo.duration).toBeLessThan(600);
+	// 		expect(videoInfo.thumb?.ext).toBe('jpeg');
+	// 	}
+	// });
 });

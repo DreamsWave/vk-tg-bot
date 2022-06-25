@@ -20,7 +20,7 @@ describe('config', () => {
 			process.env['NODE_ENV'] = 'production';
 			await Config.init(vkGroupId);
 			const conf2 = Config.get();
-			expect(conf2.name).toBe('dev');
+			expect(conf2.name).toBe('vk-tg-bot-dev');
 		} catch (error) {
 			expect(true).toBe(false);
 		}
