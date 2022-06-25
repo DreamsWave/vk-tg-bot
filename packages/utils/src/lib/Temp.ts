@@ -28,7 +28,11 @@ export default class Temp {
 	}
 	public static removeLocation(): void {
 		if (Temp.location) {
-			fs.rmSync(Temp.location, { recursive: true, force: true });
+			try {
+				fs.rmSync(Temp.location, { recursive: true, force: true });
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	}
 	public static cleanTmpdir(): void {

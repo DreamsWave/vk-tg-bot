@@ -43,7 +43,6 @@ export const handler = async (messages: Messages, context: Context) => {
 		}
 	} catch (error) {
 		console.error(JSON.stringify(error));
-		throw error;
 	} finally {
 		Temp.removeLocation();
 	}
